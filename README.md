@@ -11,7 +11,7 @@ MUMIE is an e-learning platform for learning and teaching mathematics and comput
 
 MUMIE platform and content is the result of a cooperative effort by leading universities in Europe supported by the company integral-learning.
 
-## Key features
+## Key features of MUMIE Single Sign On
 * ### Open MUMIE Tasks without having to register or log into MUMIE servers 
   When a user starts a MUMIE Task for the first time, a new account is automatically registered. The new username is composed of the moodle userid and a organisation shorthand. No further personal data are necessary
   
