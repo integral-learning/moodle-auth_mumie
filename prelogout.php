@@ -47,6 +47,7 @@ $redirect = json_encode($_GET["redirect"]);
             request.open("GET", url);
             request.send();
             request.onreadystatechange = function () {
+                console.log(request.response);
                 resolve();
             }
         })
