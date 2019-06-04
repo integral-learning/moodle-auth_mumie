@@ -44,11 +44,16 @@ $redirect = json_encode($_GET["redirect"]);
     function logoutFromServer(url) {
         var promise = new Promise(function (resolve, reject) {
             var request = new XMLHttpRequest();
+
             request.open("GET", url);
-            console.log("DONT WAIT FOR RESOIOSE")
+            request.withCredentials = true;
+            request.timeout = 10000;
             request.send();
             request.onreadystatechange = function () {
-                console.log(request.response);
+                resolve();
+            }
+            request.ontimeout = function (e) {
+                console.log("timed out");
                 resolve();
             }
         })
