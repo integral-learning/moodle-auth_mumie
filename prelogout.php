@@ -53,7 +53,6 @@ $redirect = json_encode($_GET["redirect"]);
                 resolve();
             }
             request.ontimeout = function (e) {
-                console.log("timed out");
                 resolve();
             }
         })
