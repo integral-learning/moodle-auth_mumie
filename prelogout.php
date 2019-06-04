@@ -45,6 +45,7 @@ $redirect = json_encode($_GET["redirect"]);
         var promise = new Promise(function (resolve, reject) {
             var request = new XMLHttpRequest();
             request.open("GET", url);
+            console.log("DONT WAIT FOR RESOIOSE")
             request.send();
             request.onreadystatechange = function () {
                 console.log(request.response);
