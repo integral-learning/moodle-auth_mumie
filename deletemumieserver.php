@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of auth_mumie
+ * This script is used to delete MUMIE server
  *
  * @package auth_mumie
  * @copyright  2019 integral-learning GmbH (https://www.integral-learning.de/)
@@ -23,10 +23,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require_once ('../../config.php');
+require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
 
-$plugin->version = 2019060500;
-$plugin->component = 'auth_mumie';
-$plugin->requires = 2015041700;
-$plugin->release = "v1.0";
-$plugin->maturity = MATURITY_STABLE;
+require_login(0, false);
+
+$id = optional_param('id', '', PARAM_INT);
+$returnurl = "{$CFG->wwwroot}/admin/settings.php?section=authsettingmumie";
+require_capability('auth/mumie:deleteserver', context_system::instance());
+auth_mumie\locallib::delete_mumie_server($id);
+redirect($returnurl);

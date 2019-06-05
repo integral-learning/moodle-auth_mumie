@@ -15,18 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of auth_mumie
+ * MUMIE task external functions and service definitions
  *
- * @package auth_mumie
+ * @package mod_mumie
  * @copyright  2019 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$plugin->version = 2019060500;
-$plugin->component = 'auth_mumie';
-$plugin->requires = 2015041700;
-$plugin->release = "v1.0";
-$plugin->maturity = MATURITY_STABLE;
+$functions = array(
+    'auth_mumie_submit_mumieserver_form' => array(
+        'classname' => 'auth_mumie_external',
+        'methodname' => 'submit_mumieserver_form',
+        'classpath' => 'auth/mumie/externallib.php',
+        'description' => 'Creates a Mumie server from submitted form data',
+        'ajax' => true,
+        'type' => 'write',
+    ),
+
+    'auth_mumie_get_available_courses' => array(
+        'classname' => 'auth_mumie_external',
+        'methodname' => 'get_available_courses',
+        'classpath' => 'auth/mumie/externallib.php',
+        'description' => 'get all Mumie courses that are available for this instutition',
+        'ajax' => true,
+        'type' => 'read',
+    ),
+);

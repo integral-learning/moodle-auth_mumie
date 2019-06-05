@@ -24,6 +24,38 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
+require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
+
+global $DB, $PAGE;
+
+$mumieservers = auth_mumie\locallib::get_all_mumie_servers();
+
+// Build html table containing all saved mumie servers.
+$table = new html_table();
+$table->attributes['class'] = 'generaltable auth_index mumie_server_list_container';
+$table->head = array(get_string("mumie_table_header_name", "auth_mumie"), get_string("mumie_table_header_url", "auth_mumie"),
+    get_string("mumie_edit_button", "auth_mumie"), get_string("mumie_delete_button", "auth_mumie"));
+
+foreach ($mumieservers as $server) {
+    $id = "<span class='mumie_list_entry_id' hidden>" . $server->id . "</span>";
+    $name = "<span class='mumie_list_entry_name'>" . $server->name . "</span>" . $id;
+    $url = "<span class='mumie_list_entry_url'>" . $server->url_prefix . "</span>";
+    $edit = "<a class = 'mumie_list_edit_button' title='" . get_string("mumie_edit_button", "auth_mumie") . "'>"
+        . '<span class="icon fa fa-cog fa-fw " titel ="delete" aria-hidden="true" aria-label=""></span>'
+        . "</a>";
+    $deleteurl = "{$CFG->wwwroot}/auth/mumie/deletemumieserver.php?id={$server->id}&amp;sesskey={$USER->sesskey}";
+    $delete = "<a class = 'mumie_list_delete_button' href='{$deleteurl}' title='"
+    . get_string("mumie_delete_button", "auth_mumie")
+        . "'>"
+        . '<span class="icon fa fa-trash fa-fw " aria-hidden="true"></span>'
+        . "</a>";
+    $table->data[] = array($name, $url, $edit, $delete);
+}
+
+$addbutton = "<button class='btn mumie_add_server_button btn-primary' id='mumie_add_server_button'>"
+. '<span class="icon fa fa-plus fa-fw " aria-hidden="true" aria-label=""></span>'
+. get_string("mumie_add_server_button", "auth_mumie")
+    . "</button>";
 
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext(
@@ -52,4 +84,14 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configcheckbox('auth_mumie/userdata_lastname',
         get_string('mumie_lastname', 'auth_mumie'), '', 0));
+
+    $settings->add(
+        new admin_setting_heading(
+            'mumie_servers',
+            get_string("mumie_server_list_heading", "auth_mumie"),
+            html_writer::table($table) . $addbutton)
+    );
+
+    $context = context_system::instance();
+    $PAGE->requires->js_call_amd('auth_mumie/settings', 'init', array(json_encode($context->id)));
 }

@@ -15,18 +15,40 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of auth_mumie
+ * This file contains the capabilities used by the auth_mumie plugin
  *
  * @package auth_mumie
  * @copyright  2019 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2019060500;
-$plugin->component = 'auth_mumie';
-$plugin->requires = 2015041700;
-$plugin->release = "v1.0";
-$plugin->maturity = MATURITY_STABLE;
+$capabilities = array(
+
+    'auth/mumie:addserver' => array(
+        'riskbitmask' => RISK_CONFIG,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    'auth/mumie:deleteserver' => array(
+        'riskbitmask' => RISK_CONFIG,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    'auth/mumie:viewavailablecourses' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+);
