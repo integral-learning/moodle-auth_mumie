@@ -17,7 +17,7 @@
 /**
  * MUMIE task external functions and service definitions
  *
- * @package mod_mumie
+ * @package auth_mumie
  * @copyright  2019 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
