@@ -34,7 +34,7 @@ $embedded = optional_param("embedded", false, PARAM_BOOL);
 $mumietask = $DB->get_record("mumie", array('id' => $id));
 $ssotoken = new \stdClass();
 $ssotoken->token = auth_mumie_get_token(20);
-$ssotoken->user = $USER->id;
+$ssotoken->the_user = $USER->id;
 $ssotoken->timecreated = time();
 
 $loginurl = auth_mumie_get_login_url($mumietask);
@@ -43,14 +43,15 @@ $tokentable = "auth_mumie_sso_tokens";
 
 $org = get_config("auth_mumie", "mumie_org");
 
-if ($oldtoken = $DB->get_record($tokentable, array("user" => $ssotoken->user))) {
+if ($oldtoken = $DB->get_record($tokentable, array("the_user" => $ssotoken->the_user))) {
     $ssotoken->id = $oldtoken->id;
     $DB->update_record($tokentable, $ssotoken);
 } else {
-    $DB->insert_record($tokentable, $ssotoken);
+    $DB->insert_record($tokentable, (array) $ssotoken);
 }
 
 $problemurl = auth_mumie_get_problem_url($mumietask);
+
 echo
     "
     <form id='mumie_sso_form' name='mumie_sso_form' method='post' action='{$loginurl}'>

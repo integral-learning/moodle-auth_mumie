@@ -68,11 +68,11 @@ class auth_plugin_mumie extends auth_plugin_base {
         global $CFG;
         $tokentable = "auth_mumie_sso_tokens";
 
-        if ($DB->get_record($tokentable, array('user' => $USER->id))) {
+        if ($DB->get_record($tokentable, array('the_user' => $USER->id))) {
             $redirecturl = "{$CFG->wwwroot}/auth/mumie/prelogout.php?sesskey={$USER->sesskey}&logoutUrl="
             . json_encode(auth_mumie\locallib::get_all_logout_urls())
             . "&redirect=" . urlencode("{$CFG->wwwroot}/login/logout.php?sesskey={$USER->sesskey}");
-            $DB->delete_records($tokentable, array('user' => $USER->id));
+            $DB->delete_records($tokentable, array('the_user' => $USER->id));
             redirect($redirecturl);
         }
     }

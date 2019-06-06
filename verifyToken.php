@@ -39,7 +39,7 @@ $userid = $_POST['userId'];
 
 $table = "auth_mumie_sso_tokens";
 
-$mumietoken = $DB->get_record($table, array('user' => $userid, 'token' => $token));
+$mumietoken = $DB->get_record($table, array('the_user' => $userid, 'token' => $token));
 
 $response = new stdClass();
 $user = $DB->get_record('user', array('id' => $userid));
@@ -52,10 +52,10 @@ if ($mumietoken != null && $user != null) {
         $response->userid = $user->id;
         $response->email = $user->email;
 
-        if (get_config('auth_sso2mumie', 'userdata_firstname')) {
+        if (get_config('auth_mumie', 'userdata_firstname')) {
             $response->firstname = $user->firstname;
         }
-        if (get_config('auth_sso2mumie', 'userdata_lastname')) {
+        if (get_config('auth_mumie', 'userdata_lastname')) {
             $response->lastname = $user->lastname;
         }
     }
