@@ -32,7 +32,7 @@ You need to be a MUMIE partner to use our content on Moodle. Please contact us o
 7. Go to *Site Administration*->*Plugins*->*Manage authentication* and enable MUMIE Single Sign On by clicking on the eye icon next to it
 8. Please contact us over [email](mailto:contact@integral-learning.de) and send us the URL of your Moodle server and the IP address it uses for outgoing HTTP requests. We need those to configure our own servers.
 
-## Attention
+## Requirements
 
 This activity plugin requires Javascript to work!
 
