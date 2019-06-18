@@ -50,13 +50,15 @@ if ($mumietoken != null && $user != null) {
     } else {
         $response->status = "valid";
         $response->userid = $user->id;
-        $response->email = $user->email;
 
         if (get_config('auth_mumie', 'userdata_firstname')) {
             $response->firstname = $user->firstname;
         }
         if (get_config('auth_mumie', 'userdata_lastname')) {
             $response->lastname = $user->lastname;
+        }
+        if (get_config('auth_mumie', 'userdata_mail')) {
+            $response->email = $user->email;
         }
     }
 } else {

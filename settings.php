@@ -85,6 +85,9 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('auth_mumie/userdata_lastname',
         get_string('mumie_lastname', 'auth_mumie'), '', 0));
 
+    $settings->add(new admin_setting_configcheckbox('auth_mumie/userdata_mail',
+        get_string('mumie_mail', 'auth_mumie'), '', 0));
+
     $settings->add(
         new admin_setting_heading(
             'mumie_servers',

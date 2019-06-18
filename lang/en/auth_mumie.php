@@ -32,6 +32,7 @@ $string['mumie_shared_user_data_desc'] = 'Choose which user data other than the 
 
 $string['mumie_firstname'] = 'Firstname';
 $string['mumie_lastname'] = 'Lastname';
+$string['mumie_mail'] = 'Email';
 
 $string['mumie_api_key'] = 'MUMIE API Key';
 $string['mumie_api_key_desc'] = 'Specify the MUMIE API key for grade synchronization ';

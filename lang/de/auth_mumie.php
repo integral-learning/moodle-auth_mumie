@@ -32,6 +32,7 @@ $string['mumie_shared_user_data_desc'] = 'Bestimmen Sie, welche Nutzerdaten nebe
 
 $string['mumie_firstname'] = 'Vorname';
 $string['mumie_lastname'] = 'Nachname';
+$string['mumie_mail'] = 'Email-Addresse';
 
 $string['mumie_api_key'] = 'MUMIE API Key';
 $string['mumie_api_key_desc'] = 'Geben Sie den MUMIE API-Key zur Notensynchronisation an';
