@@ -34,7 +34,22 @@ $embedded = optional_param("embedded", false, PARAM_BOOL);
 $mumietask = $DB->get_record("mumie", array('id' => $id));
 $ssotoken = new \stdClass();
 $ssotoken->token = auth_mumie_get_token(20);
-$ssotoken->the_user = $mumietask->use_encrypted_id == 1 ? auth_mumie_get_hashed_id($USER->id) : $USER->id;
+
+if ($mumietask->use_encrypted_id == 1) {
+    $hashidtable = "auth_mumie_id_hashes";
+    $hash = auth_mumie_get_hashed_id($USER->id);
+    $ssotoken->the_user = $hash;
+    $row = new \stdClass();
+    $row->hash = $hash;
+    $row->id = $USER->id;
+    if ($DB->get_record($hashidtable, array("the_user" => $USER->id))) {
+        $DB->update_record($hashidtable, $row);
+    } else {
+        $DB->insert_record($hashidtable, (array) $row);
+    }
+} else {
+    $ssotoken->the_user = $USER->id;
+}
 $ssotoken->timecreated = time();
 
 $loginurl = auth_mumie_get_login_url($mumietask);
@@ -55,7 +70,7 @@ $problemurl = auth_mumie_get_problem_url($mumietask);
 echo
     "
     <form id='mumie_sso_form' name='mumie_sso_form' method='post' action='{$loginurl}'>
-        <input type='hidden' name='userId' id='userId' type ='text' value='{$USER->id}'/>
+        <input type='hidden' name='userId' id='userId' type ='text' value='{$ssotoken->the_user}'/>
         <input type='hidden' name='token' id='token' type ='text' value='{$ssotoken->token}'/>
         <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
         <input type='hidden' name='resource' id='resource' type ='text' value='{$problemurl}'/>

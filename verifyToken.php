@@ -41,11 +41,16 @@ $table = "auth_mumie_sso_tokens";
 
 $mumietoken = $DB->get_record($table, array('the_user' => $userid, 'token' => $token));
 
-$response = new stdClass();
-$user = $DB->get_record('user', array('id' => $userid));
+if (strlen($userid) == 128) {
+    $moodleuserid = $DB->get_record("auth_mumie_id_hashes", array('hash' => $userid))->the_user;
+} else {
+    $moodleuserid = $userid;
+}
+$response = new \stdClass();
+$user = $DB->get_record('user', array('id' => $moodleuserid));
 if ($mumietoken != null && $user != null) {
     $current = time();
-    if (($current - $mumietoken->timecreated) >= 60) {
+    if (($current - $mumietoken->timecreated) >= 600000) {
         $response->status = "invalid";
     } else {
         $response->status = "valid";
