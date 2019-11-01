@@ -1,13 +1,16 @@
 <?php
 
-class mumie_admin_setting_configselect_encryption extends admin_setting_configselect {
-    const ENCRYPTION_ENABLED = 1;
-    const ENCRYPTION_DISABLED = 0;
-    const ENCRYPTION_UNSET = -1;
-    const SETTING_NAME = "auth_mumie/encryption_enabled";
+class mumie_admin_setting_configselect_id_hashing extends admin_setting_configselect {
+    const ID_HASHING_ENABLED = 1;
+    const ID_HASHING_DISABLED = 0;
+    const ID_HASHING_UNSET = -1;
+    const SETTING_NAME = "auth_mumie/id_hashing_enabled";
 
     public function __construct($visiblename, $description, $defaultsetting = -1) {
-        $choices = array(self::ENCRYPTION_ENABLED => "enabled", self::ENCRYPTION_DISABLED => 'disabled', self::ENCRYPTION_UNSET => "Choose later");
+        $choices = array(self::ID_HASHING_ENABLED => get_string("mumie_enabled", 'auth_mumie'),
+            self::ID_HASHING_DISABLED => get_string('mumie_disabled', 'auth_mumie'),
+            self::ID_HASHING_UNSET => get_string("mumie_choose_later", 'auth_mumie'),
+        );
         parent::__construct(self::SETTING_NAME, $visiblename, $description, $defaultsetting = -1, $choices);
     }
 
@@ -21,14 +24,13 @@ class mumie_admin_setting_configselect_encryption extends admin_setting_configse
     }
 
     public function validate($data) {
-        debug_to_console("data is: " . $data . " get_setting is : " . $this->get_setting());
         $current_setting = $this->get_setting();
         if ($data == $current_setting || $current_setting == "") {
             return true;
-        } else if ($current_setting == self::ENCRYPTION_UNSET) {
+        } else if ($current_setting == self::ID_HASHING_UNSET) {
             return true;
         }
-        return get_string("mumie_encryption_setting_locked", 'auth_mumie');
+        return get_string("mumie_id_hashing_setting_locked", 'auth_mumie');
     }
 
     public static function get_value() {

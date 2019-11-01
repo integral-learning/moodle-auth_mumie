@@ -48,11 +48,17 @@ $string['mumie_edit_button'] = 'Edit';
 $string['mumie_delete_button'] = 'Delete';
 $string['mumie_add_server_button'] = 'Add MUMIE Server';
 // After version 2019061800
-$string['mumie_encryption_heading'] = "Moodle-ID Encryption";
-$string['mumie_encryption_heading_desc'] = "TODO";
-$string['mumie_encryption_enabled'] = "Enable encryption of MOODLE ID";
-$string['mumie_encryption_enabled_desc'] = "TODO";
-$string['mumie_encryption_setting_locked'] = "This option cannot be changed!";
+$string['mumie_id_hashing_heading'] = "Moodle ID Hashing";
+$string['mumie_id_hashing_heading_desc'] = "If your MOODLE uses personal data in the user ID (e.g. matriculation number), you might want to enable ID hashing to protect the users' personal data.";
+$string['mumie_id_hashing'] = "Moodle ID Hashing";
+$string['mumie_id_hashing_desc'] = "<h3 style='color:red'>Be very careful</h3>
+Any changes made to this option are <b>final</b>! If ID hashing is enabled, new MUMIE accounts will be created for all users and all grades attained before this change will be lost!
+<br>Only activate this feature, if you are absolutely sure about it!
+";
+$string['mumie_id_hashing_setting_locked'] = "This option cannot be changed!";
+$string['mumie_enabled'] = 'Enabled';
+$string['mumie_disabled'] = 'Disabled';
+$string['mumie_choose_later'] = 'Choose later';
 
 // Used in mumieserver form.
 $string['mumie_form_required'] = 'required';
@@ -67,6 +73,3 @@ $string['mumie_form_server_btn_submit'] = 'Submit';
 $string['mumie_form_server_btn_cancel'] = 'Cancel';
 $string['mumie_url_prefix'] = 'MUMIE URL Prefix';
 $string['mumie_url_prefix_help'] = 'Specify the MUMIE URL prefix  <br><br> e.g. <b>https://www.ombplus.de/ombplus</b> <br><br> There can only be a single configuration for any URL prefix.';
-
-// Used in mumie_admin_setting_configtext_with_minlength.php
-$string['mumie_minimum_length'] = 'Minimum of {$a} characters';
