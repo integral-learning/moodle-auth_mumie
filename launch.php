@@ -41,8 +41,9 @@ if ($mumietask->use_encrypted_id == 1) {
     $ssotoken->the_user = $hash;
     $row = new \stdClass();
     $row->hash = $hash;
-    $row->id = $USER->id;
-    if ($DB->get_record($hashidtable, array("the_user" => $USER->id))) {
+    $row->the_user = $USER->id;
+    if ($oldRecord = $DB->get_record($hashidtable, array("the_user" => $USER->id))) {
+        $row->id = $oldRecord->id;
         $DB->update_record($hashidtable, $row);
     } else {
         $DB->insert_record($hashidtable, (array) $row);
