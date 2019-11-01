@@ -34,7 +34,7 @@ $embedded = optional_param("embedded", false, PARAM_BOOL);
 $mumietask = $DB->get_record("mumie", array('id' => $id));
 $ssotoken = new \stdClass();
 $ssotoken->token = auth_mumie_get_token(20);
-$ssotoken->the_user = $USER->id;
+$ssotoken->the_user = $mumietask->use_encrypted_id == 1 ? auth_mumie_get_hashed_id($USER->id) : $USER->id;
 $ssotoken->timecreated = time();
 
 $loginurl = auth_mumie_get_login_url($mumietask);

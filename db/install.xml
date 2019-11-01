@@ -28,5 +28,11 @@
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
             </KEYS>
         </TABLE>
+        <TABLE NAME = "auth_mumie_id_hashes">
+            <FILEDS>
+                <FIELD NAME="user" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="hash" TYPE="char" LENGTH="128" NOTNULL="true" SEQUENCE="false"/>
+            </FIELDS>
+        </TABLE>
     </TABLES>
 </XMLDB>

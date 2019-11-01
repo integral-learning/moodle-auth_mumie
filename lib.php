@@ -134,3 +134,7 @@ function auth_mumie_output_fragment_new_mumieserver_form($args) {
 
     return $o;
 }
+
+function auth_mumie_get_hashed_id($id) {
+    return hash("sha512", $id . substr(get_config('auth_mumie', 'mumie_api_key'), 0, 10));
+}

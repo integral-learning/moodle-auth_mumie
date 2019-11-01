@@ -25,6 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
+require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_admin_settings.php');
 
 global $DB, $PAGE;
 
@@ -87,6 +88,12 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configcheckbox('auth_mumie/userdata_mail',
         get_string('mumie_mail', 'auth_mumie'), '', 0));
+
+    $settings->add(new admin_setting_heading('encryption',
+        get_string('mumie_encryption_heading', 'auth_mumie'),
+        get_string('mumie_encryption_heading_desc', 'auth_mumie')));
+
+    $settings->add(new mumie_admin_setting_configselect_encryption(get_string('mumie_encryption_enabled', 'auth_mumie'), get_string('mumie_encryption_enabled_desc', 'auth_mumie')));
 
     $settings->add(
         new admin_setting_heading(
