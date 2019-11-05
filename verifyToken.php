@@ -50,7 +50,7 @@ $response = new \stdClass();
 $user = $DB->get_record('user', array('id' => $moodleuserid));
 if ($mumietoken != null && $user != null) {
     $current = time();
-    if (($current - $mumietoken->timecreated) >= 600000) {
+    if (($current - $mumietoken->timecreated) >= 60) {
         $response->status = "invalid";
     } else {
         $response->status = "valid";

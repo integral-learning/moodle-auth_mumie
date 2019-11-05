@@ -88,10 +88,6 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('auth_mumie/userdata_mail',
         get_string('mumie_mail', 'auth_mumie'), '', 0));
 
-    $settings->add(new admin_setting_heading('id_hashing',
-        get_string('mumie_id_hashing_heading', 'auth_mumie'),
-        get_string('mumie_id_hashing_heading_desc', 'auth_mumie')));
-
     $settings->add(
         new admin_setting_heading(
             'mumie_servers',
