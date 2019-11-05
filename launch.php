@@ -35,7 +35,7 @@ $mumietask = $DB->get_record("mumie", array('id' => $id));
 $ssotoken = new \stdClass();
 $ssotoken->token = auth_mumie_get_token(20);
 
-if ($mumietask->use_hashed_id == 1) {
+if (isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1) {
     $hashidtable = "auth_mumie_id_hashes";
     $hash = auth_mumie_get_hashed_id($USER->id);
     $ssotoken->the_user = $hash;
