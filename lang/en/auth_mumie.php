@@ -47,14 +47,6 @@ $string['mumie_server_list_heading'] = 'Configured MUMIE servers';
 $string['mumie_edit_button'] = 'Edit';
 $string['mumie_delete_button'] = 'Delete';
 $string['mumie_add_server_button'] = 'Add MUMIE Server';
-// After version 2019061800
-$string['mumie_id_hashing_heading'] = "Moodle ID Hashing";
-$string['mumie_id_hashing_heading_desc'] = "If your MOODLE uses personal data in the user ID (e.g. matriculation number), you might want to enable ID hashing to protect the users' personal data.";
-$string['mumie_id_hashing'] = "Moodle ID Hashing";
-$string['mumie_id_hashing_desc'] = "<h3 style='color:red'>Be very careful</h3>
-Any changes made to this option are <b>final</b>! If ID hashing is enabled, new MUMIE accounts will be created for all users and all grades attained before this change will be lost!
-<br>Only activate this feature, if you are absolutely sure about it!
-";
 
 // Used in mumieserver form.
 $string['mumie_form_required'] = 'required';
