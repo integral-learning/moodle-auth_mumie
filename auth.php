@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG;
 require_once ($CFG->libdir . '/authlib.php');
 require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
+require_once ($CFG->dirroot . '/auth/mumie/lib.php');
 
 /**
  * Enables single sign on and single sign out with MUMIE servers
@@ -68,11 +69,13 @@ class auth_plugin_mumie extends auth_plugin_base {
         global $CFG;
         $tokentable = "auth_mumie_sso_tokens";
 
-        if ($DB->get_record($tokentable, array('the_user' => $USER->id))) {
+        if ($DB->get_record($tokentable, array('the_user' => $USER->id))
+            || $DB->get_record($tokentable, array('the_user' => auth_mumie_get_hashed_id($USER->id)))) {
             $redirecturl = "{$CFG->wwwroot}/auth/mumie/prelogout.php?sesskey={$USER->sesskey}&logoutUrl="
             . json_encode(auth_mumie\locallib::get_all_logout_urls())
             . "&redirect=" . urlencode("{$CFG->wwwroot}/login/logout.php?sesskey={$USER->sesskey}");
             $DB->delete_records($tokentable, array('the_user' => $USER->id));
+            $DB->delete_records($tokentable, array('the_user' => auth_mumie_get_hashed_id($USER->id)));
             redirect($redirecturl);
         }
     }

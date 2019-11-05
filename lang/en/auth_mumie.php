@@ -55,10 +55,6 @@ $string['mumie_id_hashing_desc'] = "<h3 style='color:red'>Be very careful</h3>
 Any changes made to this option are <b>final</b>! If ID hashing is enabled, new MUMIE accounts will be created for all users and all grades attained before this change will be lost!
 <br>Only activate this feature, if you are absolutely sure about it!
 ";
-$string['mumie_id_hashing_setting_locked'] = "This option cannot be changed!";
-$string['mumie_enabled'] = 'Enabled';
-$string['mumie_disabled'] = 'Disabled';
-$string['mumie_choose_later'] = 'Choose later';
 
 // Used in mumieserver form.
 $string['mumie_form_required'] = 'required';

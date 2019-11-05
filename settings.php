@@ -25,7 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die;
 require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
-require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_admin_settings.php');
 
 global $DB, $PAGE;
 
@@ -92,8 +91,6 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading('id_hashing',
         get_string('mumie_id_hashing_heading', 'auth_mumie'),
         get_string('mumie_id_hashing_heading_desc', 'auth_mumie')));
-
-    $settings->add(new mumie_admin_setting_configselect_id_hashing(get_string('mumie_id_hashing', 'auth_mumie'), get_string('mumie_id_hashing_desc', 'auth_mumie')));
 
     $settings->add(
         new admin_setting_heading(
