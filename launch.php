@@ -42,8 +42,8 @@ if ($mumietask->use_hashed_id == 1) {
     $row = new \stdClass();
     $row->hash = $hash;
     $row->the_user = $USER->id;
-    if ($oldRecord = $DB->get_record($hashidtable, array("the_user" => $USER->id))) {
-        $row->id = $oldRecord->id;
+    if ($oldrecord = $DB->get_record($hashidtable, array("the_user" => $USER->id))) {
+        $row->id = $oldrecord->id;
         $DB->update_record($hashidtable, $row);
     } else {
         $DB->insert_record($hashidtable, (array) $row);

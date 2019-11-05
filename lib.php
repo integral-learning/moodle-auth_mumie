@@ -135,6 +135,16 @@ function auth_mumie_output_fragment_new_mumieserver_form($args) {
     return $o;
 }
 
+/**
+ * Get a hashed string from the moodle user id.
+ *
+ * Some institutions use personal data (like matriculation numbers) as user id in moodle.
+ * We need to pseudonymize the id to improve data protection.
+ * We use the first 10 characters of the xapi-key as salt to further increase security.
+ *
+ * @param string $id userId that should be hashed
+ * @return string Hashed string with 128 characters
+ */
 function auth_mumie_get_hashed_id($id) {
     return hash("sha512", $id . substr(get_config('auth_mumie', 'mumie_api_key'), 0, 10));
 }
