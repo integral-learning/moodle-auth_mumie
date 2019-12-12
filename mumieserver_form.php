@@ -27,6 +27,8 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once ($CFG->libdir . '/formslib.php');
 require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
+require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+
 
 /**
  * This moodle form is used to insert or update MumieServer in the database
@@ -70,25 +72,33 @@ class mumieserver_form extends moodleform {
     public function validation($data, $files) {
         global $DB;
         $errors = array();
-        if (auth_mumie\locallib::get_available_courses($data["url_prefix"])["courses"] == null) {
+        $server = auth_mumie\mumie_server::from_object((object) $data);
+        if (!$server->is_valid_mumie_server()) {
             $errors["url_prefix"] = get_string('mumie_form_server_not_existing', 'auth_mumie');
         }
 
         // Array containing all servers with the given url_prefix.
+        $serverbyprefix = auth_mumie\mumie_server::get_by_url_prefix($data["url_prefix"]);
+        /*
         $serverbyprefix = $DB->get_records(
             MUMIE_SERVER_TABLE_NAME,
             array("url_prefix" => auth_mumie\locallib::get_processed_server_url($data["url_prefix"]))
         );
+        */
+        /*
         $serverbyname = $DB->get_records(MUMIE_SERVER_TABLE_NAME, array("name" => $data["name"]));
+        */
+
+        $serverbyname = auth_mumie\mumie_server::get_by_name($data["name"]);
 
         if (strlen($data["name"]) == 0) {
             $errors["name"] = get_string('mumie_form_required', 'auth_mumie');
         }
 
-        if (count($serverbyname) > 0 && !$data["id"] > 0) {
+        if ($serverbyname->get_id() != null && !$data["id"] > 0) {
             $errors["name"] = get_string('mumie_form_already_existing_name', "auth_mumie");
         }
-        if (count($serverbyname) > 0 && $data["id"] > 0 && array_values($serverbyname)[0]->id != $data["id"]) {
+        if ($serverbyname->get_id() != null && $data["id"] > 0 && $serverbyname->get_id() != $data["id"]) {
             $errors["name"] = get_string('mumie_form_already_existing_name', "auth_mumie");
         }
 
@@ -96,17 +106,19 @@ class mumieserver_form extends moodleform {
             $errors["url_prefix"] = get_string('mumie_form_required', 'auth_mumie');
         }
 
+
+        debugging("serverprefix id is: " . $serverbyprefix->get_id() . " and data->id is: " . $data["id"]);
         /* url_prefix is a unique attribute. If a new server is added (id = default value),
         there mustn't be a server with this property in the database
          */
-        if (count($serverbyprefix) > 0 && !$data["id"] > 0) {
+        if ($serverbyprefix->get_id() != null && !$data["id"] > 0) {
             $errors["url_prefix"] = get_string('mumie_form_already_existing_config', "auth_mumie");
         }
 
         /* url_prefix is a unique attribute. If an existing server is edited (id>0), make sure,
         that there is no other server(a server with a different id) with the same property in the database
          */
-        if (count($serverbyprefix) > 0 && $data["id"] > 0 && array_values($serverbyprefix)[0]->id != $data["id"]) {
+        if ($serverbyprefix->get_id() != null && $data["id"] > 0 && $serverbyprefix->get_id() != $data["id"]) {
             $errors["url_prefix"] = get_string('mumie_form_already_existing_config', "auth_mumie");
         }
 

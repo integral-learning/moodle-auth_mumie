@@ -26,6 +26,8 @@
 defined('MOODLE_INTERNAL') || die;
 
 require_once ($CFG->libdir . "/externallib.php");
+require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+
 
 /**
  * External auth_mumie API
@@ -103,12 +105,8 @@ class auth_mumie_external extends external_api {
 
         $validateddata = $mform->get_data();
         if ($validateddata) {
-            // Do the action.
-            if (isset($validateddata->id) && $validateddata->id > 0) {
-                $mumieserverid = auth_mumie\locallib::update_mumie_server($validateddata);
-            } else {
-                $mumieserverid = auth_mumie\locallib::insert_mumie_server($validateddata);
-            }
+            $server = auth_mumie\mumie_server::from_object((object) $validateddata);
+            $server->upsert();
         } else {
             // Generate a warning.
             throw new moodle_exception('erroreditgroup', 'mumieserver');
@@ -126,10 +124,10 @@ class auth_mumie_external extends external_api {
     }
 
     /**
-     * Describes the parameters for get_available_courses webservice.
+     * Describes the parameters for get_server_structure webservice.
      * @return external_function_parameters
      */
-    public static function get_available_courses_parameters() {
+    public static function get_server_structure_parameters() {
         return new external_function_parameters(
             array(
                 "contextid" => new external_value(PARAM_INT, 'The context id for the requesting course'),
@@ -141,12 +139,12 @@ class auth_mumie_external extends external_api {
      * Webservice to get a list of all available MUMIE courses, servers and tasks
      * @param int $contextid The context id for the course.
      */
-    public static function get_available_courses($contextid) {
+    public static function get_server_structure($contextid) {
         global $CFG;
         require_once $CFG->dirroot . '/auth/mumie/locallib.php';
 
         $params = self::validate_parameters(
-            self::get_available_courses_parameters(),
+            self::get_server_structure_parameters(),
             ['contextid' => $contextid]
         );
 
@@ -154,14 +152,14 @@ class auth_mumie_external extends external_api {
         self::validate_context($context);
         require_capability('auth/mumie:viewavailablecourses', $context);
 
-        return json_encode(auth_mumie\locallib::get_available_courses_for_all_servers());
+        return json_encode(auth_mumie\mumie_server::get_all_servers_with_structure());
     }
 
     /**
-     * Describes the parameters for get_available_courses webservice.
+     * Describes the parameters for get_server_structure webservice.
      * @return external_function_parameters
      */
-    public static function get_available_courses_returns() {
-        return new external_value(PARAM_RAW, "courses");
+    public static function get_server_structure_returns() {
+        return new external_value(PARAM_RAW, "servers");
     }
 }

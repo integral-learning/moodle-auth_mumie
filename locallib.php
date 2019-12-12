@@ -30,6 +30,8 @@ global $CFG;
 global $DB;
 
 define("MUMIE_SERVER_TABLE_NAME", "auth_mumie_servers");
+require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+
 
 /**
  * Libary of internal functions used in mod_mumie
@@ -47,10 +49,14 @@ class locallib {
      * @return array Logout urls for all MUMIE servers
      */
     public static function get_all_logout_urls() {
+        /*
         global $DB;
         return array_map(function ($server) {
             return $server->url_prefix . "public/xapi/auth/sso/logout/" . get_config('auth_mumie', 'mumie_org');;
-        }, $DB->get_records("auth_mumie_servers"));
+        }, $DB->get_records("auth_mumie_servers"));*/
+        return array_map(function($server) {
+            $server->get_logout_url();
+        },auth_mumie\mumie_server::get_all_servers());
     }
 
     /**
@@ -142,7 +148,7 @@ class locallib {
      */
     public static function get_available_courses_for_all_servers() {
         $coursesforserver = array();
-        foreach (self::get_all_mumie_servers() as $server) {
+        foreach (auth_mumie\mumie_server::get_all_servers() as $server) {
             $coursesforserver[$server->name] = self::get_available_courses($server->url_prefix);
         }
 

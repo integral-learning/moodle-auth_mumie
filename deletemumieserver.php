@@ -25,11 +25,13 @@
 
 require_once ('../../config.php');
 require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
+require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+
 
 require_login(0, false);
 
 $id = optional_param('id', '', PARAM_INT);
 $returnurl = "{$CFG->wwwroot}/admin/settings.php?section=authsettingmumie";
 require_capability('auth/mumie:deleteserver', context_system::instance());
-auth_mumie\locallib::delete_mumie_server($id);
+auth_mumie\mumie_server::delete_by_id($id);
 redirect($returnurl);
