@@ -10,14 +10,15 @@ namespace auth_mumie;
 
 defined('MOODLE_INTERNAL') || die;
 require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_problem.php');
+require_once ($CFG->dirroot .'/auth/mumie/classes/mumie_tag.php');
+
 class mumie_course implements \JsonSerializable
 {
     private $name;
     private $tasks;
     private $coursefile;
     private $languages = array();
-    private $tagnames = array();
-    private $tagvalues = array();
+    private $tags = array();
 
     /**
      * Get the value of coursefile
@@ -105,16 +106,17 @@ class mumie_course implements \JsonSerializable
 
     public function collect_tags()
     {
-        $tagnames = array();
-        $tagvalues = array();
+        $tags = array();
         foreach ($this->tasks as $task) {
             foreach ($task->get_tags() as $tag) {
-                array_push($tagnames, $tag->name);
-                array_push($tagvalues, ...$tag->values);
+                if(!isset($tags[$tag->get_name()])) {
+                    $tags[$tag->get_name()] = array();
+                }
+                $tags[$tag->get_name()] = $tag->merge($tags[$tag->get_name()]);
             }
         }
-        $this->tagnames = array_values(array_unique($tagnames));
-        $this->values = array_values(array_unique($tagvalues));
+
+        $this->tags = array_values($tags);
     }
 
     public function jsonSerialize()
@@ -142,22 +144,6 @@ class mumie_course implements \JsonSerializable
         $this->languages = $languages;
 
         return $this;
-    }
-
-    /**
-     * Get the values of the tags
-     */
-    public function get_values()
-    {
-        return $this->values;
-    }
-
-    /**
-    * Get the tagnames of the tags
-    */
-    public function getTagNames()
-    {
-        return $this->tagnames;
     }
 
     public function get_task_by_link($link)

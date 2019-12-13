@@ -9,6 +9,8 @@
 namespace auth_mumie;
 
 defined('MOODLE_INTERNAL') || die;
+
+require_once($CFG->dirroot .'/auth/mumie/classes/mumie_tag.php');
 class mumie_problem implements \JsonSerializable
 {
     private $link;
@@ -41,7 +43,9 @@ class mumie_problem implements \JsonSerializable
         $this->link = $task->link;
         $this->headline = $task->headline;
         if (isset($task->tags)) {
-            $this->tags = $task->tags;
+            foreach($task->tags as $tag) {
+                array_push($this->tags, new mumie_tag($tag->name, $tag->values));
+            }
         }
         $this->collect_languages();
     }
@@ -77,7 +81,6 @@ class mumie_problem implements \JsonSerializable
     public function jsonSerialize()
     {
         $vars = get_object_vars($this);
-
         return $vars;
     }
 
