@@ -55,8 +55,8 @@ class locallib {
             return $server->url_prefix . "public/xapi/auth/sso/logout/" . get_config('auth_mumie', 'mumie_org');;
         }, $DB->get_records("auth_mumie_servers"));*/
         return array_map(function($server) {
-            $server->get_logout_url();
-        },auth_mumie\mumie_server::get_all_servers());
+            return $server->get_logout_url();
+        },mumie_server::get_all_servers());
     }
 
     /**

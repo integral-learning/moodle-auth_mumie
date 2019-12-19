@@ -98,7 +98,7 @@ class mumie_server implements \JsonSerializable {
     }
    
     public function get_logout_url() {
-        $this->url_prefix . "public/xapi/auth/sso/logout/" . get_config('auth_mumie', 'mumie_org');
+        return $this->url_prefix . "public/xapi/auth/sso/logout/" . get_config('auth_mumie', 'mumie_org');
     }
 
     public function get_courses_and_tasks(){
