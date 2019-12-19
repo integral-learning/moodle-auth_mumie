@@ -107,7 +107,6 @@ class mumieserver_form extends moodleform {
         }
 
 
-        debugging("serverprefix id is: " . $serverbyprefix->get_id() . " and data->id is: " . $data["id"]);
         /* url_prefix is a unique attribute. If a new server is added (id = default value),
         there mustn't be a server with this property in the database
          */

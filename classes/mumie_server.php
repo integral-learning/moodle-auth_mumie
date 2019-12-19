@@ -17,7 +17,6 @@ class mumie_server implements \JsonSerializable {
     private $languages = array();
 
     public static function from_object($record) {
-        //debugging("from record is called with: " .json_encode(array($record)));
         $server = new mumie_server();
         $server->set_url_prefix($record->url_prefix);
         $server->set_name($record->name);
@@ -57,11 +56,9 @@ class mumie_server implements \JsonSerializable {
     public function load() {
         global $DB;
         $record = (object) $DB->get_record(MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $this->url_prefix, "name" => $this->name, "id"=>$this->id]);
-        debugging("load record is : " . json_encode($record));
         if(!isset($record->id)) {
             return;
         }
-        debugging("record loaded is: " . json_encode((array) $record));
         $this->set_id($record->id);
         $this->set_url_prefix($record->url_prefix);
         $this->set_name($record->name);
