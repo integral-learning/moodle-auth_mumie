@@ -97,8 +97,6 @@ function auth_mumie_output_fragment_new_mumieserver_form($args) {
     }
     $mumieserver = new stdClass();
 
-    require_capability('auth/mumie:addserver', $context);
-
     $editoroptions = [
         'maxfiles' => EDITOR_UNLIMITED_FILES,
         'maxbytes' => $course->maxbytes,
