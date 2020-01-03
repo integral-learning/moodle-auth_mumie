@@ -2,6 +2,10 @@
 
 All important changes to this plugin will be documented in this file
 
+## [v1.3] TODO: DATE
+### Fixed
+- Capabilities are now given a proper name
+
 ## [v1.2] - 2019-11-05
 ### Added
 - Single Sign On and Single Sign Out now also work with hashed MOODLE user ids
