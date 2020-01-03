@@ -101,7 +101,7 @@ function auth_mumie_output_fragment_new_mumieserver_form($args) {
 
     $editoroptions = [
         'maxfiles' => EDITOR_UNLIMITED_FILES,
-        'maxbytes' => $course->maxbytes,
+        'maxbytes' => $CFG->maxbytes,
         'trust' => false,
         'context' => $context,
         'noclean' => true,
