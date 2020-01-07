@@ -61,3 +61,8 @@ $string['mumie_form_server_btn_submit'] = 'Submit';
 $string['mumie_form_server_btn_cancel'] = 'Cancel';
 $string['mumie_url_prefix'] = 'MUMIE URL Prefix';
 $string['mumie_url_prefix_help'] = 'Specify the MUMIE URL prefix  <br><br> e.g. <b>https://www.ombplus.de/ombplus</b> <br><br> There can only be a single configuration for any URL prefix.';
+
+// Capabilities
+$string['mumie:addserver'] = 'Add a new MUMIE server to MOODLE';
+$string['mumie:deleteserver'] = 'Remove a MUMIE server from MOODLE';
+$string['mumie:viewavailablecourses'] = 'View all MUMIE servers, courses and tasks that are available on this MOODLE platform';

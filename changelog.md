@@ -2,6 +2,14 @@
 
 All important changes to this plugin will be documented in this file
 
+## [v1.3] TODO: DATE
+### Fixed
+- Capabilities are now given a proper name
+
+### Changed
+- Added object structure for MUMIE Servers, Courses, Tasks and tags to 
+improve code quality and maintain consistency between MUMIE plugins for different LMS.
+
 ## [v1.2] - 2019-11-05
 ### Added
 - Single Sign On and Single Sign Out now also work with hashed MOODLE user ids
