@@ -60,5 +60,11 @@ function xmldb_auth_mumie_upgrade($oldversion) {
         $dbman->change_field_precision($table, $field);
     }
 
+    if($oldversion < 2020010701) {
+        $table = new xmldb_table("auth_mumie_servers");
+        $field = new xmldb_field('name', XMLDB_TYPE_CHAR, '200');
+        $dbman->change_field_precision($table, $field);
+    }
+
     return true;
 }

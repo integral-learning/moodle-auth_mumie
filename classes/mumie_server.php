@@ -8,7 +8,7 @@ global $CFG;
 require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_course.php');
 class mumie_server implements \JsonSerializable {
 
-    const MUMIE_SERVER_TABLE_NAME = "auth_mumie_servers";
+    static  $MUMIE_SERVER_TABLE_NAME = "auth_mumie_servers";
     private $id;
     private $url_prefix;
     private $name;
@@ -29,19 +29,19 @@ class mumie_server implements \JsonSerializable {
     public function create() {
         global $DB;
 
-        $DB->insert_record(MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $this->url_prefix, "name" => $this->name]);
+        $DB->insert_record(self::$MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $this->url_prefix, "name" => $this->name]);
     }
 
     public function update() {
         global $DB;
 
-        $DB->update_record(MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $this->url_prefix, "name" => $this->name, "id"=>$this->id]);
+        $DB->update_record(self::$MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $this->url_prefix, "name" => $this->name, "id"=>$this->id]);
     }
 
     public function delete() {
         global $DB;
 
-        $DB->delete_records(MUMIE_SERVER_TABLE_NAME, array("id" => $this->id));
+        $DB->delete_records(self::$MUMIE_SERVER_TABLE_NAME, array("id" => $this->id));
     }
     
     public function upsert() {
@@ -55,7 +55,7 @@ class mumie_server implements \JsonSerializable {
 
     public function load() {
         global $DB;
-        $record = (object) $DB->get_record(MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $this->url_prefix, "name" => $this->name, "id"=>$this->id]);
+        $record = (object) $DB->get_record(self::$MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $this->url_prefix, "name" => $this->name, "id"=>$this->id]);
         if(!isset($record->id)) {
             return;
         }
@@ -66,8 +66,7 @@ class mumie_server implements \JsonSerializable {
 
     public static function get_all_servers() {
         global $DB;
-
-        return array_map('self::from_object', $DB->get_records(MUMIE_SERVER_TABLE_NAME));
+        return array_map('self::from_object', $DB->get_records(self::$MUMIE_SERVER_TABLE_NAME));
     }
 
     public static function get_all_servers_with_structure() {
@@ -87,13 +86,13 @@ class mumie_server implements \JsonSerializable {
 
     public static function get_by_url_prefix($url_prefix) {
         global $DB;
-        $record = $DB->get_record(MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $url_prefix]);
+        $record = $DB->get_record(self::$MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $url_prefix]);
         return self::from_object($record);
     }
 
     public static function get_by_name($name) {
         global $DB;
-        $record = $DB->get_record(MUMIE_SERVER_TABLE_NAME, ["name" => $name]);
+        $record = $DB->get_record(self::$MUMIE_SERVER_TABLE_NAME, ["name" => $name]);
         return self::from_object($record);
     }
    
@@ -115,6 +114,11 @@ class mumie_server implements \JsonSerializable {
 
     public function is_valid_mumie_server() {
         return $this->get_courses_and_tasks()->courses != null;
+    }
+
+    public function config_exists_for_url() {
+        $config = self::get_by_url_prefix($this->url_prefix);
+        return $config->get_id() != null;
     }
 
     /**
