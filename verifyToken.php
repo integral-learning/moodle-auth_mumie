@@ -41,7 +41,7 @@ $table = "auth_mumie_sso_tokens";
 
 $mumietoken = $DB->get_record($table, array('the_user' => $userid, 'token' => $token));
 
-if (strlen($userid) == 128) {
+if (strlen($userid) >= 128) {
     $moodleuserid = $DB->get_record("auth_mumie_id_hashes", array('hash' => $userid))->the_user;
 } else {
     $moodleuserid = $userid;

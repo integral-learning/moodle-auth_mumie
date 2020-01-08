@@ -60,10 +60,19 @@ function xmldb_auth_mumie_upgrade($oldversion) {
         $dbman->change_field_precision($table, $field);
     }
 
-    if($oldversion < 2020010701) {
+    if ($oldversion < 2020010705) {
         $table = new xmldb_table("auth_mumie_servers");
         $field = new xmldb_field('name', XMLDB_TYPE_CHAR, '200');
         $dbman->change_field_precision($table, $field);
+
+        $table = new xmldb_table("auth_mumie_id_hashes");
+        $field = new xmldb_field('hash', XMLDB_TYPE_CHAR, '160');
+        $dbman->change_field_precision($table, $field);
+
+        $table = new xmldb_table("auth_mumie_sso_tokens");
+        $field = new xmldb_field('the_user', XMLDB_TYPE_CHAR, '160');
+        $dbman->change_field_precision($table, $field);
+
     }
 
     return true;

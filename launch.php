@@ -38,11 +38,14 @@ $ssotoken->token = auth_mumie_get_token(20);
 if (isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1) {
     $hashidtable = "auth_mumie_id_hashes";
     $hash = auth_mumie_get_hashed_id($USER->id);
+    if ($mumietask->privategradepool) {
+        $hash .= '@gradepool' . $mumietask->course . '@';
+    }
     $ssotoken->the_user = $hash;
     $row = new \stdClass();
     $row->hash = $hash;
     $row->the_user = $USER->id;
-    if ($oldrecord = $DB->get_record($hashidtable, array("the_user" => $USER->id))) {
+    if ($oldrecord = $DB->get_record($hashidtable, array("the_user" => $USER->id, "hash" => $row->hash))) {
         $row->id = $oldrecord->id;
         $DB->update_record($hashidtable, $row);
     } else {
