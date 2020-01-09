@@ -75,7 +75,7 @@ class auth_plugin_mumie extends auth_plugin_base {
             . json_encode(auth_mumie\mumie_server::get_all_logout_urls())
             . "&redirect=" . urlencode("{$CFG->wwwroot}/login/logout.php?sesskey={$USER->sesskey}");
             $DB->delete_records($tokentable, array('the_user' => $USER->id));
-            $DB->delete_records($tokentable, array('the_user' => auth_mumie_get_hashed_id($USER->id)));
+            $DB->delete_records_select($tokentable, ' the_user LIKE :the_user', array('the_user' => auth_mumie_get_hashed_id($USER->id) . '%'));
             redirect($redirecturl);
         }
     }
