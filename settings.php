@@ -24,9 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
 require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
-
 
 global $DB, $PAGE;
 
@@ -41,7 +39,7 @@ $table->head = array(get_string("mumie_table_header_name", "auth_mumie"), get_st
 foreach ($mumieservers as $server) {
     $id = "<span class='mumie_list_entry_id' hidden>" . $server->get_id() . "</span>";
     $name = "<span class='mumie_list_entry_name'>" . $server->get_name() . "</span>" . $id;
-    $url = "<span class='mumie_list_entry_url'>" . $server->get_url_prefix() . "</span>";
+    $url = "<span class='mumie_list_entry_url'>" . $server->get_urlprefix() . "</span>";
     $edit = "<a class = 'mumie_list_edit_button' title='" . get_string("mumie_edit_button", "auth_mumie") . "'>"
         . '<span class="icon fa fa-cog fa-fw " titel ="delete" aria-hidden="true" aria-label=""></span>'
         . "</a>";

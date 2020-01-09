@@ -24,9 +24,7 @@
  */
 
 require_once ('../../config.php');
-require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
 require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
-
 
 require_login(0, false);
 

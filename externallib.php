@@ -28,7 +28,6 @@ defined('MOODLE_INTERNAL') || die;
 require_once ($CFG->libdir . "/externallib.php");
 require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
 
-
 /**
  * External auth_mumie API
  *
@@ -63,7 +62,7 @@ class auth_mumie_external extends external_api {
         global $CFG, $USER, $DB;
 
         require_once ($CFG->dirroot . '/auth/mumie/lib.php');
-        require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
+        require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
         require_once ($CFG->dirroot . '/auth/mumie/mumieserver_form.php');
 
         // We always must pass webservice params through validate_parameters.
@@ -141,7 +140,6 @@ class auth_mumie_external extends external_api {
      */
     public static function get_server_structure($contextid) {
         global $CFG;
-        require_once $CFG->dirroot . '/auth/mumie/locallib.php';
 
         $params = self::validate_parameters(
             self::get_server_structure_parameters(),

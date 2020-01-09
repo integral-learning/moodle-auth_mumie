@@ -26,9 +26,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 require_once ($CFG->libdir . '/formslib.php');
-require_once ($CFG->dirroot . '/auth/mumie/locallib.php');
 require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
-
 
 /**
  * This moodle form is used to insert or update MumieServer in the database
@@ -39,6 +37,7 @@ require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mumieserver_form extends moodleform {
+
     /**
      * Define fields and default values for the mumie server form
      * @return void
@@ -78,17 +77,7 @@ class mumieserver_form extends moodleform {
         }
 
         // Array containing all servers with the given url_prefix.
-        $serverbyprefix = auth_mumie\mumie_server::get_by_url_prefix($data["url_prefix"]);
-        /*
-        $serverbyprefix = $DB->get_records(
-            MUMIE_SERVER_TABLE_NAME,
-            array("url_prefix" => auth_mumie\locallib::get_processed_server_url($data["url_prefix"]))
-        );
-        */
-        /*
-        $serverbyname = $DB->get_records(MUMIE_SERVER_TABLE_NAME, array("name" => $data["name"]));
-        */
-
+        $serverbyprefix = auth_mumie\mumie_server::get_by_urlprefix($data["url_prefix"]);
         $serverbyname = auth_mumie\mumie_server::get_by_name($data["name"]);
 
         if (strlen($data["name"]) == 0) {
@@ -105,7 +94,6 @@ class mumieserver_form extends moodleform {
         if (strlen($data["url_prefix"]) == 0) {
             $errors["url_prefix"] = get_string('mumie_form_required', 'auth_mumie');
         }
-
 
         /* url_prefix is a unique attribute. If a new server is added (id = default value),
         there mustn't be a server with this property in the database
