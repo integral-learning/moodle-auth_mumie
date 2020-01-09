@@ -9,6 +9,7 @@ All important changes to this plugin will be documented in this file
 ### Changed
 - Added object structure for MUMIE Servers, Courses, Tasks and tags to 
 improve code quality and maintain consistency between MUMIE plugins for different LMS.
+- A user can now have multiple MUMIE accounts. This is especially useful for grade pools
 
 ## [v1.2] - 2019-11-05
 ### Added
