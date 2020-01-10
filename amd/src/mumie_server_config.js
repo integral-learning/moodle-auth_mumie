@@ -1,7 +1,7 @@
 define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/fragment', 'core/ajax', 'core/yui'],
-    function ($, Str, ModalFactory, ModalEvents, Fragment, Ajax, Y) {
+    function($, Str, ModalFactory, ModalEvents, Fragment, Ajax, Y) {
 
-        var MumieServer = function (selector, contextid, formdata) {
+        var MumieServer = function(selector, contextid, formdata) {
             this.contextid = contextid;
             this.init(selector, formdata);
         };
@@ -10,16 +10,16 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
 
         MumieServer.prototype.contextid = -1;
 
-        MumieServer.prototype.init = function (selector, formdata) {
+        MumieServer.prototype.init = function(selector, formdata) {
             var triggers = $(selector);
-            return Str.get_string('mumie_form_server_config', 'auth_mumie').then(function (title) {
+            return Str.get_string('mumie_form_server_config', 'auth_mumie').then(function(title) {
                 // Create the modal.
                 return ModalFactory.create({
                     type: ModalFactory.types.SAVE_CANCEL,
                     title: title,
                     body: this.getBody(formdata)
                 }, triggers);
-            }.bind(this)).then(function (modal) {
+            }.bind(this)).then(function(modal) {
                 // Keep a reference to the modal.
                 this.modal = modal;
 
@@ -27,7 +27,7 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
                 this.modal.setLarge();
 
                 // We want to reset the form every time it is opened.
-                this.modal.getRoot().on(ModalEvents.hidden, function () {
+                this.modal.getRoot().on(ModalEvents.hidden, function() {
                     this.modal.setBody(this.getBody(formdata));
                 }.bind(this));
 
@@ -45,9 +45,10 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
         /**
          * @method getBody
          * @private
+         * @param {Object} formdata
          * @return {Promise}
          */
-        MumieServer.prototype.getBody = function (formdata) {
+        MumieServer.prototype.getBody = function(formdata) {
             if (typeof formdata === "undefined") {
                 formdata = {};
             }
@@ -61,13 +62,12 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
         /**
          * @method handleFormSubmissionResponse
          * @private
-         * @return {Promise}
          */
-        MumieServer.prototype.handleFormSubmissionResponse = function () {
+        MumieServer.prototype.handleFormSubmissionResponse = function() {
             this.modal.hide();
             // We could trigger an event instead.
             // Yuk.
-            Y.use('moodle-core-formchangechecker', function () {
+            Y.use('moodle-core-formchangechecker', function() {
                 M.core_formchangechecker.reset_form_dirty_state();
             });
 
@@ -77,9 +77,9 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
         /**
          * @method handleFormSubmissionFailure
          * @private
-         * @return {Promise}
+         * @param {Object} data
          */
-        MumieServer.prototype.handleFormSubmissionFailure = function (data) {
+        MumieServer.prototype.handleFormSubmissionFailure = function(data) {
             // Oh noes! Epic fail :(
             // Ah wait - this is normal. We need to re-display the form with errors!
             this.modal.setBody(this.getBody(data));
@@ -92,7 +92,7 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
          * @private
          * @param {Event} e Form submission event.
          */
-        MumieServer.prototype.submitFormAjax = function (e) {
+        MumieServer.prototype.submitFormAjax = function(e) {
             // We don't want to do a real form submission.
             e.preventDefault();
 
@@ -117,7 +117,7 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
          * @param {Event} e Form submission event.
          * @private
          */
-        MumieServer.prototype.submitForm = function (e) {
+        MumieServer.prototype.submitForm = function(e) {
             e.preventDefault();
             this.modal.getRoot().find('form').submit();
         };
@@ -130,9 +130,10 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
              * @method init
              * @param {string} selector The CSS selector used to find nodes that will trigger this module.
              * @param {int} contextid The contextid for the course.
+             * @param {Object} formdata
              * @return {Promise}
              */
-            init: function (selector, contextid, formdata) {
+            init: function(selector, contextid, formdata) {
                 return new MumieServer(selector, contextid, formdata);
             }
         };
