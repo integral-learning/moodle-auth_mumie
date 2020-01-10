@@ -9,7 +9,7 @@ define(['jquery', 'core/templates', 'core/modal_factory', 'auth_mumie/mumie_serv
 
         /**
          * Set click listener to add server button
-         * @param {number} contextid 
+         * @param {number} contextid
          */
         function setAddServerListeners(contextid) {
             require(['auth_mumie/mumie_server_config'], function(MumieServer) {
@@ -19,7 +19,7 @@ define(['jquery', 'core/templates', 'core/modal_factory', 'auth_mumie/mumie_serv
 
         /**
          * Set click listeners for the edit buttons
-         * @param {number} contextid 
+         * @param {number} contextid
          */
         function setEditButtonListeners(contextid) {
             var names = $(".mumie_list_entry_name");

@@ -25,8 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once ($CFG->libdir . "/externallib.php");
-require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+require_once($CFG->libdir . "/externallib.php");
+require_once($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
 
 /**
  * External auth_mumie API
@@ -61,13 +61,15 @@ class auth_mumie_external extends external_api {
     public static function submit_mumieserver_form($contextid, $jsonformdata) {
         global $CFG, $USER, $DB;
 
-        require_once ($CFG->dirroot . '/auth/mumie/lib.php');
-        require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
-        require_once ($CFG->dirroot . '/auth/mumie/mumieserver_form.php');
+        require_once($CFG->dirroot . '/auth/mumie/lib.php');
+        require_once($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+        require_once($CFG->dirroot . '/auth/mumie/mumieserver_form.php');
 
         // We always must pass webservice params through validate_parameters.
-        $params = self::validate_parameters(self::submit_mumieserver_form_parameters(),
-            ['contextid' => $contextid, 'jsonformdata' => $jsonformdata]);
+        $params = self::validate_parameters(
+            self::submit_mumieserver_form_parameters(),
+            ['contextid' => $contextid, 'jsonformdata' => $jsonformdata]
+        );
 
         $context = context::instance_by_id($params['contextid'], MUST_EXIST);
 
@@ -97,7 +99,8 @@ class auth_mumie_external extends external_api {
             $context,
             'mumie',
             'description',
-            null);
+            null
+        );
 
         // The last param is the ajax submitted data.
         $mform = new mumieserver_form(null, array('editoroptions' => $editoroptions), 'post', '', null, true, $data);

@@ -72,7 +72,6 @@ function xmldb_auth_mumie_upgrade($oldversion) {
         $table = new xmldb_table("auth_mumie_sso_tokens");
         $field = new xmldb_field('the_user', XMLDB_TYPE_CHAR, '160');
         $dbman->change_field_precision($table, $field);
-
     }
 
     return true;

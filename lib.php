@@ -83,7 +83,7 @@ function auth_mumie_get_token($length) {
  */
 function auth_mumie_output_fragment_new_mumieserver_form($args) {
     global $CFG;
-    require_once ($CFG->dirroot . '/auth/mumie/mumieserver_form.php');
+    require_once($CFG->dirroot . '/auth/mumie/mumieserver_form.php');
 
     $args = (object) $args;
 

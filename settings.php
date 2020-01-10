@@ -24,7 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
 
 global $DB, $PAGE;
 
@@ -75,24 +75,39 @@ if ($ADMIN->fulltree) {
     ));
 
     // Header for shared user data.
-    $settings->add(new admin_setting_heading('userdata',
+    $settings->add(new admin_setting_heading(
+        'userdata',
         get_string('mumie_shared_user_data', 'auth_mumie'),
-        get_string('mumie_shared_user_data_desc', 'auth_mumie')));
+        get_string('mumie_shared_user_data_desc', 'auth_mumie')
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('auth_mumie/userdata_firstname',
-        get_string('mumie_firstname', 'auth_mumie'), '', 0));
+    $settings->add(new admin_setting_configcheckbox(
+        'auth_mumie/userdata_firstname',
+        get_string('mumie_firstname', 'auth_mumie'),
+        '',
+        0
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('auth_mumie/userdata_lastname',
-        get_string('mumie_lastname', 'auth_mumie'), '', 0));
+    $settings->add(new admin_setting_configcheckbox(
+        'auth_mumie/userdata_lastname',
+        get_string('mumie_lastname', 'auth_mumie'),
+        '',
+        0
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('auth_mumie/userdata_mail',
-        get_string('mumie_mail', 'auth_mumie'), '', 0));
+    $settings->add(new admin_setting_configcheckbox(
+        'auth_mumie/userdata_mail',
+        get_string('mumie_mail', 'auth_mumie'),
+        '',
+        0
+    ));
 
     $settings->add(
         new admin_setting_heading(
             'mumie_servers',
             get_string("mumie_server_list_heading", "auth_mumie"),
-            html_writer::table($table) . $addbutton)
+            html_writer::table($table) . $addbutton
+        )
     );
 
     $context = context_system::instance();

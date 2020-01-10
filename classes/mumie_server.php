@@ -26,7 +26,7 @@ namespace auth_mumie;
 
 defined('MOODLE_INTERNAL') || die;
 global $CFG;
-require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_course.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/mumie_course.php');
 
 /**
  * This class represents a MUMIE Server in moodle
@@ -120,7 +120,6 @@ class mumie_server implements \JsonSerializable {
         } else {
             $this->create();
         }
-
     }
 
     /**

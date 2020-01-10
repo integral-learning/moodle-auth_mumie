@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 global $CFG;
-require_once ($CFG->libdir . '/authlib.php');
-require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
-require_once ($CFG->dirroot . '/auth/mumie/lib.php');
+require_once($CFG->libdir . '/authlib.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+require_once($CFG->dirroot . '/auth/mumie/lib.php');
 
 /**
  * Enables single sign on and single sign out with MUMIE servers

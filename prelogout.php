@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once ("../../config.php");
+require_once("../../config.php");
 $logouturls = required_param("logoutUrl", PARAM_RAW);
 $redirect = required_param("redirect", PARAM_URL);
 ?>

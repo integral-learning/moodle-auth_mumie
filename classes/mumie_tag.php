@@ -26,7 +26,7 @@
 namespace auth_mumie;
 
 defined('MOODLE_INTERNAL') || die;
-require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_problem.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/mumie_problem.php');
 
 /**
  * mumie_tags are used to classify MUMIE Tasks
@@ -90,5 +90,4 @@ class mumie_tag implements \JsonSerializable {
     public function get_name() {
         return $this->name;
     }
-
 }

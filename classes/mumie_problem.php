@@ -27,7 +27,7 @@ namespace auth_mumie;
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_tag.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/mumie_tag.php');
 
 /**
  * This class represents a MUMIE problem in moodle.

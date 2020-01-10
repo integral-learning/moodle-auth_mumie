@@ -25,8 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once ($CFG->libdir . '/formslib.php');
-require_once ($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
+require_once($CFG->libdir . '/formslib.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
 
 /**
  * This moodle form is used to insert or update MumieServer in the database
