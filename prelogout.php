@@ -23,9 +23,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$logouturls = $_GET["logoutUrl"];
-$redirect = json_encode($_GET["redirect"]);
-
+require_once ("../../config.php");
+$logouturls = required_param("logoutUrl", PARAM_RAW);
+$redirect = required_param("redirect", PARAM_URL);
 ?>
 
 <script>
@@ -38,7 +38,7 @@ $redirect = json_encode($_GET["redirect"]);
 
     Promise.all(promises)
     .then(function (values) {
-        window.location.href =<?php echo $redirect ?>;
+        window.location.href = "<?php echo $redirect ?>";
     });
 
     function logoutFromServer(url) {
