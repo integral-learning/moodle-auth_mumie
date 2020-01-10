@@ -34,8 +34,8 @@ if ($method != 'POST') {
     exit(0);
 }
 
-$token = $_POST['token'];
-$userid = $_POST['userId'];
+$token = required_param('token', PARAM_ALPHANUM);
+$userid = required_param('userId', PARAM_RAW);
 
 $table = "auth_mumie_sso_tokens";
 

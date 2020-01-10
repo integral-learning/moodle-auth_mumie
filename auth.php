@@ -48,15 +48,6 @@ class auth_plugin_mumie extends auth_plugin_base {
      * Constructor
      */
     public function __construct() {
-        $this::auth_plugin_mumie();
-    }
-
-    /**
-     * Old syntax of class constructor. Deprecated in PHP7.
-     *
-     * @deprecated since Moodle 3.1
-     */
-    public function auth_plugin_mumie() {
         $this->authtype = 'mumie';
         $this->config = get_config(self::COMPONENT_NAME);
     }
