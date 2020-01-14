@@ -28,9 +28,9 @@ require_once("../../config.php");
 global $DB;
 
 header('Content-Type:application/json');
-$method = $_SERVER['REQUEST_METHOD'];
-if ($method != 'POST') {
-    print_error($method . " is not allowed");
+
+if (!data_submitted()) {
+    print_error("Method Not Allowed or Bad Request");
     exit(0);
 }
 

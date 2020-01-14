@@ -73,6 +73,7 @@ function xmldb_auth_mumie_upgrade($oldversion) {
         $field = new xmldb_field('the_user', XMLDB_TYPE_CHAR, '160');
         $dbman->change_field_precision($table, $field);
     }
+    upgrade_plugin_savepoint(true, 2020010705, 'auth', 'mumie');
 
     return true;
 }
