@@ -2,7 +2,7 @@
 
 All important changes to this plugin will be documented in this file
 
-## [v1.3] TODO: DATE
+## [v1.3.0] TODO: DATE
 ### Fixed
 - Capabilities are now given a proper name
 

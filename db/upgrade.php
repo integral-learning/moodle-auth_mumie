@@ -18,7 +18,7 @@
  * MUMIE Task upgrade function
  *
  * @package auth_mumie
- * @copyright  2019 integral-learning GmbH (https://www.integral-learning.de/)
+ * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -58,9 +58,10 @@ function xmldb_auth_mumie_upgrade($oldversion) {
 
         $dbman->change_field_type($table, $field);
         $dbman->change_field_precision($table, $field);
+        upgrade_plugin_savepoint(true, 2019110104, 'auth', 'mumie');
     }
 
-    if ($oldversion < 2020010705) {
+    if ($oldversion < 2020011400) {
         $table = new xmldb_table("auth_mumie_servers");
         $field = new xmldb_field('name', XMLDB_TYPE_CHAR, '200');
         $dbman->change_field_precision($table, $field);
@@ -72,8 +73,8 @@ function xmldb_auth_mumie_upgrade($oldversion) {
         $table = new xmldb_table("auth_mumie_sso_tokens");
         $field = new xmldb_field('the_user', XMLDB_TYPE_CHAR, '160');
         $dbman->change_field_precision($table, $field);
+        upgrade_plugin_savepoint(true, 2020011400, 'auth', 'mumie');
     }
-    upgrade_plugin_savepoint(true, 2020010705, 'auth', 'mumie');
 
     return true;
 }

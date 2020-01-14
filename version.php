@@ -18,15 +18,15 @@
  * This file defines the version of auth_mumie
  *
  * @package auth_mumie
- * @copyright  2019 integral-learning GmbH (https://www.integral-learning.de/)
+ * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020010705;
+$plugin->version = 2020011400;
 $plugin->component = 'auth_mumie';
 $plugin->requires = 2015041700;
-$plugin->release = "v1.2";
+$plugin->release = "v1.3.0";
 $plugin->maturity = MATURITY_STABLE;
