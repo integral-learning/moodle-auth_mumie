@@ -43,6 +43,11 @@ class mumie_server implements \JsonSerializable {
     const MUMIE_SERVER_TABLE_NAME = "auth_mumie_servers";
 
     /**
+     * This is used as parameter when requesting available courses and tasks.
+     */
+    const MUMIE_JSON_FORMAT_VERSION = 2;
+
+    /**
      * Primary key for db entry
      * @var int
      */
@@ -197,6 +202,13 @@ class mumie_server implements \JsonSerializable {
     }
 
     /**
+     * Get URL for XAPI grades
+     */
+    public function get_grade_sync_url() {
+        return $this->urlprefix. '/public/xapi?v=' . self::MUMIE_JSON_FORMAT_VERSION;
+    }
+
+    /**
      * Get the latest course structure form the MUMIE server
      * @return stdClass server response
      */
@@ -204,7 +216,7 @@ class mumie_server implements \JsonSerializable {
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $this->urlprefix . "public/courses-and-tasks",
+            CURLOPT_URL => $this->urlprefix . "public/courses-and-tasks?v=" . self::MUMIE_JSON_FORMAT_VERSION,
             CURLOPT_USERAGENT => 'Codular Sample cURL Request',
         ]);
         $response = curl_exec($curl);

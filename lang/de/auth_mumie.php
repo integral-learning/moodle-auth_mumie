@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die;
 $string['pluginname'] = 'MUMIE Single-Sign-On';
 
 $string['mumie_shared_user_data'] = 'Nutzerdaten';
-$string['mumie_shared_user_data_desc'] = 'Bestimmen Sie, welche Nutzerdaten neben der ID MUMIE-Servern zur Verfügung gestellt werden sollen';
+$string['mumie_shared_user_data_desc'] = 'Bestimmen Sie, welche Nutzerdaten zur Verfügung gestellt werden sollen';
 
 $string['mumie_firstname'] = 'Vorname';
 $string['mumie_lastname'] = 'Nachname';
