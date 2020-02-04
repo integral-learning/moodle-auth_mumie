@@ -114,7 +114,7 @@ class auth_mumie_external extends external_api {
             throw new moodle_exception('erroreditgroup', 'mumieserver');
         }
 
-        return $mumieserverid;
+        return $server->get_id();
     }
 
     /**

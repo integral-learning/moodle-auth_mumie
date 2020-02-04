@@ -178,7 +178,9 @@ class mumie_server implements \JsonSerializable {
      */
     public static function get_by_urlprefix($urlprefix) {
         global $DB;
-        $record = $DB->get_record(self::MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $urlprefix]);
+        $server = new mumie_server();
+        $server->set_urlprefix($urlprefix);
+        $record = $DB->get_record(self::MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $server->get_urlprefix()]);
         return self::from_object($record);
     }
 
