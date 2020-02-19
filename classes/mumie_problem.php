@@ -93,6 +93,14 @@ class mumie_problem implements \JsonSerializable {
         $this->collect_languages();
     }
 
+    public static function from_task_db_object($data) {
+        $task = new \stdClass;
+        $task->link = \mod_mumie\locallib::remove_params_from_url($data->taskurl);
+        $headline = [((object)["language" => $data->language, "name" => $data->name])];
+        $task->headline = $headline;
+        return new mumie_problem($task);
+    }
+
     /**
      * Collect and set all languages this problem is available in
      */
