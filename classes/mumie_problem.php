@@ -157,4 +157,17 @@ class mumie_problem implements \JsonSerializable {
     public function get_tags() {
         return $this->tags;
     }
+
+    /**
+     * Get the headline for a given language
+     * @param string $language
+     * @return string
+     */
+    public function get_headline_by_language($language) {
+        foreach ($this->headline as $localheadline) {
+            if ($localheadline->language == $language) {
+                return $localheadline->name;
+            }
+        }
+    }
 }

@@ -266,7 +266,7 @@ class mumie_server implements \JsonSerializable {
     /**
      * Get and set the latest tasks and courses from the MUMIE server
      */
-    protected function load_structure() {
+    public function load_structure() {
         $coursesandtasks = $this->get_courses_and_tasks();
         $this->courses = [];
         if ($coursesandtasks) {
@@ -296,6 +296,19 @@ class mumie_server implements \JsonSerializable {
         $vars = get_object_vars($this);
 
         return $vars;
+    }
+
+    /**
+     * Find a course on this server by its coursefile
+     * @param string $coursefile
+     * @return mumie_couse
+     */
+    public function get_course_by_coursefile($coursefile) {
+        foreach ($this->courses as $course) {
+            if ($course->get_coursefile() == $coursefile) {
+                return $course;
+            }
+        }
     }
 
     /**
