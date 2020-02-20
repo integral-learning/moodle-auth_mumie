@@ -200,11 +200,22 @@ class mumie_course implements \JsonSerializable {
      * @return mumie_problem
      */
     public function get_task_by_link($link) {
-        $link = substr($link, 0, strpos($link, "?"));
+        if(strpos($link, "?") !== false) {
+            $link = substr($link, 0, strpos($link, "?"));
+        }
         foreach ($this->tasks as $task) {
             if ($task->get_link() == $link) {
                 return $task;
             }
         }
+    }
+
+    /**
+     * Add a MUMIE problem to the server-course-problem structure.
+     * @param stdClass an instance of MUMIE Task
+     */
+    public function add_custom_problem_to_structure($task) {
+        array_push($this->tasks, mumie_problem::from_task_db_object($task));
+        $this->collect_languages();
     }
 }

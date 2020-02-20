@@ -264,7 +264,7 @@ class mumie_server implements \JsonSerializable {
     }
 
     /**
-     * Get and set the latest tasks and courses from the MUMIE server
+     * Loead and set the latest tasks and courses from the MUMIE server
      */
     public function load_structure() {
         $coursesandtasks = $this->get_courses_and_tasks();
@@ -309,6 +309,15 @@ class mumie_server implements \JsonSerializable {
                 return $course;
             }
         }
+    }
+
+    /**
+     * Add a MUMIE problem to the server-course-problem structure.
+     * @param stdClass an instance of MUMIE Task
+     */
+    public function add_custom_problem_to_structure($task) {
+        $this->get_course_by_coursefile($task->mumie_coursefile)->add_custom_problem_to_structure($task);
+        $this->collect_languages();
     }
 
     /**
