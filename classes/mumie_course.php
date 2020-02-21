@@ -200,7 +200,7 @@ class mumie_course implements \JsonSerializable {
      * @return mumie_problem
      */
     public function get_task_by_link($link) {
-        if(strpos($link, "?") !== false) {
+        if (strpos($link, "?") !== false) {
             $link = substr($link, 0, strpos($link, "?"));
         }
         foreach ($this->tasks as $task) {
