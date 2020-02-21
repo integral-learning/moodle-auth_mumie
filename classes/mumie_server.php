@@ -264,7 +264,7 @@ class mumie_server implements \JsonSerializable {
     }
 
     /**
-     * Loead and set the latest tasks and courses from the MUMIE server
+     * Load and set the latest tasks and courses from the MUMIE server
      */
     public function load_structure() {
         $coursesandtasks = $this->get_courses_and_tasks();

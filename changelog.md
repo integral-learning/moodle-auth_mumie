@@ -3,11 +3,12 @@
 All important changes to this plugin will be documented in this file
 ## [v1.3.1] - TODO: ENTER DATE
 ### Added
-- MUMIE Problems can now be added to the server-course-task structure. This means that tasks that are not part of the offical server structre are now supported as well.
+- MUMIE Problems can now be added to the server-course-task structure. 
+This means that tasks that are not part of the offical server structre are now supported as well.
 
 ## [v1.3.0] - 2019-02-04
 ### Fixed
-- Capabilities are now given a proper name
+- Capabilities are now given a proper name.
 
 ### Changed
 - Added object structure for MUMIE Servers, Courses, Tasks and tags to 
@@ -16,7 +17,7 @@ improve code quality and maintain consistency between MUMIE plugins for differen
 
 ## [v1.2] - 2019-11-05
 ### Added
-- Single Sign On and Single Sign Out now also work with hashed MOODLE user ids
+- Single Sign On and Single Sign Out now also work with hashed MOODLE user ids.
 
 
 ## [v1.1] - 2019-16-06
