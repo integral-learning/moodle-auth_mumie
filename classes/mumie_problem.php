@@ -95,7 +95,7 @@ class mumie_problem implements \JsonSerializable {
 
     /**
      * Create a mumie_problem from a MUMIE Task instance
-     * @param stdClass the instance of MUMIE Task
+     * @param stdClass $data the instance of MUMIE Task
      * @return mumie_problem
      */
     public static function from_task_db_object($data) {

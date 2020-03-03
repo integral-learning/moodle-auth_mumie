@@ -212,7 +212,7 @@ class mumie_course implements \JsonSerializable {
 
     /**
      * Add a MUMIE problem to the server-course-problem structure.
-     * @param stdClass an instance of MUMIE Task
+     * @param stdClass $task an instance of MUMIE Task
      */
     public function add_custom_problem_to_structure($task) {
         array_push($this->tasks, mumie_problem::from_task_db_object($task));
