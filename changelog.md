@@ -1,12 +1,12 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
-## [v1.3.1] - TODO: ENTER DATE
+## [v1.3.1] - 2020-03-03
 ### Added
-- MUMIE Problems can now be added to the server-course-task structure. 
-This means that tasks that are not part of the offical server structre are now supported as well.
+- MUMIE Problems can now be added to the plugin's server-course-task structure. 
+This means that the use of tasks that are not part of the offical server structre is now supported as well.
 
-## [v1.3.0] - 2019-02-04
+## [v1.3.0] - 2020-02-04
 ### Fixed
 - Capabilities are now given a proper name.
 
