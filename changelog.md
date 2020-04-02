@@ -1,6 +1,13 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
+## [v1.3.2] - TODO
+### Added
+- MUMIE course names are now available in multiple languages
+
+### Changed
+- Now using different constants for gradesync format and course format versions
+
 ## [v1.3.1] - 2020-03-03
 ### Added
 - MUMIE Problems can now be added to the plugin's server-course-task structure. 

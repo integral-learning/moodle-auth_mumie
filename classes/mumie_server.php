@@ -45,7 +45,12 @@ class mumie_server implements \JsonSerializable {
     /**
      * This is used as parameter when requesting available courses and tasks.
      */
-    const MUMIE_JSON_FORMAT_VERSION = 2;
+    const MUMIE_JSON_FORMAT_VERSION = 3;
+
+    /**
+     * This is used as parameter when synchronizing grades
+     */
+    const MUMIE_GRADE_SYNC_VERSION = 2;
 
     /**
      * Primary key for db entry
@@ -207,7 +212,7 @@ class mumie_server implements \JsonSerializable {
      * Get URL for XAPI grades
      */
     public function get_grade_sync_url() {
-        return $this->urlprefix. '/public/xapi?v=' . self::MUMIE_JSON_FORMAT_VERSION;
+        return $this->urlprefix. '/public/xapi?v=' . self::MUMIE_GRADE_SYNC_VERSION;
     }
 
     /**

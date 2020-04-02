@@ -40,7 +40,7 @@ require_once($CFG->dirroot . '/auth/mumie/classes/mumie_tag.php');
 class mumie_course implements \JsonSerializable {
     /**
      * The course's name
-     * @var string
+     * @var stdClass[]
      */
     private $name;
     /**
@@ -102,7 +102,7 @@ class mumie_course implements \JsonSerializable {
 
     /**
      * Get the value of name
-     * @return string
+     * @return stdClass[]
      */
     public function get_name() {
         return $this->name;
@@ -110,7 +110,7 @@ class mumie_course implements \JsonSerializable {
 
     /**
      * Set the value of name
-     * @param string $name
+     * @param stdClass[] $name
      * @return  self
      */
     public function set_name($name) {
@@ -142,8 +142,8 @@ class mumie_course implements \JsonSerializable {
      */
     public function collect_languages() {
         $langs = [];
-        foreach ($this->tasks as $task) {
-            array_push($langs, ...$task->get_languages());
+        foreach ($this->name as $translation) {
+            array_push($langs, $translation->language);
         }
         $this->languages = array_values(array_unique($langs));
     }
