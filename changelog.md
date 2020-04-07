@@ -4,6 +4,7 @@ All important changes to this plugin will be documented in this file
 ## [v1.3.2] - TODO
 ### Added
 - MUMIE course names are now available in multiple languages
+- MUMIE Tasks can now link an entire course at once. Grades will not be synchronized for these kind of activities.
 
 ### Changed
 - Now using different constants for gradesync format and course format versions

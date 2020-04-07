@@ -54,6 +54,11 @@ class mumie_course implements \JsonSerializable {
      */
     private $coursefile;
     /**
+     * A link to the course's overview page
+     * @var string
+     */
+    private $link;
+    /**
      * All languages that are available in this course
      * @var string[]
      */
@@ -118,6 +123,25 @@ class mumie_course implements \JsonSerializable {
 
         return $this;
     }
+    
+    /**
+     * Set the value of link
+     * @param  string $link
+     * @return self
+     */
+    public function set_link($link) {
+        $this->link = $link;
+
+        return $this;
+    }
+    
+    /**
+     * Get the value of link
+     * @return void
+     */
+    public function get_link() {
+        return $this->link;
+    }
 
     /**
      * Constructor
@@ -127,6 +151,7 @@ class mumie_course implements \JsonSerializable {
         $this->name = $coursewithtasks->name;
         $this->coursefile = $coursewithtasks->pathToCourseFile;
         $this->tasks = [];
+        $this->link = $coursewithtasks->link;
         if ($coursewithtasks->tasks) {
             foreach ($coursewithtasks->tasks as $task) {
                 $taskobj = new mumie_problem($task);
