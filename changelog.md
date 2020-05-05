@@ -6,6 +6,9 @@ All important changes to this plugin will be documented in this file
 - MUMIE course names are now available in multiple languages
 - MUMIE Tasks can now link an entire course at once. Grades will not be synchronized for these kind of activities.
 
+### Fixed
+- MUMIE server's names are now trimmed before saving. Trailing whitespace caused mod_form's javascript to crash.
+
 ### Changed
 - Now using different constants for gradesync format and course format versions
 

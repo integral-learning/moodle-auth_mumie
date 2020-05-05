@@ -54,7 +54,6 @@ if ($mumietoken != null && $user != null) {
         $response->status = "invalid";
     } else {
         $response->status = "valid";
-        $response->userid = $user->id;
 
         if (get_config('auth_mumie', 'userdata_firstname')) {
             $response->firstname = $user->firstname;

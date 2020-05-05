@@ -359,7 +359,7 @@ class mumie_server implements \JsonSerializable {
      */
     public function set_urlprefix($urlprefix) {
         $urlprefix = (substr($urlprefix, -1) == '/' ? $urlprefix : $urlprefix . '/');
-        $this->urlprefix = $urlprefix;
+        $this->urlprefix = trim($urlprefix);
         return $this;
     }
 
@@ -377,7 +377,7 @@ class mumie_server implements \JsonSerializable {
      * @return self
      */
     public function set_name($name) {
-        $this->name = $name;
+        $this->name = trim($name);
         return $this;
     }
 
