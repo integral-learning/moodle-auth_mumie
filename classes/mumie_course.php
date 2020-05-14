@@ -123,7 +123,7 @@ class mumie_course implements \JsonSerializable {
 
         return $this;
     }
-    
+
     /**
      * Set the value of link
      * @param  string $link
@@ -134,7 +134,7 @@ class mumie_course implements \JsonSerializable {
 
         return $this;
     }
-    
+
     /**
      * Get the value of link
      * @return void

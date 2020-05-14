@@ -71,6 +71,7 @@ if ($oldtoken = $DB->get_record($tokentable, array("the_user" => $ssotoken->the_
 }
 
 $problemurl = auth_mumie_get_problem_url($mumietask);
+$problempath = auth_mumie_get_problem_path($mumietask);
 
 echo
     "
@@ -79,6 +80,8 @@ echo
         <input type='hidden' name='token' id='token' type ='text' value='{$ssotoken->token}'/>
         <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
         <input type='hidden' name='resource' id='resource' type ='text' value='{$problemurl}'/>
+        <input type='hidden' name='path' id='resource' type ='text' value='{$problempath}'/>
+        <input type='hidden' name='lang' id='resource' type ='text' value='{$mumietask->language}'/>
     </form>
     <script>
     document.forms['mumie_sso_form'].submit();

@@ -223,7 +223,11 @@ class mumie_server implements \JsonSerializable {
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $this->urlprefix . "public/courses-and-tasks?v=" . self::MUMIE_JSON_FORMAT_VERSION . "&org=" . get_config("auth_mumie", "mumie_org"),
+            CURLOPT_URL => $this->urlprefix .
+             "public/courses-and-tasks?v="
+             . self::MUMIE_JSON_FORMAT_VERSION
+             . "&org="
+             . get_config("auth_mumie", "mumie_org"),
             CURLOPT_USERAGENT => 'Codular Sample cURL Request',
         ]);
         $response = curl_exec($curl);

@@ -56,6 +56,16 @@ function auth_mumie_get_problem_url($mumietask) {
 }
 
 /**
+ * Get path to the problem on LEMON servers
+ *
+ * @param stdClass $mumietask
+ * @return string path
+ */
+function auth_mumie_get_problem_path($mumietask) {
+    return substr($mumietask->taskurl, 0, strpos($mumietask->taskurl, '?lang='));
+}
+
+/**
  * Generate a randomized token for single sign in to MUMIE servers
  *
  * @param int $length word length of the token
