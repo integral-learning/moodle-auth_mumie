@@ -212,7 +212,7 @@ class mumie_server implements \JsonSerializable {
      * Get URL for XAPI grades
      */
     public function get_grade_sync_url() {
-        return $this->urlprefix. '/public/xapi?v=' . self::MUMIE_GRADE_SYNC_VERSION;
+        return $this->urlprefix. 'public/xapi?v=' . self::MUMIE_GRADE_SYNC_VERSION;
     }
 
     /**
