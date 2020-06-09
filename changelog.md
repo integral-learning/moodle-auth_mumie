@@ -1,7 +1,7 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
-## [v1.3.2] - TODO
+## [v1.3.2] - 2020-06-09
 ### Added
 - MUMIE course names are now available in multiple languages
 - MUMIE Tasks can now link an entire course at once. Grades will not be synchronized for these kind of activities.
