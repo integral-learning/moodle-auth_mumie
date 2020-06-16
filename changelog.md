@@ -1,6 +1,11 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
+
+## [v1.3.3] - TODO
+### Fixed
+- Fixed minified js files
+
 ## [v1.3.2] - 2020-06-09
 ### Added
 - MUMIE course names are now available in multiple languages
