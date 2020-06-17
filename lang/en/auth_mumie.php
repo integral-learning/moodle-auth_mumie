@@ -47,6 +47,20 @@ $string['mumie_server_list_heading'] = 'Configured MUMIE servers';
 $string['mumie_edit_button'] = 'Edit';
 $string['mumie_delete_button'] = 'Delete';
 $string['mumie_add_server_button'] = 'Add MUMIE Server';
+$string['mumie_authentication_header'] = 'Authentication & Authorization';
+$string['mumie_authentication_header_desc'] = 'These settings are used to authenticate users and authorize requests';
+$string['mumie_task_admin_header'] = 'MUMIE Task settings';
+$string['mumie_task_admin_header_desc'] = 'These settings apply to the MUMIE Task plugin';
+$string['admin_gradepool_selection'] = 'Share grades between courses';
+$string['admin_gradepool_description'] = 'Choose whether to share grades for MUMIE problems between courses. You can leave this decision to the teachers.
+<br>
+<br>If sharing is enabled, points that were earned for MUMIE problems in one course will be automatically synchronized with other courses\' gradebooks that have grade synchronization enabled as well.
+<br>If not, courses will neither be able to import nor to export grades.
+<br><br><b>Changing this value does not affect existing MUMIE Tasks or courses containing MUMIE Tasks!</b>
+';
+$string['admin_gradepool_free_choice_option'] = 'Leave decision to teachers';
+$string['admin_gradepool_private_option'] = 'Do not share grades';
+$string['admin_gradepool_shared_option'] = 'Share grades';
 
 // Used in mumieserver form.
 $string['mumie_form_required'] = 'required';

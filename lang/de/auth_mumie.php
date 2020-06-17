@@ -47,6 +47,20 @@ $string['mumie_server_list_heading'] = 'Konfigurierte MUMIE-Server';
 $string['mumie_edit_button'] = 'Bearbeiten';
 $string['mumie_delete_button'] = 'Löschen';
 $string['mumie_add_server_button'] = 'MUMIE-Server hinzufügen';
+$string['mumie_authentication_header'] = 'Authentifizierung & Autorisierung';
+$string['mumie_authentication_header_desc'] = 'Diese Einstellungen werden zum Authentifizieren von Nutzern und Autorisieren von Requests benutzt';
+$string['mumie_task_admin_header'] = 'MUMIE-Task-Einstellungen';
+$string['mumie_task_admin_header_desc'] = 'Diese Einstellungen gelten für das MUMIE-Task-Plugin';
+$string['admin_gradepool_selection'] = 'Teilen von Punkte zwischen Kursen';
+$string['admin_gradepool_description'] = 'Legen Sie fest, ob Noten für MUMIE-Aufgaben zwischen Kursen geteilt werden sollen. Sie können diese Entscheidung auch den Dozierenden überlassen.
+<br>
+<br>Falls das Teilen aktiviert ist, werden Punkte, die für das Bearbeiten von MUMIE-Aufgaben in einem MOODLE-Kurse vergeben wurden, auch in anderen Kursen übernommen.
+<br>Falls diese Option deaktiviert ist, werden keine Punkte aus anderen MOODLE-Kursen übernommen.
+<br><br><b>Änderungen an dieser Einstellungen haben keinen Einfluss auf bereits existierende MUMIE Tasks!</b>
+';
+$string['admin_gradepool_free_choice_option'] = 'Dozierende entscheiden selbst';
+$string['admin_gradepool_private_option'] = 'Punkte nicht teilen';
+$string['admin_gradepool_shared_option'] = 'Punkte teilen';
 
 // Used in mumieserver form.
 $string['mumie_form_required'] = 'Pflichtfeld';
