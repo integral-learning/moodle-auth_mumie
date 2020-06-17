@@ -58,13 +58,13 @@ $addbutton = "<button class='btn mumie_add_server_button btn-primary' id='mumie_
     . "</button>";
 
 if ($ADMIN->fulltree) {
-    // Header for authentication settings
+    // Header for authentication settings.
     $settings->add(new admin_setting_heading(
         'authorization',
         get_string('mumie_authentication_header', 'auth_mumie'),
         get_string('mumie_authentication_header_desc', 'auth_mumie')
     ));
-    
+
     $settings->add(new admin_setting_configtext(
         'auth_mumie/mumie_api_key',
         get_string('mumie_api_key', 'auth_mumie'),
@@ -109,7 +109,7 @@ if ($ADMIN->fulltree) {
         0
     ));
 
-    // Header for MumieTask settings
+    // Header for MumieTask settings.
     $settings->add(new admin_setting_heading(
         'mumietask',
         get_string('mumie_task_admin_header', 'auth_mumie'),
@@ -121,7 +121,7 @@ if ($ADMIN->fulltree) {
         1 => get_string('admin_gradepool_private_option', 'auth_mumie'),
         0 => get_string('admin_gradepool_shared_option', 'auth_mumie')
     );
-    
+
     $settings->add(
         new admin_setting_configselect(
             'auth_mumie/defaultgradepool',
