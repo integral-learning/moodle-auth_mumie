@@ -43,7 +43,6 @@ class mumieserver_form extends moodleform {
      * @return void
      */
     public function definition() {
-        global $CFG;
         $mform = $this->_form;
 
         $mform->addElement('text', 'name', get_string('mumie_server_name', 'auth_mumie'));
