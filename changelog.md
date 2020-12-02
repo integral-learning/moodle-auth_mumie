@@ -2,6 +2,10 @@
 
 All important changes to this plugin will be documented in this file
 
+## [v1.3.4] - TODO
+### Added
+- Problem selector URL can be changed in admin settings
+
 ## [v1.3.3] - 2020-06-17
 ### Fixed
 - Fixed minified js files

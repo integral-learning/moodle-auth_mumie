@@ -140,6 +140,22 @@ if ($ADMIN->fulltree) {
         )
     );
 
+    $settings->add(
+        new admin_setting_heading(
+            'mumie_dev_options',
+            get_string("mumie_dev_options_heading", "auth_mumie"),
+            get_string("mumie_dev_options_description", "auth_mumie")
+        )
+    );
+
+    $settings->add(new admin_setting_configtext(
+        'auth_mumie/mumie_problem_selector_url',
+        get_string('mumie_problem_selector_url', 'auth_mumie'),
+        get_string('mumie_problem_selector_url_description', 'auth_mumie'),
+        'https://pool.mumie.net',
+        PARAM_URL
+    ));
+
     $context = context_system::instance();
     $PAGE->requires->js_call_amd('auth_mumie/settings', 'init', array(json_encode($context->id)));
 }
