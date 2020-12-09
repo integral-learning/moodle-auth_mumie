@@ -59,7 +59,7 @@ class auth_mumie_external extends external_api {
      * @return int new mumieserver id.
      */
     public static function submit_mumieserver_form($contextid, $jsonformdata) {
-        global $CFG, $USER, $DB;
+        global $CFG;
 
         require_once($CFG->dirroot . '/auth/mumie/lib.php');
         require_once($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
@@ -140,8 +140,6 @@ class auth_mumie_external extends external_api {
      * @param int $contextid The context id for the course.
      */
     public static function get_server_structure($contextid) {
-        global $CFG;
-
         $params = self::validate_parameters(
             self::get_server_structure_parameters(),
             ['contextid' => $contextid]
