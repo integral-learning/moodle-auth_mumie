@@ -82,8 +82,6 @@ class auth_mumie_external extends external_api {
         $data = array();
         parse_str($serialiseddata, $data);
 
-        $warnings = array();
-
         $editoroptions = [
             'maxfiles' => EDITOR_UNLIMITED_FILES,
             'trust' => false,

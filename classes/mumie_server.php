@@ -310,7 +310,7 @@ class mumie_server implements \JsonSerializable {
     /**
      * Find a course on this server by its coursefile
      * @param string $coursefile
-     * @return mumie_couse
+     * @return mumie_course
      */
     public function get_course_by_coursefile($coursefile) {
         foreach ($this->courses as $course) {

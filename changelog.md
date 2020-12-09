@@ -28,7 +28,7 @@ All important changes to this plugin will be documented in this file
 ## [v1.3.1] - 2020-03-03
 ### Added
 - MUMIE Problems can now be added to the plugin's server-course-task structure. 
-This means that the use of tasks that are not part of the offical server structre is now supported as well.
+This means that the use of tasks that are not part of the official server structre is now supported as well.
 
 ## [v1.3.0] - 2020-02-04
 ### Fixed
