@@ -62,7 +62,7 @@ $string['admin_gradepool_free_choice_option'] = 'Leave decision to teachers';
 $string['admin_gradepool_private_option'] = 'Do not share grades';
 $string['admin_gradepool_shared_option'] = 'Share grades';
 $string['mumie_dev_options_heading'] = 'Developer options';
-$string['mumie_dev_options_description']= 'These settings are for developers only. No changes required!';
+$string['mumie_dev_options_description'] = 'These settings are for developers only. No changes required!';
 $string['mumie_problem_selector_url'] = 'Problem selector URL';
 $string['mumie_problem_selector_url_description'] = 'Lemon instance that should be used to select problems';
 
