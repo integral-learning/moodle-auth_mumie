@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the global auth_mumie settingspage.
+ * This file defines the global auth_mumie settings page.
  *
  * @package auth_mumie
  * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
@@ -41,7 +41,7 @@ foreach ($mumieservers as $server) {
     $name = "<span class='mumie_list_entry_name'>" . $server->get_name() . "</span>" . $id;
     $url = "<span class='mumie_list_entry_url'>" . $server->get_urlprefix() . "</span>";
     $edit = "<a class = 'mumie_list_edit_button' title='" . get_string("mumie_edit_button", "auth_mumie") . "'>"
-        . '<span class="icon fa fa-cog fa-fw " titel ="delete" aria-hidden="true" aria-label=""></span>'
+        . '<span class="icon fa fa-cog fa-fw " title ="delete" aria-hidden="true" aria-label=""></span>'
         . "</a>";
     $deleteurl = "{$CFG->wwwroot}/auth/mumie/deletemumieserver.php?id={$server->get_id()}&amp;sesskey={$USER->sesskey}";
     $delete = "<a class = 'mumie_list_delete_button' href='{$deleteurl}' title='"
@@ -139,6 +139,22 @@ if ($ADMIN->fulltree) {
             html_writer::table($table) . $addbutton
         )
     );
+
+    $settings->add(
+        new admin_setting_heading(
+            'mumie_dev_options',
+            get_string("mumie_dev_options_heading", "auth_mumie"),
+            get_string("mumie_dev_options_description", "auth_mumie")
+        )
+    );
+
+    $settings->add(new admin_setting_configtext(
+        'auth_mumie/mumie_problem_selector_url',
+        get_string('mumie_problem_selector_url', 'auth_mumie'),
+        get_string('mumie_problem_selector_url_description', 'auth_mumie'),
+        'https://pool.mumie.net',
+        PARAM_URL
+    ));
 
     $context = context_system::instance();
     $PAGE->requires->js_call_amd('auth_mumie/settings', 'init', array(json_encode($context->id)));

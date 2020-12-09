@@ -26,10 +26,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * xmldb_auth_umie_upgrade is the function that upgrades
+ * xmldb_auth_mumie_upgrade is the function that upgrades
  * the auth_mumie database when is needed
  *
- * This function is automaticly called when version number in
+ * This function is automatically called when version number in
  * version.php changes.
  *
  * @param int $oldversion New old version number.

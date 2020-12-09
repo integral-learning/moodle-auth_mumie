@@ -96,7 +96,7 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
             // We don't want to do a real form submission.
             e.preventDefault();
 
-            // Convert all the form elements values to a serialised string.
+            // Convert all the form elements values to a serialized string.
             var formData = this.modal.getRoot().find('form').serialize();
             // Now we can continue...
             Ajax.call([{
@@ -125,7 +125,7 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
         return /** @alias module:auth_mumie/newserver */ {
             // Public variables and functions.
             /**
-             * Attach event listeners to initialise this module.
+             * Attach event listeners to initialize this module.
              *
              * @method init
              * @param {string} selector The CSS selector used to find nodes that will trigger this module.

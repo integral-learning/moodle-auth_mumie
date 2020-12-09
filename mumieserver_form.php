@@ -62,7 +62,7 @@ class mumieserver_form extends moodleform {
     }
 
     /**
-     * Valdiate the form data
+     * Validate the form data
      * @param array $data form data
      * @param array $files files uploaded
      * @return array associative array of errors
