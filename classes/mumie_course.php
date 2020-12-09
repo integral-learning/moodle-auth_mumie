@@ -151,7 +151,7 @@ class mumie_course implements \JsonSerializable {
         $this->name = $coursewithtasks->name;
         $this->coursefile = $coursewithtasks->pathToCourseFile;
         $this->tasks = [];
-        $this->link = $coursewithtasks->link;
+        $this->link = $coursewithtasks->link ?? null;
         if ($coursewithtasks->tasks) {
             foreach ($coursewithtasks->tasks as $task) {
                 $taskobj = new mumie_problem($task);
