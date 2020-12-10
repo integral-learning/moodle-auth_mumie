@@ -61,6 +61,10 @@ $string['admin_gradepool_description'] = 'Legen Sie fest, ob Noten für MUMIE-Au
 $string['admin_gradepool_free_choice_option'] = 'Dozierende entscheiden selbst';
 $string['admin_gradepool_private_option'] = 'Punkte nicht teilen';
 $string['admin_gradepool_shared_option'] = 'Punkte teilen';
+$string['mumie_dev_options_heading'] = 'Entwickleroptionen';
+$string['mumie_dev_options_description'] = 'Diese Einstellungen sind nur für die Entwicklung gedacht. Bitte nehmen Sie keine Änderungen daran vor!';
+$string['mumie_problem_selector_url'] = 'Problem-Selector-URL';
+$string['mumie_problem_selector_url_description'] = 'Die URL zur Lemon-Instanz, mit der Aufgaben ausgewählt werdedn sollen';
 
 // Used in mumieserver form.
 $string['mumie_form_required'] = 'Pflichtfeld';

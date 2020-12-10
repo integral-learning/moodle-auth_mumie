@@ -39,7 +39,7 @@ $functions = array(
         'classname' => 'auth_mumie_external',
         'methodname' => 'get_server_structure',
         'classpath' => 'auth/mumie/externallib.php',
-        'description' => 'get all Mumie severs, courses and tasks that are available for this instutition',
+        'description' => 'get all Mumie severs, courses and tasks that are available for this institution',
         'ajax' => true,
         'type' => 'read',
     ),
