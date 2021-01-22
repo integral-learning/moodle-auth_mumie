@@ -190,11 +190,13 @@ class mumie_course implements \JsonSerializable {
         $this->tags = array_values($tags);
     }
 
+    // phpcs:disable
     /**
      * Necessary to encode this object as json.
      * @return mixed
      */
     public function jsonSerialize() {
+        // phpcs:enable
         $vars = get_object_vars($this);
 
         return $vars;

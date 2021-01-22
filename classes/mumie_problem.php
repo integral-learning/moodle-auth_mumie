@@ -135,11 +135,13 @@ class mumie_problem implements \JsonSerializable {
         return $this;
     }
 
+    // phpcs:disable
     /**
      * Necessary to encode this object as json.
      * @return mixed
      */
     public function jsonSerialize() {
+        // phpcs:enable
         $vars = get_object_vars($this);
         return $vars;
     }
