@@ -297,13 +297,11 @@ class mumie_server implements \JsonSerializable {
         $this->languages = array_values(array_unique($langs));
     }
 
-    // phpcs:disable
     /**
      * Necessary to encode this object as json.
      * @return mixed
      */
     public function jsonSerialize() {
-        // phpcs:enable
         $vars = get_object_vars($this);
 
         return $vars;
