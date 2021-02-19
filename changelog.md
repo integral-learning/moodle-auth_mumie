@@ -2,6 +2,10 @@
 
 All important changes to this plugin will be documented in this file
 
+## [v1.3.5] - TODO
+### Added
+- Implemented Privacy-API
+
 ## [v1.3.4] - 2020-12-10
 ### Added
 - Problem selector URL can be changed in admin settings
