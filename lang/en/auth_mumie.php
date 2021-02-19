@@ -96,3 +96,5 @@ $string['privacy:metadata:auth_mumie_servers:email'] = 'The user\'s e-mail addre
 $string['privacy:metadata:auth_mumie_tokens:tableexplanation'] = 'Details of SSO tokens used to log into MUMIE/Lemon servers';
 $string['privacy:metadata:auth_mumie_hashes:tableexplanation'] = 'Details of hash lookup table for moodle user IDs';
 $string['privacy:metadata:auth_mumie_servers:tableexplanation'] = 'Details of optional sharing of personal data with MUMIE/Lemon servers';
+$string['mumie_course_account'] = 'Special course account';
+$string['mumie_sso_tokens'] = 'Logins for Single-Sign-On';

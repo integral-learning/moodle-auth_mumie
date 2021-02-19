@@ -99,16 +99,16 @@ class provider implements
         }
 
         if(count($courseids) > 0) {
+            list($insql, $inparams) = $DB->get_in_or_equal($courseids);
+
             $sql = "SELECT c.id
                     FROM {context} c
                     JOIN {course} course
-                    ON c.contextlevel = :contextlevel
-                    AND c.instanceid IN (" . implode(", ", $courseids) .")";
+                    ON c.contextlevel = ?
+                    AND c.instanceid $insql";
             $contextlist->add_from_sql(
                 $sql,
-                array(
-                    'contextlevel' => CONTEXT_COURSE,
-                )
+                array_merge([CONTEXT_COURSE], $inparams)
             );
         }
 
@@ -121,11 +121,6 @@ class provider implements
         $contextlist->add_from_sql($sql, $params);
 
         return $contextlist;
-    }
-
-    private static function arrayToSqlString($array) {
-        $s = '';
-        //foreach()
     }
 
     /**
@@ -182,22 +177,23 @@ class provider implements
     private static function export_id_hashes(array $hashes, $context) {
         $data = [];
         $courseid = $context->__get("instanceid");
-        debugging("courseid" . $courseid);
         foreach($hashes as $hash) {
             if(strpos($hash, "@gradepool{$courseid}@") !== false) {
-                $data["uniqueIdForCourse"] = $hash;
+                $data["mumieId"] = $hash;
             }
         }
-        writer::with_context($context)->export_data([get_string('pluginname', 'auth_mumie'), 'TODO: user ID for MUMIE and Lemon servers'], (object) $data);
+        writer::with_context($context)->export_data([get_string('pluginname', 'auth_mumie'), get_string('mumie_course_account', 'auth_mumie')], (object) $data);
     }
 
     private static function export_sso_tokens(array $hashes, $context) {
         global $DB;
 
+        list($insql, $inparams) = $DB->get_in_or_equal($hashes);
+
         $sql = "SELECT * FROM {auth_mumie_sso_tokens}
-                WHERE the_user in (" . "'" . implode("', '", (array) $hashes) . "')";
-        $tokens = $DB->get_records_sql($sql, array("hashes" => implode("', '", (array) $hashes)));
-        writer::with_context($context)->export_data([get_string('pluginname', 'auth_mumie'), 'TODO: SSO Tokens'], (object) $tokens);
+                WHERE the_user $insql";
+        $tokens = $DB->get_records_sql($sql, $inparams);
+        writer::with_context($context)->export_data([get_string('pluginname', 'auth_mumie'), get_string('mumie_sso_tokens', 'auth_mumie')], (object) $tokens);
     }
 
     /**
@@ -211,20 +207,9 @@ class provider implements
 
         foreach ($contextlist->get_contexts() as $context) {
             if($context->contextlevel == CONTEXT_COURSE) {
-                $courseid = $context->__get("instanceid");
-                $records = $DB->get_records('auth_mumie_id_hashes', array('the_user' => $userid));
-                foreach ($records as $record) {
-                    if (strpos($record->hash, "@gradepool{$courseid}@") !== false) {
-                        $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $userid, 'hash' => $record->hash));
-                        $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
-                    }
-                }
+                self::delete_in_course_context($context, [$userid]);
             } else if ($context->contextlevel == CONTEXT_USER) {
-                $records = $DB->get_records('auth_mumie_id_hashes', array('the_user' => $userid));
-                foreach ($records as $record) {
-                    $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $userid));
-                    $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
-                }
+                self::delete_in_user_context($context, [$userid]);
             }
         }
     }
@@ -238,15 +223,12 @@ class provider implements
         global $DB;
 
         if ($context->contextlevel == CONTEXT_USER) {
-            $records = $DB->get_records('auth_mumie_id_hashes', array('the_user', $userid));
-                foreach ($records as $record) {
-                    $DB->delete_records('auth_mumie_id_hashes', array('the_user', $userid));
-                    $DB->delete_records('auth_mumie_sso_tokens', array('the_user', $record->hash));
-                }
+            $DB->get_records('auth_mumie_id_hashes');
+            $DB->delete_records('auth_mumie_sso_tokens');
         } else if ($context->contextlevel == CONTEXT_COURSE) {
             $courseid = $context->__get("instanceid");
             $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE 'hash' LIKE = ':gradepool'";
-            $DB->get_records_sql($sql, array("gradepool" => "@gradepool{$courseid}@"));
+            $DB->get_records_sql($sql, array("gradepool" => "%@gradepool{$courseid}@"));
             foreach ($records as $record) {
                 $DB->delete_records('auth_mumie_id_hashes', array('the_user', $userid));
                 $DB->delete_records('auth_mumie_sso_tokens', array('the_user', $record->hash));
@@ -262,29 +244,53 @@ class provider implements
     public static function delete_data_for_users(approved_userlist $userlist) {
         global $DB;
 
-        if (empty($contextlist->count())) {
-            return;
+        $context = $userlist->get_context();
+
+        if ($context instanceof \context_user) {
+            self::delete_in_user_context($context, $userlist->get_userids());
+        } else if($context instanceof \context_course) {
+            self::delete_in_course_context($context, $userlist->get_userids());
         }
-
-        $userid = $contextlist->get_user()->id;
-        foreach ($contextlist->get_contexts() as $context) {
-            if ($context->contextlevel == CONTEXT_USER) {
-                continue;
-            } else if ($context->contextlevel == CONTEXT_COURSE) {
-
+    }
+    
+    /**
+     * Delete all personal data from a given course context.
+     *
+     * @param  \context $context
+     * @param  array $userids
+     * @return void
+     */
+    private static function delete_in_course_context(\context $context, array $userids) {
+        global $DB;
+        $courseid = $context->__get("instanceid");
+        list($insql, $inparams) = $DB->get_in_or_equal($userids);
+        $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
+        $records = $DB->get_records_sql($sql, $inparams);
+        //TODO: Use fewer transactions
+        foreach ($records as $record) {
+            if(strpos($record->hash, "@gradepool{$courseid}@") !== false ) {
+                $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $record->the_user, 'hash' => $record->hash));
+                $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
             }
         }
     }
-
-    private static function delete_user_in_course_context(\context $context) {
-        $courseid = $context->__get("instanceid");
-        $userid = $contextlist->get_user()->id;
-        $records = $DB->get_records('auth_mumie_id_hashes', array('the_user' => $userid));
+    
+    /**
+     * Delete personal data for a given user context.
+     *
+     * @param  \context $context
+     * @param  array $userids
+     * @return void
+     */
+    private static function delete_in_user_context(\context $context, array $userids) {
+        global $DB;
+        list($insql, $inparams) = $DB->get_in_or_equal($userids);
+        $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
+        $records = $DB->get_records_sql($sql, $inparams);
+        //TODO: Do this in fewer transactions
         foreach ($records as $record) {
-            if (strpos($record->hash, "@gradepool{$courseid}@") !== false) {
-                $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $userid, 'hash' => $record->hash));
-                $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
-            }
+            $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $record->the_user));
+            $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
         }
     }
 }
