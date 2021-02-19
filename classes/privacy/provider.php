@@ -117,7 +117,7 @@ class provider implements
             );
         }
 
-        // Add User context
+        // Add User context.
         $sql = "SELECT ctx.id
                   FROM {auth_mumie_id_hashes} hashes
                   JOIN {context} ctx ON ctx.instanceid = hashes.the_user AND ctx.contextlevel = :contextlevel
@@ -176,7 +176,7 @@ class provider implements
 
         }
     }
-    
+
     /**
      * Export lookup table for hashed user IDs.
      *
@@ -200,7 +200,7 @@ class provider implements
             (object) $data
         );
     }
-    
+
     /**
      * Export sso token table.
      *
@@ -221,7 +221,8 @@ class provider implements
                 get_string('pluginname', 'auth_mumie'),
                 get_string('mumie_sso_tokens', 'auth_mumie')
             ],
-            (object) $tokens);
+            (object) $tokens
+        );
     }
 
     /**
@@ -301,7 +302,7 @@ class provider implements
             }
         }
     }
-    
+
     /**
      * Delete personal data for a given user context.
      *
