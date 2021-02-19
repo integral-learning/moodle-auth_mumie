@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of auth_mumie
+ * This class provides an interface to export and delete user data.
  *
  * @package auth_mumie
- * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
+ * @copyright  2017-2021 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -31,7 +31,15 @@ use core_privacy\local\request\userlist;
 use core_privacy\local\request\approved_userlist;
 use core_privacy\local\request\writer;
 
-class provider implements 
+/**
+ * This class provides an interface to export and delete user data.
+ *
+ * @package auth_mumie
+ * @copyright  2017-2021 integral-learning GmbH (https://www.integral-learning.de/)
+ * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements
     \core_privacy\local\metadata\provider,
     \core_privacy\local\request\plugin\provider,
     \core_privacy\local\request\core_userlist_provider {
@@ -42,11 +50,8 @@ class provider implements
      * @return  collection     A listing of user data stored through this system.
      */
     public static function get_metadata(collection $collection) : collection {
- 
-        // Here you will add more items into the collection.
- 
         $collection->add_database_table(
-            'auth_mumie_sso_tokens', 
+            'auth_mumie_sso_tokens',
             [
                 'token' => 'privacy:metadata:auth_mumie_tokens:token',
                 'the_user' => 'privacy:metadata:auth_mumie_tokens:hash',
@@ -65,7 +70,7 @@ class provider implements
         );
 
         $collection->add_external_location_link(
-            'MUMIE/Lemon', 
+            'MUMIE/Lemon',
             [
                 'firstname' => 'privacy:metadata:auth_mumie_servers:firstname',
                 'lastname' => 'privacy:metadata:auth_mumie_servers:lastname',
@@ -90,7 +95,7 @@ class provider implements
         $hashes = $DB->get_records('auth_mumie_id_hashes', array('the_user' => $userid));
         $courseids = array();
 
-        foreach($hashes as $hash) {
+        foreach ($hashes as $hash) {
             $matches = array();
             \preg_match('@gradepool([0-9]*)@', $hash->hash, $matches);
             if (count($matches) > 0 && !in_array($matches[1], $courseids)) {
@@ -98,7 +103,7 @@ class provider implements
             }
         }
 
-        if(count($courseids) > 0) {
+        if (count($courseids) > 0) {
             list($insql, $inparams) = $DB->get_in_or_equal($courseids);
 
             $sql = "SELECT c.id
@@ -130,9 +135,7 @@ class provider implements
      */
     public static function get_users_in_context(userlist $userlist) {
         $context = $userlist->get_context();
-        // debugging("GETTING USERS in CONTEXT");
 
-        //TODO: Handle User-Context;
         if (!is_a($context, \context_course::class)) {
             return;
         }
@@ -165,7 +168,7 @@ class provider implements
             );
             if ($context->contextlevel == CONTEXT_COURSE ) {
                 self::export_id_hashes($hashes, $context);
-            } 
+            }
 
             if ($context->contextlevel == CONTEXT_USER) {
                 self::export_sso_tokens($hashes, $context);
@@ -173,19 +176,39 @@ class provider implements
 
         }
     }
-
-    private static function export_id_hashes(array $hashes, $context) {
+    
+    /**
+     * Export lookup table for hashed user IDs.
+     *
+     * @param  array $hashes
+     * @param  \context $context
+     * @return void
+     */
+    private static function export_id_hashes(array $hashes, \context $context) {
         $data = [];
         $courseid = $context->__get("instanceid");
-        foreach($hashes as $hash) {
-            if(strpos($hash, "@gradepool{$courseid}@") !== false) {
+        foreach ($hashes as $hash) {
+            if (strpos($hash, "@gradepool{$courseid}@") !== false) {
                 $data["mumieId"] = $hash;
             }
         }
-        writer::with_context($context)->export_data([get_string('pluginname', 'auth_mumie'), get_string('mumie_course_account', 'auth_mumie')], (object) $data);
+        writer::with_context($context)->export_data(
+            [
+                get_string('pluginname', 'auth_mumie'),
+                get_string('mumie_course_account', 'auth_mumie')
+            ],
+            (object) $data
+        );
     }
-
-    private static function export_sso_tokens(array $hashes, $context) {
+    
+    /**
+     * Export sso token table.
+     *
+     * @param  array $hashes
+     * @param  \context $context
+     * @return void
+     */
+    private static function export_sso_tokens(array $hashes, \context $context) {
         global $DB;
 
         list($insql, $inparams) = $DB->get_in_or_equal($hashes);
@@ -193,7 +216,12 @@ class provider implements
         $sql = "SELECT * FROM {auth_mumie_sso_tokens}
                 WHERE the_user $insql";
         $tokens = $DB->get_records_sql($sql, $inparams);
-        writer::with_context($context)->export_data([get_string('pluginname', 'auth_mumie'), get_string('mumie_sso_tokens', 'auth_mumie')], (object) $tokens);
+        writer::with_context($context)->export_data(
+            [
+                get_string('pluginname', 'auth_mumie'),
+                get_string('mumie_sso_tokens', 'auth_mumie')
+            ],
+            (object) $tokens);
     }
 
     /**
@@ -206,7 +234,7 @@ class provider implements
         $userid = $contextlist->get_user()->id;
 
         foreach ($contextlist->get_contexts() as $context) {
-            if($context->contextlevel == CONTEXT_COURSE) {
+            if ($context->contextlevel == CONTEXT_COURSE) {
                 self::delete_in_course_context($context, [$userid]);
             } else if ($context->contextlevel == CONTEXT_USER) {
                 self::delete_in_user_context($context, [$userid]);
@@ -248,11 +276,11 @@ class provider implements
 
         if ($context instanceof \context_user) {
             self::delete_in_user_context($context, $userlist->get_userids());
-        } else if($context instanceof \context_course) {
+        } else if ($context instanceof \context_course) {
             self::delete_in_course_context($context, $userlist->get_userids());
         }
     }
-    
+
     /**
      * Delete all personal data from a given course context.
      *
@@ -266,9 +294,8 @@ class provider implements
         list($insql, $inparams) = $DB->get_in_or_equal($userids);
         $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
         $records = $DB->get_records_sql($sql, $inparams);
-        //TODO: Use fewer transactions
         foreach ($records as $record) {
-            if(strpos($record->hash, "@gradepool{$courseid}@") !== false ) {
+            if (strpos($record->hash, "@gradepool{$courseid}@") !== false ) {
                 $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $record->the_user, 'hash' => $record->hash));
                 $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
             }
@@ -287,7 +314,6 @@ class provider implements
         list($insql, $inparams) = $DB->get_in_or_equal($userids);
         $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
         $records = $DB->get_records_sql($sql, $inparams);
-        //TODO: Do this in fewer transactions
         foreach ($records as $record) {
             $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $record->the_user));
             $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
