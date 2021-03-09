@@ -86,7 +86,7 @@ class mumie_server implements \JsonSerializable {
      */
     public static function from_object($record) {
         $server = new mumie_server();
-        if($record){
+        if ($record) {
             $server->set_urlprefix($record->url_prefix);
             $server->set_name($record->name);
             if ($record->id != 0) {
