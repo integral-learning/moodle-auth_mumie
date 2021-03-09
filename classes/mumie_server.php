@@ -8,20 +8,21 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * This class represents a MUMIE Server in moodle
  *
  * @package auth_mumie
- * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
+ * @copyright 2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace auth_mumie;
 
 defined('MOODLE_INTERNAL') || die;
@@ -32,11 +33,12 @@ require_once($CFG->dirroot . '/auth/mumie/classes/mumie_course.php');
  * This class represents a MUMIE Server in moodle
  *
  * @package auth_mumie
- * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
+ * @copyright 2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mumie_server implements \JsonSerializable {
+class mumie_server implements \JsonSerializable
+{
     /**
      * The db table name for MUMIE server configurations
      */
@@ -84,7 +86,8 @@ class mumie_server implements \JsonSerializable {
      * @param stdClass $record
      * @return mumie_server
      */
-    public static function from_object($record) {
+    public static function from_object($record)
+    {
         $server = new mumie_server();
         $server->set_urlprefix($record->url_prefix);
         $server->set_name($record->name);
@@ -97,7 +100,8 @@ class mumie_server implements \JsonSerializable {
     /**
      * Create a database entry for this MUMIE server
      */
-    private function create() {
+    private function create()
+    {
         global $DB;
         $DB->insert_record(self::MUMIE_SERVER_TABLE_NAME, ["url_prefix" => $this->urlprefix, "name" => $this->name]);
     }
@@ -105,7 +109,8 @@ class mumie_server implements \JsonSerializable {
     /**
      * Update the database entry for this MUMIE server
      */
-    public function update() {
+    public function update()
+    {
         global $DB;
         $DB->update_record(
             self::MUMIE_SERVER_TABLE_NAME,
@@ -116,7 +121,8 @@ class mumie_server implements \JsonSerializable {
     /**
      * Delete this MUMIE server from the database
      */
-    public function delete() {
+    public function delete()
+    {
         global $DB;
         $DB->delete_records(self::MUMIE_SERVER_TABLE_NAME, array("id" => $this->id));
     }
@@ -124,7 +130,8 @@ class mumie_server implements \JsonSerializable {
     /**
      * Create or update a database entry for this MUMIE server
      */
-    public function upsert() {
+    public function upsert()
+    {
         if (isset($this->id) && $this->id > 0) {
             $this->update();
         } else {
@@ -137,7 +144,8 @@ class mumie_server implements \JsonSerializable {
      *
      * @return mumie_server[]
      */
-    public static function get_all_servers() {
+    public static function get_all_servers()
+    {
         global $DB;
         return array_map('self::from_object', $DB->get_records(self::MUMIE_SERVER_TABLE_NAME));
     }
@@ -146,7 +154,8 @@ class mumie_server implements \JsonSerializable {
      * Get all MUMIE servers including their course structure
      * @return mumie_server[]
      */
-    public static function get_all_servers_with_structure() {
+    public static function get_all_servers_with_structure()
+    {
         $servers = array();
         foreach (self::get_all_servers() as $server) {
             $server->load_structure();
@@ -160,7 +169,8 @@ class mumie_server implements \JsonSerializable {
      *
      * @return string[] Logout urls for all MUMIE servers
      */
-    public static function get_all_logout_urls() {
+    public static function get_all_logout_urls()
+    {
         return array_map(function ($server) {
             return $server->get_logout_url();
         }, self::get_all_servers());
@@ -170,7 +180,8 @@ class mumie_server implements \JsonSerializable {
      * Delete a MUMIE server
      * @param int $id
      */
-    public static function delete_by_id($id) {
+    public static function delete_by_id($id)
+    {
         $server = new mumie_server();
         $server->set_id($id);
         $server->delete();
@@ -181,7 +192,8 @@ class mumie_server implements \JsonSerializable {
      * @param string $urlprefix
      * @return mumie_server
      */
-    public static function get_by_urlprefix($urlprefix) {
+    public static function get_by_urlprefix($urlprefix)
+    {
         global $DB;
         $server = new mumie_server();
         $server->set_urlprefix($urlprefix);
@@ -194,7 +206,8 @@ class mumie_server implements \JsonSerializable {
      * @param string $name
      * @return mumie_server
      */
-    public static function get_by_name($name) {
+    public static function get_by_name($name)
+    {
         global $DB;
         $record = $DB->get_record(self::MUMIE_SERVER_TABLE_NAME, ["name" => $name]);
         return self::from_object($record);
@@ -204,30 +217,33 @@ class mumie_server implements \JsonSerializable {
      * Get the logout URL for this MUMIE server
      * @return string
      */
-    public function get_logout_url() {
+    public function get_logout_url()
+    {
         return $this->urlprefix . "public/xapi/auth/sso/logout/" . get_config('auth_mumie', 'mumie_org');
     }
 
     /**
      * Get URL for XAPI grades
      */
-    public function get_grade_sync_url() {
-        return $this->urlprefix. 'public/xapi?v=' . self::MUMIE_GRADE_SYNC_VERSION;
+    public function get_grade_sync_url()
+    {
+        return $this->urlprefix . 'public/xapi?v=' . self::MUMIE_GRADE_SYNC_VERSION;
     }
 
     /**
      * Get the latest course structure form the MUMIE server
      * @return stdClass server response
      */
-    public function get_courses_and_tasks() {
+    public function get_courses_and_tasks()
+    {
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => $this->urlprefix .
-             "public/courses-and-tasks?v="
-             . self::MUMIE_JSON_FORMAT_VERSION
-             . "&org="
-             . get_config("auth_mumie", "mumie_org"),
+                "public/courses-and-tasks?v="
+                . self::MUMIE_JSON_FORMAT_VERSION
+                . "&org="
+                . get_config("auth_mumie", "mumie_org"),
             CURLOPT_USERAGENT => 'Codular Sample cURL Request',
         ]);
         $response = curl_exec($curl);
@@ -239,7 +255,8 @@ class mumie_server implements \JsonSerializable {
      * Check if this URL actually belongs to a MUMIE server
      * @return bool
      */
-    public function is_valid_mumie_server() {
+    public function is_valid_mumie_server()
+    {
         return $this->get_courses_and_tasks()->courses != null;
     }
 
@@ -247,7 +264,8 @@ class mumie_server implements \JsonSerializable {
      * Check if there already is a configuration for the given url prefix in the database.
      * @return bool
      */
-    public function config_exists_for_url() {
+    public function config_exists_for_url()
+    {
         $config = self::get_by_urlprefix($this->urlprefix);
         return $config->get_id() != null;
     }
@@ -256,7 +274,8 @@ class mumie_server implements \JsonSerializable {
      * Get the value of courses
      * @return mumie_course[]
      */
-    public function get_courses() {
+    public function get_courses()
+    {
         return $this->courses;
     }
 
@@ -264,9 +283,10 @@ class mumie_server implements \JsonSerializable {
      * Set the value of courses
      *
      * @param mumie_courses[] $courses
-     * @return  self
+     * @return self
      */
-    public function set_courses($courses) {
+    public function set_courses($courses)
+    {
         $this->courses = $courses;
 
         return $this;
@@ -275,7 +295,8 @@ class mumie_server implements \JsonSerializable {
     /**
      * Load and set the latest tasks and courses from the MUMIE server
      */
-    public function load_structure() {
+    public function load_structure()
+    {
         $coursesandtasks = $this->get_courses_and_tasks();
         $this->courses = [];
         if ($coursesandtasks) {
@@ -289,7 +310,8 @@ class mumie_server implements \JsonSerializable {
     /**
      * Collect and set a list of all languages that are available on this MUMIE server
      */
-    private function collect_languages() {
+    private function collect_languages()
+    {
         $langs = [];
         foreach ($this->courses as $course) {
             array_push($langs, ...$course->get_languages());
@@ -301,7 +323,8 @@ class mumie_server implements \JsonSerializable {
      * Necessary to encode this object as json.
      * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $vars = get_object_vars($this);
 
         return $vars;
@@ -312,7 +335,8 @@ class mumie_server implements \JsonSerializable {
      * @param string $coursefile
      * @return mumie_course
      */
-    public function get_course_by_coursefile($coursefile) {
+    public function get_course_by_coursefile($coursefile)
+    {
         foreach ($this->courses as $course) {
             if ($course->get_coursefile() == $coursefile) {
                 return $course;
@@ -324,7 +348,8 @@ class mumie_server implements \JsonSerializable {
      * Add a MUMIE problem to the server-course-problem structure.
      * @param stdClass $task an instance of MUMIE Task
      */
-    public function add_custom_problem_to_structure($task) {
+    public function add_custom_problem_to_structure($task)
+    {
         $this->get_course_by_coursefile($task->mumie_coursefile)->add_custom_problem_to_structure($task);
         $this->collect_languages();
     }
@@ -333,16 +358,18 @@ class mumie_server implements \JsonSerializable {
      * Get all languages that are available on the MUMIE server
      * @return string[]
      */
-    public function get_languages() {
+    public function get_languages()
+    {
         return $this->languages;
     }
 
     /**
      * Set the value of languages
      * @param string[] $languages
-     * @return  self
+     * @return self
      */
-    public function set_languages($languages) {
+    public function set_languages($languages)
+    {
         $this->languages = $languages;
 
         return $this;
@@ -352,7 +379,8 @@ class mumie_server implements \JsonSerializable {
      * Get the URL of the MUMIE server
      * @return string
      */
-    public function get_urlprefix() {
+    public function get_urlprefix()
+    {
         return $this->urlprefix;
     }
 
@@ -361,7 +389,8 @@ class mumie_server implements \JsonSerializable {
      * @param string $urlprefix
      * @return self
      */
-    public function set_urlprefix($urlprefix) {
+    public function set_urlprefix($urlprefix)
+    {
         $urlprefix = (substr($urlprefix, -1) == '/' ? $urlprefix : $urlprefix . '/');
         $this->urlprefix = trim($urlprefix);
         return $this;
@@ -371,7 +400,8 @@ class mumie_server implements \JsonSerializable {
      * Get the human-readable name for this MUMIE server configuration
      * @return string
      */
-    public function get_name() {
+    public function get_name()
+    {
         return $this->name;
     }
 
@@ -380,7 +410,8 @@ class mumie_server implements \JsonSerializable {
      * @param string $name
      * @return self
      */
-    public function set_name($name) {
+    public function set_name($name)
+    {
         $this->name = trim($name);
         return $this;
     }
@@ -389,7 +420,8 @@ class mumie_server implements \JsonSerializable {
      * Get the primary key for this MUMIE server configuration
      * @return int
      */
-    public function get_id() {
+    public function get_id()
+    {
         return $this->id;
     }
 
@@ -398,7 +430,8 @@ class mumie_server implements \JsonSerializable {
      * @param int $id
      * @return self
      */
-    public function set_id($id) {
+    public function set_id($id)
+    {
         $this->id = $id;
         return $this;
     }
