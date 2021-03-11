@@ -6,6 +6,9 @@ All important changes to this plugin will be documented in this file
 ### Added
 - Implemented Privacy-API
 
+### Fixed
+- Editing a MUMIE Task whose MUMIE server was deleted no longer causes an error
+
 ## [v1.3.4] - 2020-12-10
 ### Added
 - Problem selector URL can be changed in admin settings
