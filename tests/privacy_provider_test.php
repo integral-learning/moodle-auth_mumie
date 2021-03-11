@@ -251,7 +251,7 @@ class auth_mumie_privacy_provider_testcase extends \core_privacy\tests\provider_
         $this->assertEquals([$user1->id], $DB->get_fieldset_select('auth_mumie_id_hashes', 'the_user', ''));
         $this->assertCount(1, $DB->get_records('auth_mumie_sso_tokens', array()));
     }
-    
+
     /**
      * Create login data for a user. If course is specified, use a gradepool.
      *
