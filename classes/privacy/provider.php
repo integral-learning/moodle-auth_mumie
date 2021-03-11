@@ -139,12 +139,13 @@ class provider implements
         if (!is_a($context, \context_course::class)) {
             return;
         }
+        $courseid = $context->__get("instanceid");
 
         $sql = "SELECT the_user as userid
             FROM {auth_mumie_id_hashes}
             WHERE hash LIKE :gradepool
         ";
-        $userlist->add_from_sql('userid', $sql, array('gradepool' => $context->instance));
+        $userlist->add_from_sql('userid', $sql, array('gradepool' => "%@gradepool{$courseid}@"));
     }
 
     /**
@@ -252,15 +253,14 @@ class provider implements
         global $DB;
 
         if ($context->contextlevel == CONTEXT_USER) {
-            $DB->get_records('auth_mumie_id_hashes');
-            $DB->delete_records('auth_mumie_sso_tokens');
+            self::delete_in_user_context($context, [$context->__get('instanceid')]);
         } else if ($context->contextlevel == CONTEXT_COURSE) {
             $courseid = $context->__get("instanceid");
-            $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE 'hash' LIKE = ':gradepool'";
-            $DB->get_records_sql($sql, array("gradepool" => "%@gradepool{$courseid}@"));
+            $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE hash LIKE :gradepool";
+            $records = $DB->get_records_sql($sql, array('gradepool' => "%@gradepool{$courseid}@"));
             foreach ($records as $record) {
-                $DB->delete_records('auth_mumie_id_hashes', array('the_user', $userid));
-                $DB->delete_records('auth_mumie_sso_tokens', array('the_user', $record->hash));
+                $DB->delete_records('auth_mumie_id_hashes', array('id' => $record->id));
+                $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
             }
         }
     }
@@ -312,6 +312,9 @@ class provider implements
      */
     private static function delete_in_user_context(\context $context, array $userids) {
         global $DB;
+        if (!is_a($context, \context_user::class)) {
+            return;
+        }
         list($insql, $inparams) = $DB->get_in_or_equal($userids);
         $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
         $records = $DB->get_records_sql($sql, $inparams);
