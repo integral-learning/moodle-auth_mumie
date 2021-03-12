@@ -246,8 +246,8 @@ class auth_mumie_privacy_provider_testcase extends \core_privacy\tests\provider_
 
         $this->create_login($user3);
         $this->create_login($user3, $course1);
-        $ctxuser = context_user::instance($user3->id);
-        provider::delete_data_for_all_users_in_context($ctxuser);
+        $userctx = context_user::instance($user3->id);
+        provider::delete_data_for_all_users_in_context($userctx);
         $this->assertEquals([$user1->id], $DB->get_fieldset_select('auth_mumie_id_hashes', 'the_user', ''));
         $this->assertCount(1, $DB->get_records('auth_mumie_sso_tokens', array()));
     }
