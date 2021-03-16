@@ -84,3 +84,17 @@ $string['mumie_url_prefix_help'] = 'Bitte geben Sie die URL des MUMIE-Servers ei
 $string['mumie:addserver'] = 'MUMIE-Server zu MOODLE hinzufügen';
 $string['mumie:deleteserver'] = 'MUMIE-Server löschen';
 $string['mumie:viewavailablecourses'] = 'Alle MUMIE-Server, -Courses und -Tasks sehen, die auf diesem MOODLE verfügbar sind';
+
+// Privacy.
+$string['privacy:metadata:auth_mumie_tokens:token'] = 'Tokens zur Verifizierung von Single-Sign-On-Versuchen zu MUMIE/Lemon-Server.';
+$string['privacy:metadata:auth_mumie_tokens:hash'] = 'Gehashte Moodle-User-Id mit der Nutzer auf MUMIE/Lemon-Servern identifiziert wird.';
+$string['privacy:metadata:auth_mumie_tokens:timecreated'] = 'Zeitpunkt des letzten Single-Sign-On-Versuchs';
+$string['privacy:metadata:auth_mumie_hashes:userid'] = 'Moodle-Nutzer-ID';
+$string['privacy:metadata:auth_mumie_servers:firstname'] = 'Vorname des Nutzers';
+$string['privacy:metadata:auth_mumie_servers:lastname'] = 'Nachname des Nutzers';
+$string['privacy:metadata:auth_mumie_servers:email'] = 'E-Mail-Adrese des Nutzers';
+$string['privacy:metadata:auth_mumie_tokens:tableexplanation'] = 'Details zu den SSO-Tokens, die zum Login auf MUMIE/Lemon-Servern verwendet werdem.';
+$string['privacy:metadata:auth_mumie_hashes:tableexplanation'] = 'Details zur Lookup Table für gehashte Moodle-User-IDs';
+$string['privacy:metadata:auth_mumie_servers:tableexplanation'] = 'Details zum optionalen Teilen von persönlichen Daten mit MUMIE/Lemon-Servern';
+$string['mumie_course_account'] = 'Individueller MUMIE-Account für Moodle-Kurs';
+$string['mumie_sso_tokens'] = 'Login-Daten für Single-Sign-On';

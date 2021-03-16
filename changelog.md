@@ -3,6 +3,9 @@
 All important changes to this plugin will be documented in this file
 
 ## [v1.3.5] - TODO
+### Added
+- Implemented Privacy-API
+
 ### Fixed
 - Editing a MUMIE Task whose MUMIE server was deleted no longer causes an error
 
