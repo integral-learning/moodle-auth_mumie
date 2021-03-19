@@ -2,7 +2,7 @@
 
 All important changes to this plugin will be documented in this file
 
-## [v1.3.5] - TODO
+## [v1.3.5] - 2021-03-19
 ### Added
 - Implemented Privacy-API
 
