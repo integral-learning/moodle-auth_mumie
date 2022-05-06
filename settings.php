@@ -70,7 +70,7 @@ if ($ADMIN->fulltree) {
         get_string('mumie_api_key', 'auth_mumie'),
         get_string('mumie_api_key_desc', 'auth_mumie'),
         '',
-        PARAM_ALPHANUMEXT
+        PARAM_ALPHANUM
     ));
 
     $settings->add(new admin_setting_configtext(

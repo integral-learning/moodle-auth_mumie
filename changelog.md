@@ -4,7 +4,8 @@ All important changes to this plugin will be documented in this file
 
 ## [v1.3.6] - 2022-05-06
 ### Fixed
-- Fixed param type of **MUMIE Org** and **MUMIE API Key** in admin settings. Now all characters [a-z], [A-Z], [0-9], dash and underscore are allowed
+- Fixed param type of **MUMIE Org**. Now all alphanumeric characters, dash and underscore are allowed
+- Fixed param type of *MUMIE API Key* to alphanumeric
 
 ## [v1.3.5] - 2021-03-19
 ### Added
