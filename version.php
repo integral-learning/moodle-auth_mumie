@@ -25,8 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2021031200;
+$plugin->version = 2022050600;
 $plugin->component = 'auth_mumie';
 $plugin->requires = 2015041700;
-$plugin->release = "v1.3.5";
+$plugin->release = "v1.3.6";
 $plugin->maturity = MATURITY_STABLE;
