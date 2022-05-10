@@ -70,7 +70,7 @@ if ($ADMIN->fulltree) {
         get_string('mumie_api_key', 'auth_mumie'),
         get_string('mumie_api_key_desc', 'auth_mumie'),
         '',
-        PARAM_URL
+        PARAM_ALPHANUM
     ));
 
     $settings->add(new admin_setting_configtext(
@@ -78,7 +78,7 @@ if ($ADMIN->fulltree) {
         get_string('mumie_org', 'auth_mumie'),
         get_string('mumie_org_desc', 'auth_mumie'),
         '',
-        PARAM_URL
+        PARAM_ALPHANUMEXT
     ));
 
     // Header for shared user data.
