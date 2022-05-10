@@ -2,7 +2,7 @@
 
 All important changes to this plugin will be documented in this file
 
-## [v1.3.6] - 2022-05-06
+## [v1.3.6] - 2022-05-10
 ### Fixed
 - Fixed param type of **MUMIE Org**. Now all alphanumeric characters, dash and underscore are allowed
 - Fixed param type of *MUMIE API Key* to alphanumeric
