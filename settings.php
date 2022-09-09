@@ -41,7 +41,7 @@ foreach ($mumieservers as $server) {
     $name = "<span class='mumie_list_entry_name'>" . $server->get_name() . "</span>" . $id;
     $url = "<span class='mumie_list_entry_url'>" . $server->get_urlprefix() . "</span>";
     $edit = "<a class = 'mumie_list_edit_button' title='" . get_string("mumie_edit_button", "auth_mumie") . "'>"
-        . '<span class="icon fa fa-cog fa-fw " title ="delete" aria-hidden="true" aria-label=""></span>'
+        . '<span class="icon fa fa-cog fa-fw " aria-hidden="true" aria-label=""></span>'
         . "</a>";
     $deleteurl = "{$CFG->wwwroot}/auth/mumie/deletemumieserver.php?id={$server->get_id()}&amp;sesskey={$USER->sesskey}";
     $delete = "<a class = 'mumie_list_delete_button' href='{$deleteurl}' title='"
