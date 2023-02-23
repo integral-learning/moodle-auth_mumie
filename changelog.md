@@ -1,6 +1,9 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
+## [v1.4.0] - TODO
+## Changed
+- Plugin now requires Moodle 4.0
 
 ## [v1.3.6] - 2022-05-10
 ### Fixed
