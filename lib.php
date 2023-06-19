@@ -103,7 +103,11 @@ function auth_mumie_output_fragment_new_mumieserver_form($args) {
     $formdata = [];
     if (!empty($args->jsonformdata)) {
         $serialiseddata = json_decode($args->jsonformdata);
-        parse_str($serialiseddata, $formdata);
+        if (is_string($serialiseddata)) {
+            parse_str($serialiseddata, $formdata);
+        } else {
+            $formdata = $serialiseddata;
+        }
     }
     $mumieserver = new stdClass();
 
@@ -130,7 +134,7 @@ function auth_mumie_output_fragment_new_mumieserver_form($args) {
 
     $mform->set_data($mumieserver);
 
-    if (!empty($args->jsonformdata) && strcmp($args->jsonformdata, "{}") !== 0) {
+    if (!empty($args->jsonformdata) && strcmp($args->jsonformdata, "[]") !== 0) {
         // If we were passed non-empty form data we want the mform to call validation functions and show errors.
         $mform->is_validated();
     }

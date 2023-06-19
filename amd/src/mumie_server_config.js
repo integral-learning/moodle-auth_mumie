@@ -50,7 +50,7 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
          */
         MumieServer.prototype.getBody = function(formdata) {
             if (typeof formdata === "undefined") {
-                formdata = {};
+                formdata = [];
             }
             // Get the content of the modal.
             var params = {
