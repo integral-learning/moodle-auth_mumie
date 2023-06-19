@@ -1,6 +1,10 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
+## [v1.4.1] - XXX
+### Fixed
+- Fixed an exception that was thrown under php 8 whenever the admin settings were displayed
+
 ## [v1.4.0] - 2023-02-27
 ## Changed
 - Plugin now requires Moodle 4.0
