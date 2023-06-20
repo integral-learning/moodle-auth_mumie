@@ -38,7 +38,7 @@
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
             </KEYS>
         </TABLE>
-        <TABLE NAME = "auth_mumie_encryption_key" COMMENT="Lookup table for salted and hased userids">
+        <TABLE NAME = "auth_mumie_cryptographic_key" COMMENT="Table for cryptographic keys used to sign data transmitted to LEMON servers">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="name" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>

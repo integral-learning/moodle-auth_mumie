@@ -1,7 +1,7 @@
 <?php
 
-class mumie_encryption_key {
-    const MUMIE_ENCRYPTION_KEY_TABLE = "auth_mumie_encryption_key";
+class mumie_cryptographic_key {
+    const MUMIE_CRYPTOGRAPHIC_KEY_TABLE = "auth_mumie_cryptographic_key";
     private string $id;
     private string $name;
     private string $key;
@@ -17,27 +17,27 @@ class mumie_encryption_key {
 
     public function create() {
         global $DB;
-        $DB->insert_record(self::MUMIE_ENCRYPTION_KEY_TABLE, ["name" => $this->name, "key" => $this->key]);
+        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key" => $this->key]);
     }
 
     public function update() {
         global $DB;
-        $DB->update_record(self::MUMIE_ENCRYPTION_KEY_TABLE, ["name" => $this->name, "key" => $this->key, "id" => $this->id]);
+        $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key" => $this->key, "id" => $this->id]);
     }
 
-    public static function getByName(string $name) : mumie_encryption_key | null{
+    public static function getByName(string $name) : mumie_cryptographic_key | null{
         global $DB;
-        $record = $DB->get_record(self::MUMIE_ENCRYPTION_KEY_TABLE, ["name" => $name]);
+        $record = $DB->get_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $name]);
         return self::fromRecord($record);
     }
 
-    private static function fromRecord($record) : mumie_encryption_key | null {
+    private static function fromRecord($record) : mumie_cryptographic_key | null {
         if (!$record) {
             return null;
         }
-        $encryption_key = new mumie_encryption_key($record->name, $record->key);
-        $encryption_key->setId($record->id);
-        return $encryption_key;
+        $cryptographic_key = new mumie_cryptographic_key($record->name, $record->key);
+        $cryptographic_key->setId($record->id);
+        return $cryptographic_key;
     }
 
     /**

@@ -77,7 +77,7 @@ function xmldb_auth_mumie_upgrade($oldversion) {
     }
 
     if ($oldversion < 2023062000) {
-        $table = new xmldb_table('auth_mumie_encryption_key');
+        $table = new xmldb_table('auth_mumie_cryptographic_key');
 
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
         $table->add_field('name', XMLDB_TYPE_CHAR, '10', null, XMLDB_NOTNULL, null, null);

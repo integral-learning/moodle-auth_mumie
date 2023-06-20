@@ -2,16 +2,16 @@
 
 require_once($CFG->dirroot . '/auth/mumie/classes/encryption/mumie_encryption_key.php');
 
-class mumie_encryption_service
+class mumie_cryptography_service
 {
     const PUBLIC_KEY_NAME = "public";
     const PRIVATE_KEY_NAME = "private";
-    public static function get_public_key() : mumie_encryption_key | null {
-        return mumie_encryption_key::getByName(self::PUBLIC_KEY_NAME);
+    public static function get_public_key() : mumie_cryptographic_key | null {
+        return mumie_cryptographic_key::getByName(self::PUBLIC_KEY_NAME);
     }
 
-    public static function get_private_key() : mumie_encryption_key | null {
-        return mumie_encryption_key::getByName(self::PRIVATE_KEY_NAME);
+    public static function get_private_key() : mumie_cryptographic_key | null {
+        return mumie_cryptographic_key::getByName(self::PRIVATE_KEY_NAME);
     }
 
     public static function ensure_key_pair_exist() {
@@ -52,13 +52,13 @@ class mumie_encryption_service
     }
 
     private static function update_key(string $name, string $key) {
-        $encryptionkey = mumie_encryption_key::getByName($name);
-        if (!is_null($encryptionkey)) {
-            $encryptionkey->setKey($key);
-            $encryptionkey->update();
+        $cryptographickey = mumie_cryptographic_key::getByName($name);
+        if (!is_null($cryptographickey)) {
+            $cryptographickey->setKey($key);
+            $cryptographickey->update();
         } else {
-            $encryptionkey = new mumie_encryption_key($name, $key);
-            $encryptionkey->create();
+            $cryptographickey = new mumie_cryptographic_key($name, $key);
+            $cryptographickey->create();
         }
     }
 }
