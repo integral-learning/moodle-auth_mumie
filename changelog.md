@@ -1,12 +1,11 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
-
 ## [v1.5.0] - XXX
 ### Added
 - Added a new EP `[GET] /auth/mumie/publicKey.php` that returns the public cryptographic key used to sign data
 
-## [v1.4.1] - XXX
+## [v1.4.1] - 2023-06-26
 ### Fixed
 - Fixed an exception that was thrown under php 8 whenever the admin settings were displayed
 
