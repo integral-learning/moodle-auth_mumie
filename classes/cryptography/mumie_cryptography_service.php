@@ -13,21 +13,59 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * This file defines a class used to manage cryptographic keys used within the mumie plugins.
+ *
+ * @package auth_mumie
+ * @copyright  2017-2023 integral-learning GmbH (https://www.integral-learning.de/)
+ * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot . '/auth/mumie/classes/encryption/mumie_encryption_key.php');
 
+/**
+ * This class is used to manage cryptographic keys for communication with MUMIE/Lemon servers.
+ *
+ * @package auth_mumie
+ * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
+ * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class mumie_cryptography_service {
+    /**
+     * The identifier for the public key
+     */
     const PUBLIC_KEY_NAME = "public";
+    /**
+     * The identifier for the private key
+     */
     const PRIVATE_KEY_NAME = "private";
+
+    /**
+     * Get the public cryptographic key saved in the database
+     * @return mumie_cryptographic_key|null
+     */
     public static function get_public_key() : mumie_cryptographic_key | null {
         return mumie_cryptographic_key::get_by_name(self::PUBLIC_KEY_NAME);
     }
 
+    /**
+     * Get the private cryptographic key saved in the database
+     * @return mumie_cryptographic_key|null
+     */
     public static function get_private_key() : mumie_cryptographic_key | null {
         return mumie_cryptographic_key::get_by_name(self::PRIVATE_KEY_NAME);
     }
 
+    /**
+     * Generate cryptographic key pair, if it does not exist.
+     * @return void
+     */
     public static function ensure_key_pair_exist() {
         $publickey = self::get_public_key();
         $privatekey = self::get_private_key();
@@ -37,6 +75,10 @@ class mumie_cryptography_service {
         }
     }
 
+    /**
+     * Generate a cryptographic key pair and save it to the database
+     * @return void
+     */
     private static function generate_key_pair() : void {
         $config = array(
             "digest_alg" => "sha512",
@@ -49,23 +91,45 @@ class mumie_cryptography_service {
         $pubkey = openssl_pkey_get_details($res);
         $pubkey = $pubkey["key"];
 
-        self::update_key_pair($privatekey, $pubkey);
+        self::upsert_key_pair($privatekey, $pubkey);
     }
 
-    private static function update_key_pair(string $privatekey, string $publickey) : void {
-        self::update_private_key($privatekey);
-        self::update_public_key($publickey);
+    /**
+     * Upsert a cryptographic key pair
+     * @param string $privatekey
+     * @param string $publickey
+     * @return void
+     */
+    private static function upsert_key_pair(string $privatekey, string $publickey) : void {
+        self::upsert_private_key($privatekey);
+        self::upsert_public_key($publickey);
     }
 
-    private static function update_public_key(string $key) : void {
-        self::update_key(self::PUBLIC_KEY_NAME, $key);
+    /**
+     * Upsert the public cryptographic key
+     * @param string $key
+     * @return void
+     */
+    private static function upsert_public_key(string $key) : void {
+        self::upsert_key(self::PUBLIC_KEY_NAME, $key);
     }
 
-    private static function update_private_key(string $key) : void {
-        self::update_key(self::PRIVATE_KEY_NAME, $key);
+    /**
+     * Upsert the private cryptographic key
+     * @param string $key
+     * @return void
+     */
+    private static function upsert_private_key(string $key) : void {
+        self::upsert_key(self::PRIVATE_KEY_NAME, $key);
     }
 
-    private static function update_key(string $name, string $key) {
+    /**
+     * Upsert a key with a given name
+     * @param string $name
+     * @param string $key
+     * @return void
+     */
+    private static function upsert_key(string $name, string $key) {
         $cryptographickey = mumie_cryptographic_key::get_by_name($name);
         if (!is_null($cryptographickey)) {
             $cryptographickey->set_key($key);

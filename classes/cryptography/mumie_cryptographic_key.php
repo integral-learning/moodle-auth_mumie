@@ -13,13 +13,44 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * This file defines a class representing a cryptographic key stored in the database
+ *
+ * @package auth_mumie
+ * @copyright  2017-2023 integral-learning GmbH (https://www.integral-learning.de/)
+ * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/**
+ * This class is representing a cryptographic key stored in the database
+ *
+ * @package auth_mumie
+ * @copyright  2017-2023 integral-learning GmbH (https://www.integral-learning.de/)
+ * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class mumie_cryptographic_key {
+    /**
+     * Name of table used to store keys
+     */
     const MUMIE_CRYPTOGRAPHIC_KEY_TABLE = "auth_mumie_cryptographic_key";
+    /**
+     * @var string
+     */
     private string $id;
+    /**
+     * @var string
+     */
     private string $name;
+    /**
+     * @var string
+     */
     private string $key;
 
     /**
+     * Create a new instance
      * @param string $name
      * @param string $key
      */
@@ -28,23 +59,44 @@ class mumie_cryptographic_key {
         $this->key = $key;
     }
 
+    /**
+     * Insert a new key into the database
+     * @return void
+     * @throws dml_exception
+     */
     public function create() {
         global $DB;
         $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key" => $this->key]);
     }
 
+    /**
+     * Update an existing database entry
+     * @return void
+     * @throws dml_exception
+     */
     public function update() {
         global $DB;
         $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key" => $this->key, "id" => $this->id]);
     }
 
+    /**
+     * Find a database entry by name
+     * @param string $name
+     * @return mumie_cryptographic_key|null
+     * @throws dml_exception
+     */
     public static function get_by_name(string $name) : mumie_cryptographic_key | null {
         global $DB;
         $record = $DB->get_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $name]);
         return self::from_record($record);
     }
 
-    private static function from_record($record) : mumie_cryptographic_key | null {
+    /**
+     * Create a class instance from a record
+     * @param mixed $record
+     * @return mumie_cryptographic_key|null
+     */
+    private static function from_record(mixed $record) : mumie_cryptographic_key | null {
         if (!$record) {
             return null;
         }
@@ -54,6 +106,7 @@ class mumie_cryptographic_key {
     }
 
     /**
+     * Get the id
      * @return string
      */
     public function get_id() : string {
@@ -61,6 +114,7 @@ class mumie_cryptographic_key {
     }
 
     /**
+     * Set a new id
      * @param string $id
      */
     public function set_id(string $id) : void {
@@ -68,6 +122,7 @@ class mumie_cryptographic_key {
     }
 
     /**
+     * Get the name
      * @return string
      */
     public function get_name() : string {
@@ -75,6 +130,7 @@ class mumie_cryptographic_key {
     }
 
     /**
+     * Set a new name
      * @param string $name
      */
     public function set_name(string $name) : void {
@@ -82,6 +138,7 @@ class mumie_cryptographic_key {
     }
 
     /**
+     * Get the key
      * @return string
      */
     public function get_key() : string {
@@ -89,10 +146,10 @@ class mumie_cryptographic_key {
     }
 
     /**
+     * Set a new key
      * @param string $key
      */
     public function set_key(string $key) : void {
         $this->key = $key;
     }
-
 }
