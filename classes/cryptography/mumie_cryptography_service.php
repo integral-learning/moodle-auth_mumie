@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . '/auth/mumie/classes/encryption/mumie_encryption_key.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptographic_key.php');
 
 /**
  * This class is used to manage cryptographic keys for communication with MUMIE/Lemon servers.
