@@ -50,7 +50,7 @@ class mumie_cryptography_service {
      * Get the public cryptographic key saved in the database
      * @return mumie_cryptographic_key|null
      */
-    public static function get_public_key() : mumie_cryptographic_key | null {
+    public static function get_public_key() : ?mumie_cryptographic_key {
         return mumie_cryptographic_key::get_by_name(self::PUBLIC_KEY_NAME);
     }
 
@@ -58,7 +58,7 @@ class mumie_cryptography_service {
      * Get the private cryptographic key saved in the database
      * @return mumie_cryptographic_key|null
      */
-    public static function get_private_key() : mumie_cryptographic_key | null {
+    public static function get_private_key() : ?mumie_cryptographic_key {
         return mumie_cryptographic_key::get_by_name(self::PRIVATE_KEY_NAME);
     }
 

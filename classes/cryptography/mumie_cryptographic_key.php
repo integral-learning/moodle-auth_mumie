@@ -85,7 +85,7 @@ class mumie_cryptographic_key {
      * @return mumie_cryptographic_key|null
      * @throws dml_exception
      */
-    public static function get_by_name(string $name) : mumie_cryptographic_key | null {
+    public static function get_by_name(string $name) : ?mumie_cryptographic_key {
         global $DB;
         $record = $DB->get_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $name]);
         return self::from_record($record);
@@ -96,7 +96,7 @@ class mumie_cryptographic_key {
      * @param mixed $record
      * @return mumie_cryptographic_key|null
      */
-    private static function from_record(mixed $record) : mumie_cryptographic_key | null {
+    private static function from_record($record) : ?mumie_cryptographic_key {
         if (!$record) {
             return null;
         }
