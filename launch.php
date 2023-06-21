@@ -27,13 +27,13 @@ namespace auth_mumie;
 const WORKSHEET_PREFIX = "worksheet_";
 require_once("../../config.php");
 require_once($CFG->dirroot . '/auth/mumie/lib.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/sso/launch_form_builder.php');
 require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
 require_once($CFG->dirroot . '/mod/mumie/lib.php');
 require_login();
 
 global $DB, $USER;
 $id = optional_param('id', 0, PARAM_INT); // Course Module ID.
-$embedded = optional_param("embedded", false, PARAM_BOOL);
 
 $mumietask = $DB->get_record("mumie", array('id' => $id));
 $ssotoken = new \stdClass();
@@ -59,12 +59,8 @@ if (isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1) {
     $ssotoken->the_user = $USER->id;
 }
 $ssotoken->timecreated = time();
-
-$loginurl = auth_mumie_get_login_url($mumietask);
-
 $tokentable = "auth_mumie_sso_tokens";
 
-$org = get_config("auth_mumie", "mumie_org");
 
 if ($oldtoken = $DB->get_record($tokentable, array("the_user" => $ssotoken->the_user))) {
     $ssotoken->id = $oldtoken->id;
@@ -73,32 +69,16 @@ if ($oldtoken = $DB->get_record($tokentable, array("the_user" => $ssotoken->the_
     $DB->insert_record($tokentable, (array) $ssotoken);
 }
 
-$problemurl = auth_mumie_get_problem_url($mumietask);
 $problempath = auth_mumie_get_problem_path($mumietask);
 
-$deadlineinputs = include_deadline_signature($problempath, $mumietask) ? get_deadline_signature_inputs(mumie_get_effective_duedate($USER->id, $mumietask), $ssotoken->the_user, $problempath) : "";
-echo
-    "
-    <form id='mumie_sso_form' name='mumie_sso_form' method='post' action='{$loginurl}'>
-        <input type='hidden' name='userId' id='userId' type ='text' value='{$ssotoken->the_user}'/>
-        <input type='hidden' name='token' id='token' type ='text' value='{$ssotoken->token}'/>
-        <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
-        <input type='hidden' name='resource' id='resource' type ='text' value='{$problemurl}'/>
-        <input type='hidden' name='path' id='path' type ='text' value='{$problempath}'/>
-        <input type='hidden' name='lang' id='lang' type ='text' value='{$mumietask->language}'/>"
-    . $deadlineinputs
-    . "</form>
-    <script>
-    document.forms['mumie_sso_form'].submit();
-    </script>
-    ";
-
-function include_deadline_signature(string $problempath, $mumietask) : bool {
-    return str_starts_with($problempath, WORKSHEET_PREFIX) && isset($mumietask->duedate);
+$launchformbuilder = new launch_form_builder($ssotoken, $mumietask);
+$deadline = mumie_get_effective_duedate($USER->id, $mumietask);
+if (include_deadline_signature($problempath, $deadline)) {
+    $launchformbuilder->with_deadline($deadline);
 }
-function get_deadline_signature_inputs(int $deadline, $userid, $problempath) : string {
-    $deadlinedata = json_encode(["deadline" => $deadline, "userId" => $userid, "worksheetId" =>str_replace(WORKSHEET_PREFIX, '', $problempath)]);
-    $signeddata = \mumie_cryptography_service::sign_data($deadlinedata);
-    return "<input type='hidden' name='deadline' id='deadline' type='text' value='{$deadlinedata}'>
-        <input type='hidden' name='deadlineSignature' id='deadlineSignature' type='text' value='{$signeddata}'>";
+echo $launchformbuilder->build();
+
+function include_deadline_signature(string $problempath, $deadline) : bool {
+    return str_starts_with($problempath, WORKSHEET_PREFIX)
+        && $deadline > 0;
 }
