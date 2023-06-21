@@ -28,6 +28,7 @@ const WORKSHEET_PREFIX = "worksheet_";
 require_once("../../config.php");
 require_once($CFG->dirroot . '/auth/mumie/lib.php');
 require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
+require_once($CFG->dirroot . '/mod/mumie/lib.php');
 require_login();
 
 global $DB, $USER;
@@ -72,11 +73,10 @@ if ($oldtoken = $DB->get_record($tokentable, array("the_user" => $ssotoken->the_
     $DB->insert_record($tokentable, (array) $ssotoken);
 }
 
-
 $problemurl = auth_mumie_get_problem_url($mumietask);
 $problempath = auth_mumie_get_problem_path($mumietask);
 
-$deadlineinputs = include_deadline_signature($problempath, $mumietask) ? get_deadline_signature_inputs("my deadline", $ssotoken->the_user, $problempath) : "";
+$deadlineinputs = include_deadline_signature($problempath, $mumietask) ? get_deadline_signature_inputs(mumie_get_effective_duedate($USER->id, $mumietask), $ssotoken->the_user, $problempath) : "";
 echo
     "
     <form id='mumie_sso_form' name='mumie_sso_form' method='post' action='{$loginurl}'>
@@ -96,7 +96,7 @@ echo
 function include_deadline_signature(string $problempath, $mumietask) : bool {
     return str_starts_with($problempath, WORKSHEET_PREFIX) && isset($mumietask->duedate);
 }
-function get_deadline_signature_inputs($deadline, $userid, $problempath) : string {
+function get_deadline_signature_inputs(int $deadline, $userid, $problempath) : string {
     $deadlinedata = json_encode(["deadline" => $deadline, "userId" => $userid, "worksheetId" =>str_replace(WORKSHEET_PREFIX, '', $problempath)]);
     $signeddata = \mumie_cryptography_service::sign_data($deadlinedata);
     return "<input type='hidden' name='deadline' id='deadline' type='text' value='{$deadlinedata}'>
