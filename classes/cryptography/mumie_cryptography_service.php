@@ -66,13 +66,19 @@ class mumie_cryptography_service {
      * Generate cryptographic key pair, if it does not exist.
      * @return void
      */
-    public static function ensure_key_pair_exist() {
+    public static function ensure_key_pair_exist() : void {
         $publickey = self::get_public_key();
         $privatekey = self::get_private_key();
 
         if (is_null($publickey) || is_null($privatekey)) {
             self::generate_key_pair();
         }
+    }
+
+    public static function sign_data(string $data) : string {
+        self::ensure_key_pair_exist();
+        openssl_sign($data, $signeddata, self::get_private_key()->get_key());
+        return $signeddata;
     }
 
     /**
@@ -129,7 +135,7 @@ class mumie_cryptography_service {
      * @param string $key
      * @return void
      */
-    private static function upsert_key(string $name, string $key) {
+    private static function upsert_key(string $name, string $key) : void {
         $cryptographickey = mumie_cryptographic_key::get_by_name($name);
         if (!is_null($cryptographickey)) {
             $cryptographickey->set_key($key);
