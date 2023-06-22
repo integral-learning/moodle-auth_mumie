@@ -3,6 +3,7 @@
 namespace auth_mumie\token;
 
 use auth_mumie\user\mumie_user;
+require_once($CFG->dirroot . '/auth/mumie/classes/sso/token/sso_token.php');
 
 class token_service {
     public static function generate_sso_token(mumie_user $user) : sso_token {
@@ -15,17 +16,6 @@ class token_service {
             $token->create();
         }
         return $token;
-    }
-
-    private static function get_external_user($user, $mumietask) {
-        if (self::use_hashed_user($mumietask)) {
-
-        }
-        return $user;
-    }
-
-    private static function use_hashed_user($mumietask) : bool {
-        return isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1;
     }
 
     private static function generate_token() {

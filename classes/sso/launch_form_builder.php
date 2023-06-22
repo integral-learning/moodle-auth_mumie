@@ -2,6 +2,8 @@
 
 namespace auth_mumie;
 
+require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
+
 use auth_mumie\token\sso_token;
 
 class launch_form_builder
