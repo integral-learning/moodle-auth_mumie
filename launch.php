@@ -24,11 +24,17 @@
  */
 namespace auth_mumie;
 
+use auth_mumie\hash\hashing_service;
+use auth_mumie\token\token_service;
+
 const WORKSHEET_PREFIX = "worksheet_";
 require_once("../../config.php");
 require_once($CFG->dirroot . '/auth/mumie/lib.php');
 require_once($CFG->dirroot . '/auth/mumie/classes/sso/launch_form_builder.php');
 require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/sso/hash/hashing_service.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/sso/token/token_service.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/sso/token/sso_token.php');
 require_once($CFG->dirroot . '/mod/mumie/lib.php');
 require_login();
 
@@ -36,38 +42,13 @@ global $DB, $USER;
 $id = optional_param('id', 0, PARAM_INT); // Course Module ID.
 
 $mumietask = $DB->get_record("mumie", array('id' => $id));
-$ssotoken = new \stdClass();
-$ssotoken->token = auth_mumie_get_token(20);
 
-if (isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1) {
-    $hashidtable = "auth_mumie_id_hashes";
-    $hash = auth_mumie_get_hashed_id($USER->id);
-    if ($mumietask->privategradepool) {
-        $hash .= '@gradepool' . $mumietask->course . '@';
-    }
-    $ssotoken->the_user = $hash;
-    $row = new \stdClass();
-    $row->hash = $hash;
-    $row->the_user = $USER->id;
-    if ($oldrecord = $DB->get_record($hashidtable, array("the_user" => $USER->id, "hash" => $row->hash))) {
-        $row->id = $oldrecord->id;
-        $DB->update_record($hashidtable, $row);
-    } else {
-        $DB->insert_record($hashidtable, (array) $row);
-    }
+if (use_id_hashing($mumietask)) {
+    $externaluser = hashing_service::generate_hash($USER->id, $mumietask)->getHash();
 } else {
-    $ssotoken->the_user = $USER->id;
+    $externaluser = $USER->id;
 }
-$ssotoken->timecreated = time();
-$tokentable = "auth_mumie_sso_tokens";
-
-
-if ($oldtoken = $DB->get_record($tokentable, array("the_user" => $ssotoken->the_user))) {
-    $ssotoken->id = $oldtoken->id;
-    $DB->update_record($tokentable, $ssotoken);
-} else {
-    $DB->insert_record($tokentable, (array) $ssotoken);
-}
+$ssotoken = token_service::generate_sso_token($mumietask, $externaluser);
 
 $problempath = auth_mumie_get_problem_path($mumietask);
 
@@ -81,4 +62,11 @@ echo $launchformbuilder->build();
 function include_deadline_signature(string $problempath, $deadline) : bool {
     return str_starts_with($problempath, WORKSHEET_PREFIX)
         && $deadline > 0;
+}
+/**
+ * @param mixed $mumietask
+ * @return bool
+ */
+function use_id_hashing(mixed $mumietask) : bool {
+    return isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1;
 }

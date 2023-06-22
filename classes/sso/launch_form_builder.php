@@ -2,9 +2,11 @@
 
 namespace auth_mumie;
 
+use auth_mumie\token\sso_token;
+
 class launch_form_builder
 {
-    private \stdClass $ssotoken;
+    private sso_token $ssotoken;
     private \stdClass $mumietask;
     private string $deadlinefragment;
 
@@ -14,7 +16,7 @@ class launch_form_builder
      * @param string    $org
      * @param \stdClass $mumie
      */
-    public function __construct(\stdClass $ssotoken, \stdClass $mumie)
+    public function __construct(sso_token $ssotoken, \stdClass $mumie)
     {
         $this->ssotoken = $ssotoken;
         $this->mumietask = $mumie;
@@ -28,7 +30,7 @@ class launch_form_builder
 
     private function get_deadline_signature_inputs(int $deadline) : string {
         $problempath = auth_mumie_get_problem_path($this->mumietask);
-        $deadlinedata = json_encode(["deadline" => $deadline, "userId" => $this->ssotoken->the_user, "problemPath" => $problempath]);
+        $deadlinedata = json_encode(["deadline" => $deadline, "userId" => $this->ssotoken->getUser(), "problemPath" => $problempath]);
         $signeddata = \mumie_cryptography_service::sign_data($deadlinedata);
         return "<input type='hidden' name='deadline' id='deadline' type='text' value='{$deadlinedata}'>
         <input type='hidden' name='deadlineSignature' id='deadlineSignature' type='text' value='{$signeddata}'>";
@@ -42,8 +44,8 @@ class launch_form_builder
 
         return"
             <form id='mumie_sso_form' name='mumie_sso_form' method='post' action='{$loginurl}'>
-                <input type='hidden' name='userId' id='userId' type ='text' value='{$this->ssotoken->the_user}'/>
-                <input type='hidden' name='token' id='token' type ='text' value='{$this->ssotoken->token}'/>
+                <input type='hidden' name='userId' id='userId' type ='text' value='{$this->ssotoken->getUser()}'/>
+                <input type='hidden' name='token' id='token' type ='text' value='{$this->ssotoken->getToken()}'/>
                 <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
                 <input type='hidden' name='resource' id='resource' type ='text' value='{$problemurl}'/>
                 <input type='hidden' name='path' id='path' type ='text' value='{$problempath}'/>

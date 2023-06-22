@@ -32,10 +32,17 @@ class sso_token {
         $DB->update_record(self::SSO_TOKEN_TABLE, array("the_user" => $this->user, "token" => $this->token, "timecreated" => $this->timecreated, "id" => $this->id));
     }
 
-    public static function find_by_user(string $user) : sso_token {
+    public static function find_by_user(string $user) : ?sso_token {
         global $DB;
-        $record = $DB->get_record(self::SSO_TOKEN_TABLE, ["the_user", $user]);
-        $token = new sso_token($record->token, $record->user, $record->timecreated);
+        $record = $DB->get_record(self::SSO_TOKEN_TABLE, ["the_user" => $user]);
+        return self::from_record($record);
+    }
+
+    private static function from_record($record) : ?sso_token {
+        if (!$record) {
+            return null;
+        }
+        $token = new sso_token($record->token, $record->the_user, $record->timecreated);
         $token->setId($record->id);
         return $token;
     }
