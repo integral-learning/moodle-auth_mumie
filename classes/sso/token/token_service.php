@@ -2,15 +2,16 @@
 
 namespace auth_mumie\token;
 
+use auth_mumie\user\mumie_user;
+
 class token_service {
-    public static function generate_sso_token($mumietask, $user) : sso_token {
-        $externaluser = self::get_external_user($user, $mumietask);
-        if ($token = sso_token::find_by_user($externaluser)) {
+    public static function generate_sso_token(mumie_user $user) : sso_token {
+        if ($token = sso_token::find_by_user($user->get_mumie_id())) {
             $token->setToken(self::generate_token());
             $token->setTimecreated(time());
             $token->update();
         } else {
-            $token = new sso_token(self::generate_token(), $externaluser, time());
+            $token = new sso_token(self::generate_token(), $user->get_mumie_id(), time());
             $token->create();
         }
         return $token;
