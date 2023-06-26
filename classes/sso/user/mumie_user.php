@@ -5,6 +5,9 @@ namespace auth_mumie\user;
 class mumie_user {
     private int $moodleid;
     private string $mumieid;
+    private string $firstname;
+    private string $lastname;
+    private string $email;
 
     /**
      * @param int    $moodleid
@@ -14,6 +17,17 @@ class mumie_user {
     {
         $this->moodleid = $moodleid;
         $this->mumieid = $mumieid;
+    }
+
+    public function load() {
+        global $DB;
+        $user = $DB->get_record('user', array('id' => $this->moodleid));
+        if (!$user) {
+            return;
+        }
+        $this->firstname = $user->firstname;
+        $this->lastname = $user->lastname;
+        $this->email = $user->email;
     }
 
     /**
@@ -46,5 +60,29 @@ class mumie_user {
     public function set_mumie_id(string $mumieid) : void
     {
         $this->mumieid = $mumieid;
+    }
+
+    /**
+     * @return string
+     */
+    public function get_firstname() : string
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @return string
+     */
+    public function get_lastname() : string
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @return string
+     */
+    public function get_email() : string
+    {
+        return $this->email;
     }
 }

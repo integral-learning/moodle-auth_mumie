@@ -46,7 +46,7 @@ class mumie_id_hash {
         return self::from_record($record);
     }
 
-    private static function find_by_hash($hash) : ?mumie_id_hash {
+    public static function find_by_hash($hash) : ?mumie_id_hash {
         global $DB;
         $record = $DB->get_record(self::HASH_ID_TABLE, ["hash" => $hash]);
         return self::from_record($record);

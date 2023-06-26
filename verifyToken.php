@@ -23,47 +23,31 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once("../../config.php");
+use auth_mumie\user\mumie_user_service;
+use auth_mumie\token\token_service;
 
-global $DB;
+require_once("../../config.php");
+require_once($CFG->dirroot . "/auth/mumie/classes/sso/user/mumie_user_service.php");
+require_once($CFG->dirroot . "/auth/mumie/classes/sso/token/token_service.php");
 
 header('Content-Type:application/json');
 
-if (!data_submitted()) {
-    print_error("Method Not Allowed or Bad Request");
-    exit(0);
-}
-
 $token = required_param('token', PARAM_ALPHANUM);
-$userid = required_param('userId', PARAM_RAW);
+$mumieid = required_param('userId', PARAM_RAW);
+$user = mumie_user_service::get_from_mumie_user($mumieid);
 
-$table = "auth_mumie_sso_tokens";
-
-$mumietoken = $DB->get_record($table, array('the_user' => $userid, 'token' => $token));
-
-if (strlen($userid) >= 128) {
-    $moodleuserid = $DB->get_record("auth_mumie_id_hashes", array('hash' => $userid))->the_user;
-} else {
-    $moodleuserid = $userid;
-}
+$user->load();
 $response = new \stdClass();
-$user = $DB->get_record('user', array('id' => $moodleuserid));
-if ($mumietoken != null && $user != null) {
-    $current = time();
-    if (($current - $mumietoken->timecreated) >= 60) {
-        $response->status = "invalid";
-    } else {
-        $response->status = "valid";
-
-        if (get_config('auth_mumie', 'userdata_firstname')) {
-            $response->firstname = $user->firstname;
-        }
-        if (get_config('auth_mumie', 'userdata_lastname')) {
-            $response->lastname = $user->lastname;
-        }
-        if (get_config('auth_mumie', 'userdata_mail')) {
-            $response->email = $user->email;
-        }
+if (token_service::is_token_valid($user, $token)) {
+    $response->status = "valid";
+    if (get_config('auth_mumie', 'userdata_firstname')) {
+        $response->firstname = $user->get_firstname();
+    }
+    if (get_config('auth_mumie', 'userdata_lastname')) {
+        $response->lastname = $user->get_lastname();
+    }
+    if (get_config('auth_mumie', 'userdata_mail')) {
+        $response->email = $user->get_email();
     }
 } else {
     $response->status = "invalid";

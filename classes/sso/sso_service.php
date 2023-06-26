@@ -23,10 +23,9 @@ class sso_service {
     }
 
     private static function get_launch_form(sso_token $token, $mumietask, $deadline) : string {
-        $problempath = auth_mumie_get_problem_path($mumietask);
-
         $launchformbuilder = new launch_form_builder($token, $mumietask);
 
+        $problempath = auth_mumie_get_problem_path($mumietask);
         if (self::include_signed_deadline($problempath, $deadline)) {
             $launchformbuilder->with_deadline($deadline);
         }
