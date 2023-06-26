@@ -39,14 +39,22 @@ use auth_mumie\token\sso_token;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class launch_form_builder {
+    /**
+     * @var sso_token|\stdClass
+     */
     private sso_token $ssotoken;
+    /**
+     * @var \stdClass
+     */
     private \stdClass $mumietask;
+    /**
+     * @var string
+     */
     private string $deadlinefragment;
 
     /**
-     * @param string    $userid
-     * @param \stdClass    $ssotoken
-     * @param string    $org
+     * Create a new instance
+     * @param sso_token $ssotoken
      * @param \stdClass $mumie
      */
     public function __construct(sso_token $ssotoken, \stdClass $mumie) {
@@ -55,11 +63,21 @@ class launch_form_builder {
         $this->deadlinefragment = '';
     }
 
+    /**
+     * Add a deadline parameter to the launch form.
+     * @param int $deadline
+     * @return $this
+     */
     public function with_deadline(int $deadline) : launch_form_builder {
         $this->deadlinefragment = $this->get_deadline_signature_inputs($deadline);
         return $this;
     }
 
+    /**
+     * Get the html string input for deadline parameter
+     * @param int $deadline
+     * @return string
+     */
     private function get_deadline_signature_inputs(int $deadline) : string {
         $problempath = auth_mumie_get_problem_path($this->mumietask);
         $deadlinedata = json_encode( [
@@ -72,6 +90,11 @@ class launch_form_builder {
         <input type='hidden' name='deadlineSignature' id='deadlineSignature' type='text' value='{$signeddata}'>";
     }
 
+    /**
+     * Get the launch form html code as string
+     * @return string
+     * @throws \dml_exception
+     */
     public function build() : string {
         $loginurl = auth_mumie_get_login_url($this->mumietask);
         $org = get_config("auth_mumie", "mumie_org");
@@ -93,5 +116,4 @@ class launch_form_builder {
             </script>
         ";
     }
-
 }

@@ -15,8 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This class is a service providing functionalities regarding hashing/masking of moodle ids.
- * Hashes are used as user id on MUMIE servers.
+ * This class is a service providing functionalities regarding hashing/masking of moodle ids. Hashes are used as user id on MUMIE servers.
  *
  * @package auth_mumie
  * @copyright  2017-2023 integral-learning GmbH (https://www.integral-learning.de/)
@@ -31,8 +30,7 @@ require_once($CFG->dirroot . '/auth/mumie/classes/sso/hash/mumie_id_hash.php');
 require_once($CFG->dirroot . '/auth/mumie/lib.php');
 
 /**
- * This class is a service providing functionalities regarding hashing/masking of moodle ids.
- * Hashes are used as user id on MUMIE servers.
+ * This class is a service providing functionalities regarding hashing/masking of moodle ids. Hashes are used as user id on MUMIE servers.
  *
  * @package auth_mumie
  * @copyright  2017-2023 integral-learning GmbH (https://www.integral-learning.de/)
@@ -40,13 +38,27 @@ require_once($CFG->dirroot . '/auth/mumie/lib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class hashing_service {
-    public static function generate_hash($user, $mumietask) : mumie_id_hash {
+    /**
+     * Generate a hash of the userid for a given MUMIE Task
+     * @param string    $user
+     * @param \stdClass $mumietask
+     * @return mumie_id_hash
+     */
+    public static function generate_hash(string $user, \stdClass $mumietask) : mumie_id_hash {
         $mumieidhash = new mumie_id_hash($user, self::get_hash_with_suffix($user, $mumietask));
         $mumieidhash->save();
         return $mumieidhash;
     }
 
-    private static function get_hash_with_suffix($user, $mumietask) : string {
+    /**
+     * MUMIE user names consist out of the hashed user ID and a suffix depending on the MUMIE Task.
+     *
+     * This function returns the entire user name.
+     * @param string    $user
+     * @param \stdClass $mumietask
+     * @return string
+     */
+    private static function get_hash_with_suffix(string $user, \stdClass $mumietask) : string {
         $hash = auth_mumie_get_hashed_id($user);
         if ($mumietask->privategradepool) {
             $hash .= '@gradepool' . $mumietask->course . '@';

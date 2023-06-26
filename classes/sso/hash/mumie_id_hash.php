@@ -34,12 +34,25 @@ namespace auth_mumie\hash;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mumie_id_hash {
+    /**
+     * Name of the database table
+     */
     const HASH_ID_TABLE = "auth_mumie_id_hashes";
+    /**
+     * @var int
+     */
     private int $id;
+    /**
+     * @var int
+     */
     private int $user;
+    /**
+     * @var string
+     */
     private string $hash;
 
     /**
+     * Create a new instance
      * @param int    $user
      * @param string $hash
      */
@@ -48,41 +61,79 @@ class mumie_id_hash {
         $this->hash = $hash;
     }
 
+    /**
+     * Create a database entry, if none exists.
+     * @return void
+     */
     public function save() : void {
         if (!self::find($this->user, $this->hash)) {
             $this->create();
         }
     }
 
+    /**
+     * Create a new db entry
+     * @return void
+     * @throws \dml_exception
+     */
     public function create() : void {
         global $DB;
         $DB->insert_record(self::HASH_ID_TABLE, ["the_user" => $this->user, "hash" => $this->hash]);
     }
 
+    /**
+     * Update existing db entry
+     * @return void
+     * @throws \dml_exception
+     */
     public function update() : void {
         global $DB;
         $DB->update_record(self::HASH_ID_TABLE, ["id" => $this->id, "the_user" => $this->user, "hash" => $this->hash]);
     }
 
-    public static function find_by_user($user) : ?mumie_id_hash {
+    /**
+     * Find id has by moodle user id.
+     * @param string $user
+     * @return mumie_id_hash|null
+     * @throws \dml_exception
+     */
+    public static function find_by_user(string $user) : ?mumie_id_hash {
         global $DB;
         $record = $DB->get_record(self::HASH_ID_TABLE, ["the_user" => $user]);
         return self::from_record($record);
     }
 
-    private static function find($user, $hash) : ?mumie_id_hash {
+    /**
+     * Find db entry matching a given user and hash.
+     * @param int $user
+     * @param string $hash
+     * @return mumie_id_hash|null
+     * @throws \dml_exception
+     */
+    private static function find(int $user, string $hash) : ?mumie_id_hash {
         global $DB;
         $record = $DB->get_record(self::HASH_ID_TABLE, ["the_user" => $user, "hash" => $hash]);
         return self::from_record($record);
     }
 
-    public static function find_by_hash($hash) : ?mumie_id_hash {
+    /**
+     * Find db entry matching a given hash.
+     * @param string $hash
+     * @return mumie_id_hash|null
+     * @throws \dml_exception
+     */
+    public static function find_by_hash(string $hash) : ?mumie_id_hash {
         global $DB;
         $record = $DB->get_record(self::HASH_ID_TABLE, ["hash" => $hash]);
         return self::from_record($record);
     }
 
-    private static function from_record($record) : ?mumie_id_hash {
+    /**
+     * Create class instance from db result.
+     * @param \stdClass|null $record
+     * @return mumie_id_hash|null
+     */
+    private static function from_record(?\stdClass $record) : ?mumie_id_hash {
         if ($record == null) {
             return null;
         }
@@ -92,6 +143,7 @@ class mumie_id_hash {
     }
 
     /**
+     * Get the id.
      * @return int
      */
     public function get_id() : int {
@@ -99,6 +151,7 @@ class mumie_id_hash {
     }
 
     /**
+     * Set the id
      * @param int $id
      */
     public function set_id(int $id) : void {
@@ -106,6 +159,7 @@ class mumie_id_hash {
     }
 
     /**
+     * Get the moodle user id
      * @return int
      */
     public function get_user() : int {
@@ -113,6 +167,7 @@ class mumie_id_hash {
     }
 
     /**
+     * Set the moodle user id
      * @param int $user
      */
     public function set_user(int $user) : void {
@@ -120,6 +175,7 @@ class mumie_id_hash {
     }
 
     /**
+     * Get the hash
      * @return string
      */
     public function get_hash() : string {
@@ -127,6 +183,7 @@ class mumie_id_hash {
     }
 
     /**
+     * Set the hash
      * @param string $hash
      */
     public function set_hash(string $hash) : void {

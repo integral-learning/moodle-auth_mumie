@@ -42,7 +42,13 @@ require_once($CFG->dirroot . '/auth/mumie/classes/sso/user/mumie_user.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mumie_user_service {
-    public static function get_user($moodleid, $mumietask) : mumie_user {
+    /**
+     * Get a mumie_user instance for a given moodle user and MUMIE Task
+     * @param string    $moodleid
+     * @param \stdClass $mumietask
+     * @return mumie_user
+     */
+    public static function get_user(string $moodleid, \stdClass $mumietask) : mumie_user {
         if (self::use_id_masking($mumietask)) {
             $mumieid = hashing_service::generate_hash($moodleid, $mumietask)->get_hash();
         } else {
@@ -51,19 +57,42 @@ class mumie_user_service {
         return new mumie_user($moodleid, $mumieid);
     }
 
-    public static function get_from_mumie_user(string $mumieid) : mumie_user {
+    /**
+     * Get mumie_user from a mumie user id.
+     * @param string $mumieid
+     * @return mumie_user
+     * @throws \dml_exception
+     */
+    public static function get_from_mumie_user(string $mumieid) : ?mumie_user {
         if (self::is_mumie_id_masked($mumieid)) {
             $moodleid = mumie_id_hash::find_by_hash($mumieid)->get_user();
         } else {
             $moodleid = (int) $mumieid;
         }
-        return new mumie_user($moodleid, $mumieid);
+        $user = new mumie_user($moodleid, $mumieid);
+        $exists = $user->load();
+        if (!$exists) {
+            return null;
+        };
+        return $user;
     }
 
+    /**
+     * Check whether we should mask the moodle user id.
+     *
+     * Only very old MUMIE Tasks dont use id masking.
+     * @param mixed $mumietask
+     * @return bool
+     */
     private static function use_id_masking(mixed $mumietask) : bool {
         return isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1;
     }
 
+    /**
+     * Check whether this mumie id was created by masking a moodle id.
+     * @param string $mumieid
+     * @return bool
+     */
     private static function is_mumie_id_masked(string $mumieid) : bool {
         return strlen($mumieid) >= 128;
     }

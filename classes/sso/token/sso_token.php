@@ -25,15 +25,39 @@
 
 namespace auth_mumie\token;
 
+/**
+ * This class represents a db entity in the 'auth_mumie_sso_tokens' table.
+ *
+ * @package auth_mumie
+ * @copyright  2017-2023 integral-learning GmbH (https://www.integral-learning.de/)
+ * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class sso_token {
+    /**
+     * Name of the database table
+     */
     const SSO_TOKEN_TABLE = "auth_mumie_sso_tokens";
 
+    /**
+     * @var int
+     */
     private int $id;
+    /**
+     * @var string
+     */
     private string $token;
+    /**
+     * @var string
+     */
     private string $user;
+    /**
+     * @var int
+     */
     private int $timecreated;
 
     /**
+     * Create a new instance
      * @param string $token
      * @param string $user
      * @param int    $timecreated
@@ -44,6 +68,11 @@ class sso_token {
         $this->timecreated = $timecreated;
     }
 
+    /**
+     * Create a new db entry
+     * @return void
+     * @throws \dml_exception
+     */
     public function create() : void {
         global $DB;
         $DB->insert_record(
@@ -55,6 +84,11 @@ class sso_token {
             ));
     }
 
+    /**
+     * Update existing db entry
+     * @return void
+     * @throws \dml_exception
+     */
     public function update() : void {
         global $DB;
         $DB->update_record(
@@ -67,13 +101,24 @@ class sso_token {
             ));
     }
 
+    /**
+     * Find db entry matching a given user
+     * @param string $user
+     * @return sso_token|null
+     * @throws \dml_exception
+     */
     public static function find_by_user(string $user) : ?sso_token {
         global $DB;
         $record = $DB->get_record(self::SSO_TOKEN_TABLE, ["the_user" => $user]);
         return self::from_record($record);
     }
 
-    private static function from_record($record) : ?sso_token {
+    /**
+     * Create instance from db record
+     * @param \stdClass $record
+     * @return sso_token|null
+     */
+    private static function from_record(\stdClass $record) : ?sso_token {
         if (!$record) {
             return null;
         }
@@ -83,6 +128,7 @@ class sso_token {
     }
 
     /**
+     * Get the id
      * @return int
      */
     public function get_id() : int {
@@ -90,6 +136,7 @@ class sso_token {
     }
 
     /**
+     * Set the id
      * @param int $id
      */
     public function set_id(int $id) : void {
@@ -97,6 +144,7 @@ class sso_token {
     }
 
     /**
+     * Get the token
      * @return string
      */
     public function get_token() : string {
@@ -104,6 +152,7 @@ class sso_token {
     }
 
     /**
+     * Set the token
      * @param string $token
      */
     public function set_token(string $token) : void {
@@ -111,6 +160,7 @@ class sso_token {
     }
 
     /**
+     * Get the user.
      * @return string
      */
     public function get_user() : string {
@@ -118,6 +168,7 @@ class sso_token {
     }
 
     /**
+     * Set the user
      * @param string $user
      */
     public function set_user(string $user) : void {
@@ -125,6 +176,7 @@ class sso_token {
     }
 
     /**
+     * Get time created
      * @return int
      */
     public function get_timecreated() : int {
@@ -132,6 +184,7 @@ class sso_token {
     }
 
     /**
+     * Set time created
      * @param int $timecreated
      */
     public function set_timecreated(int $timecreated) : void {

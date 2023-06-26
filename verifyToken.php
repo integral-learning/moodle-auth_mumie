@@ -36,9 +36,8 @@ $token = required_param('token', PARAM_ALPHANUM);
 $mumieid = required_param('userId', PARAM_RAW);
 $user = mumie_user_service::get_from_mumie_user($mumieid);
 
-$user->load();
 $response = new \stdClass();
-if (token_service::is_token_valid($user, $token)) {
+if ($user != null && token_service::is_token_valid($user, $token)) {
     $response->status = "valid";
     if (get_config('auth_mumie', 'userdata_firstname')) {
         $response->firstname = $user->get_firstname();

@@ -39,6 +39,12 @@ require_once($CFG->dirroot . '/auth/mumie/classes/sso/token/sso_token.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class token_service {
+    /**
+     * Generate a new SSO Token for a given user
+     * @param mumie_user $user
+     * @return sso_token
+     * @throws \dml_exception
+     */
     public static function generate_sso_token(mumie_user $user) : sso_token {
         if ($token = sso_token::find_by_user($user->get_mumie_id())) {
             $token->set_token(self::generate_token());
@@ -51,6 +57,13 @@ class token_service {
         return $token;
     }
 
+    /**
+     * Check whether a given token is valid
+     * @param mumie_user|null $user
+     * @param string          $token
+     * @return bool
+     * @throws \dml_exception
+     */
     public static function is_token_valid(?mumie_user $user, string $token): bool {
         if ($user == null) {
             return false;
@@ -61,11 +74,20 @@ class token_service {
             && !self::has_token_timed_out($ssotoken);
     }
 
+    /**
+     * Check whether an existing token has timed out
+     * @param sso_token $token
+     * @return bool
+     */
     private static function has_token_timed_out(sso_token $token) : bool {
         $current = time();
         return $current - $token->get_timecreated() > 60;
     }
 
+    /**
+     * Generate a new token value
+     * @return string
+     */
     private static function generate_token() {
         return auth_mumie_get_token(20);
     }

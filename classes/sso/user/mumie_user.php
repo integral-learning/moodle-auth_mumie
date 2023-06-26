@@ -34,13 +34,29 @@ namespace auth_mumie\user;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mumie_user {
+    /**
+     * @var int
+     */
     private int $moodleid;
+    /**
+     * @var string
+     */
     private string $mumieid;
+    /**
+     * @var string
+     */
     private string $firstname;
+    /**
+     * @var string
+     */
     private string $lastname;
+    /**
+     * @var string
+     */
     private string $email;
 
     /**
+     * Create a new instance
      * @param int    $moodleid
      * @param string $mumieid
      */
@@ -49,18 +65,27 @@ class mumie_user {
         $this->mumieid = $mumieid;
     }
 
-    public function load() {
+    /**
+     * Load missing values from the database, if available.
+     *
+     * Returns true, if successful.
+     * @return bool
+     * @throws \dml_exception
+     */
+    public function load() : bool {
         global $DB;
         $user = $DB->get_record('user', array('id' => $this->moodleid));
         if (!$user) {
-            return;
+            return false;
         }
         $this->firstname = $user->firstname;
         $this->lastname = $user->lastname;
         $this->email = $user->email;
+        return true;
     }
 
     /**
+     * Set moodle id
      * @return int
      */
     public function get_moodle_id() : int {
@@ -68,6 +93,7 @@ class mumie_user {
     }
 
     /**
+     * Get moodle id
      * @param int $moodleid
      */
     public function set_moodle_id(int $moodleid) : void {
@@ -75,6 +101,7 @@ class mumie_user {
     }
 
     /**
+     * Get mumie id
      * @return string
      */
     public function get_mumie_id() : string {
@@ -82,6 +109,7 @@ class mumie_user {
     }
 
     /**
+     * Set mumie id
      * @param string $mumieid
      */
     public function set_mumie_id(string $mumieid) : void {
@@ -89,6 +117,7 @@ class mumie_user {
     }
 
     /**
+     * Get first name
      * @return string
      */
     public function get_firstname() : string {
@@ -96,6 +125,7 @@ class mumie_user {
     }
 
     /**
+     * get lastname
      * @return string
      */
     public function get_lastname() : string {
@@ -103,6 +133,7 @@ class mumie_user {
     }
 
     /**
+     * Get email
      * @return string
      */
     public function get_email() : string {
