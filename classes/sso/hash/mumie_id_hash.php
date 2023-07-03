@@ -130,11 +130,11 @@ class mumie_id_hash {
 
     /**
      * Create class instance from db result.
-     * @param \stdClass|null $record
+     * @param  mixed $record
      * @return mumie_id_hash|null
      */
-    private static function from_record(?\stdClass $record) : ?mumie_id_hash {
-        if ($record == null) {
+    private static function from_record(mixed $record) : ?mumie_id_hash {
+        if (!$record) {
             return null;
         }
         $idhash = new mumie_id_hash($record->the_user, $record->hash);
