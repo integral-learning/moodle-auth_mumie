@@ -29,6 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
 
 use auth_mumie\token\sso_token;
+use auth_mumie\user\mumie_user;
 
 /**
  * This class is used to create an HTML form that's used to launch the SSO POST request
@@ -48,18 +49,24 @@ class launch_form_builder {
      */
     private \stdClass $mumietask;
     /**
+     * @var mumie_user
+     */
+    private mumie_user $user;
+    /**
      * @var string
      */
     private string $deadlinefragment;
 
     /**
      * Create a new instance
-     * @param sso_token $ssotoken
-     * @param \stdClass $mumie
+     * @param sso_token  $ssotoken
+     * @param \stdClass  $mumie
+     * @param mumie_user $user
      */
-    public function __construct(sso_token $ssotoken, \stdClass $mumie) {
+    public function __construct(sso_token $ssotoken, \stdClass $mumie, mumie_user $user) {
         $this->ssotoken = $ssotoken;
         $this->mumietask = $mumie;
+        $this->user = $user;
         $this->deadlinefragment = '';
     }
 
@@ -79,15 +86,22 @@ class launch_form_builder {
      * @return string
      */
     private function get_deadline_signature_inputs(int $deadline) : string {
-        $problempath = auth_mumie_get_problem_path($this->mumietask);
-        $deadlinedata = json_encode( [
-            "deadline" => $deadline,
-            "userId" => $this->ssotoken->get_user(),
-            "problemPath" => $problempath
-        ]);
-        $signeddata = \mumie_cryptography_service::sign_data($deadlinedata);
-        return "<input type='hidden' name='deadline' id='deadline' type='text' value='{$deadlinedata}'>
+        $signeddata = \mumie_cryptography_service::sign_data(
+            $deadline,
+            $this->user->get_sync_id(),
+            $this->get_worksheet_id()
+        );
+        return "<input type='hidden' name='deadline' id='deadline' type='text' value='{$deadline}'>
         <input type='hidden' name='deadlineSignature' id='deadlineSignature' type='text' value='{$signeddata}'>";
+    }
+
+    /**
+     * Get worksheet id from problem path
+     * @return string
+     */
+    private function get_worksheet_id() : string {
+        $problempath = auth_mumie_get_problem_path($this->mumietask);
+        return str_replace(sso_service::WORKSHEET_PREFIX, "", $problempath);
     }
 
     /**

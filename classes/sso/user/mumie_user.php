@@ -54,6 +54,10 @@ class mumie_user {
      * @var string
      */
     private string $email;
+    /**
+     * @var string
+     */
+    private string $org;
 
     /**
      * Create a new instance
@@ -63,6 +67,7 @@ class mumie_user {
     public function __construct(int $moodleid, string $mumieid) {
         $this->moodleid = $moodleid;
         $this->mumieid = $mumieid;
+        $this->org = get_config("auth_mumie", "mumie_org");
     }
 
     /**
@@ -82,6 +87,16 @@ class mumie_user {
         $this->lastname = $user->lastname;
         $this->email = $user->email;
         return true;
+    }
+
+    /**
+     * Get the sync id.
+     *
+     * The sync id is the full username on a MUMIE / Lemon server
+     * @return string
+     */
+    public function get_sync_id() : string {
+        return "gsso_" . $this->org . "_" . $this->mumieid;
     }
 
     /**

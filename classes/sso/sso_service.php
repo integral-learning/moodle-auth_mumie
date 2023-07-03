@@ -30,6 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 use auth_mumie\user\mumie_user_service;
 use auth_mumie\token\token_service;
 use auth_mumie\token\sso_token;
+use auth_mumie\user\mumie_user;
 
 require_once($CFG->dirroot . '/auth/mumie/classes/sso/user/mumie_user_service.php');
 require_once($CFG->dirroot . '/auth/mumie/classes/sso/token/token_service.php');
@@ -61,19 +62,20 @@ class sso_service {
         $mumieuser = mumie_user_service::get_user($moodleid, $mumietask);
         $ssotoken = token_service::generate_sso_token($mumieuser);
         $deadline = mumie_get_effective_duedate($moodleid, $mumietask);
-        echo self::get_launch_form($ssotoken, $mumietask, $deadline);
+        echo self::get_launch_form($ssotoken, $mumietask, $deadline, $mumieuser);
     }
 
     /**
      * Get html code for launch form used to send POST request
-     * @param sso_token $token
-     * @param \stdClass $mumietask
-     * @param int       $deadline
+     * @param sso_token  $token
+     * @param \stdClass  $mumietask
+     * @param int        $deadline
+     * @param mumie_user $user
      * @return string
      * @throws \dml_exception
      */
-    private static function get_launch_form(sso_token $token, \stdClass $mumietask, int $deadline) : string {
-        $launchformbuilder = new launch_form_builder($token, $mumietask);
+    private static function get_launch_form(sso_token $token, \stdClass $mumietask, int $deadline, mumie_user $user) : string {
+        $launchformbuilder = new launch_form_builder($token, $mumietask, $user);
 
         $problempath = auth_mumie_get_problem_path($mumietask);
         if (self::include_signed_deadline($problempath, $deadline)) {

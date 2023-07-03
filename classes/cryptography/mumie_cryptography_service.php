@@ -76,14 +76,14 @@ class mumie_cryptography_service {
     }
 
     /**
-     * Create signature for given data string.
-     * @param string $data
+     * Create base64 encode signature for given data strings.
+     * @param string ...$data
      * @return string
      */
-    public static function sign_data(string $data) : string {
+    public static function sign_data(string ...$data) : string {
         self::ensure_key_pair_exist();
-        openssl_sign($data, $signeddata, self::get_private_key()->get_key());
-        return $signeddata;
+        openssl_sign(implode("",  $data), $signeddata, self::get_private_key()->get_key());
+        return base64_encode($signeddata);
     }
 
     /**
