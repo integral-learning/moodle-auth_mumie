@@ -82,7 +82,7 @@ class mumie_cryptography_service {
      */
     public static function sign_data(string ...$data) : string {
         self::ensure_key_pair_exist();
-        openssl_sign(implode("",  $data), $signeddata, self::get_private_key()->get_key(), "OPENSSL_ALGO_SHA512");
+        openssl_sign(implode("",  $data), $signeddata, self::get_private_key()->get_key(), OPENSSL_ALGO_SHA512);
         return base64_encode($signeddata);
     }
 
