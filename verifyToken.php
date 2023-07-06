@@ -34,7 +34,7 @@ header('Content-Type:application/json');
 
 $token = required_param('token', PARAM_ALPHANUM);
 $mumieid = required_param('userId', PARAM_RAW);
-$user = mumie_user_service::get_from_mumie_user($mumieid);
+$user = mumie_user_service::get_user_from_mumie_id($mumieid);
 
 $response = new \stdClass();
 if ($user != null && token_service::is_token_valid($user, $token)) {

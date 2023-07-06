@@ -61,7 +61,7 @@ class mumie_user_service {
      * @return mumie_user
      * @throws \dml_exception
      */
-    public static function get_from_mumie_user(string $mumieid) : ?mumie_user {
+    public static function get_user_from_mumie_id(string $mumieid) : ?mumie_user {
         if (self::is_mumie_id_masked($mumieid)) {
             $moodleid = mumie_id_hash::find_by_hash($mumieid)->get_user();
         } else {
