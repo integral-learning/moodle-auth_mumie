@@ -49,11 +49,9 @@ class mumie_user_service {
      * @return mumie_user
      */
     public static function get_user(string $moodleid, \stdClass $mumietask) : mumie_user {
-        if (self::use_id_masking($mumietask)) {
-            $mumieid = hashing_service::generate_hash($moodleid, $mumietask)->get_hash();
-        } else {
-            $mumieid = $moodleid;
-        }
+        $mumieid = self::use_id_masking($mumietask)
+            ? hashing_service::generate_hash($moodleid, $mumietask)->get_hash()
+            : $moodleid;
         return new mumie_user($moodleid, $mumieid);
     }
 
