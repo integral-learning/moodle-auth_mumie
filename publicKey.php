@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of auth_mumie
+ * This script is used by external MUMIE/LEMON servers to retrieve the public key
  *
  * @package auth_mumie
  * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
@@ -23,10 +23,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require_once("../../config.php");
+require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
 
-$plugin->version = 2023062000;
-$plugin->component = 'auth_mumie';
-$plugin->requires = 2022041900;
-$plugin->release = "v1.4.1";
-$plugin->maturity = MATURITY_STABLE;
+$publickey = mumie_cryptography_service::get_public_key();
+if (!$publickey) {
+    http_response_code(404);
+    return;
+}
+echo $publickey->get_key();
