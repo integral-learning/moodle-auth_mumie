@@ -31,6 +31,7 @@ use auth_mumie\user\mumie_user_service;
 use auth_mumie\token\token_service;
 use auth_mumie\token\sso_token;
 use auth_mumie\user\mumie_user;
+use mod_mumie\locallib;
 
 require_once($CFG->dirroot . '/auth/mumie/classes/sso/user/mumie_user_service.php');
 require_once($CFG->dirroot . '/auth/mumie/classes/sso/token/token_service.php');
@@ -61,7 +62,7 @@ class sso_service {
     public static function sso(string $moodleid, \stdClass $mumietask) : void {
         $mumieuser = mumie_user_service::get_user($moodleid, $mumietask);
         $ssotoken = token_service::generate_sso_token($mumieuser);
-        $deadline = mumie_get_effective_duedate($moodleid, $mumietask);
+        $deadline = locallib::get_effective_duedate($moodleid, $mumietask);
         echo self::get_launch_form($ssotoken, $mumietask, $deadline, $mumieuser);
     }
 
