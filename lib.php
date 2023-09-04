@@ -162,6 +162,7 @@ function auth_mumie_get_hashed_id($id) {
 }
 
 /**
+ * Transforms the deadline(Unix Timestamp) from seconds to milliseconds.
  * @param int $deadline timestamp in s
  * @return int timestamp in ms
  */
