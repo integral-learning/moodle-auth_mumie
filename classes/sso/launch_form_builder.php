@@ -27,6 +27,7 @@ namespace auth_mumie;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
+require_once($CFG->dirroot . '/auth/mumie/lib.php');
 
 use auth_mumie\token\sso_token;
 use auth_mumie\user\mumie_user;
@@ -76,7 +77,8 @@ class launch_form_builder {
      * @return $this
      */
     public function with_deadline(int $deadline) : launch_form_builder {
-        $this->deadlinefragment = $this->get_deadline_signature_inputs($deadline);
+        $deadlineinmilliseconds = auth_mumie_get_deadline_in_ms($deadline);
+        $this->deadlinefragment = $this->get_deadline_signature_inputs($deadlineinmilliseconds);
         return $this;
     }
 
