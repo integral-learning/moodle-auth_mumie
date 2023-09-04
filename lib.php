@@ -165,6 +165,6 @@ function auth_mumie_get_hashed_id($id) {
  * @param int $deadline timestamp in s
  * @return int timestamp in ms
  */
-function auth_mumie_get_deadline_in_ms($deadline){
-    return $deadline*1000;
+function auth_mumie_get_deadline_in_ms($deadline) {
+    return $deadline * 1000;
 }
