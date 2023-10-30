@@ -94,7 +94,7 @@ class launch_form_builder {
             $syncidlowercase,
             $this->get_worksheet_id()
         );
-        return "<input type='hidden' name='deadline' id='deadline' type='text' value='{$deadline}'>
+        return "<input type='hidden' name='deadline' id='deadline' type='text' value='{$deadlineinmilliseconds}'>
         <input type='hidden' name='deadlineSignature' id='deadlineSignature' type='text' value='{$signeddata}'>";
     }
 
