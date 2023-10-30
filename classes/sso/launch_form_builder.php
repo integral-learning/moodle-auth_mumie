@@ -87,9 +87,11 @@ class launch_form_builder {
      * @return string
      */
     private function get_deadline_signature_inputs(int $deadline) : string {
+        $deadlineinmilliseconds = auth_mumie_get_deadline_in_ms($deadline);
+        $syncidlowercase = strtolower($this->user->get_sync_id());
         $signeddata = \mumie_cryptography_service::sign_data(
-            auth_mumie_get_deadline_in_ms($deadline),
-            strtolower($this->user->get_sync_id()),
+            $deadlineinmilliseconds,
+            $syncidlowercase,
             $this->get_worksheet_id()
         );
         return "<input type='hidden' name='deadline' id='deadline' type='text' value='{$deadline}'>
