@@ -1,6 +1,11 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
+## [v1.5.0] - 2023-10-31
+### Added
+- Added a new EP `[GET] /auth/mumie/publicKey.php` that returns the public cryptographic key used to sign data
+- Added signed deadline data to SSO requests when opening MUMIE Tasks representing a worksheet with correction trigger AFTER_DEADLINE
+
 ## [v1.4.1] - 2023-06-26
 ### Fixed
 - Fixed an exception that was thrown under php 8 whenever the admin settings were displayed

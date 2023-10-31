@@ -160,3 +160,12 @@ function auth_mumie_output_fragment_new_mumieserver_form($args) {
 function auth_mumie_get_hashed_id($id) {
     return hash("sha512", $id . substr(get_config('auth_mumie', 'mumie_api_key'), 0, 10));
 }
+
+/**
+ * Transforms the deadline(Unix Timestamp) from seconds to milliseconds.
+ * @param int $deadline timestamp in s
+ * @return int timestamp in ms
+ */
+function auth_mumie_get_deadline_in_ms($deadline) {
+    return $deadline * 1000;
+}

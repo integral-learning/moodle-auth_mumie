@@ -15,23 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables single sign on and single sign out with MUMIE servers
+ * This script is used by external MUMIE/LEMON servers to retrieve the public key
  *
  * @package auth_mumie
  * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace auth_mumie;
 
 require_once("../../config.php");
-require_once($CFG->dirroot . '/auth/mumie/classes/sso/sso_service.php');
+require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
 
-require_login();
-
-global $DB, $USER;
-$id = optional_param('id', 0, PARAM_INT); // Course Module ID.
-
-$mumietask = $DB->get_record("mumie", array('id' => $id));
-
-sso_service::sso($USER->id, $mumietask);
+$publickey = mumie_cryptography_service::get_public_key();
+if (!$publickey) {
+    http_response_code(404);
+    return;
+}
+echo $publickey->get_key();
