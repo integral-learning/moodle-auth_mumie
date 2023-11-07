@@ -130,7 +130,7 @@ class mumie_id_hash {
 
     /**
      * Create class instance from db result.
-     * @param  mixed $record
+     * @param  stdClass $record
      * @return mumie_id_hash|null
      */
     private static function from_record(mixed $record) : ?mumie_id_hash {
