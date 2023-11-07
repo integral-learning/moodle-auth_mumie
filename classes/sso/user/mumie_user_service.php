@@ -79,10 +79,10 @@ class mumie_user_service {
      * Check whether we should mask the moodle user id.
      *
      * Only very old MUMIE Tasks dont use id masking.
-     * @param mixed $mumietask
+     * @param \stdClass $mumietask
      * @return bool
      */
-    private static function use_id_masking(mixed $mumietask) : bool {
+    private static function use_id_masking(\stdClass $mumietask) : bool {
         return isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1;
     }
 
