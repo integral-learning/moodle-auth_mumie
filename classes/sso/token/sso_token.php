@@ -118,7 +118,7 @@ class sso_token {
      * @param \stdClass $record
      * @return sso_token|null
      */
-    private static function from_record(\stdClass $record) : ?sso_token {
+    private static function from_record($record) : ?sso_token {
         if (!$record) {
             return null;
         }

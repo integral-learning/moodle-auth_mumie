@@ -133,7 +133,7 @@ class mumie_id_hash {
      * @param  \stdClass $record
      * @return mumie_id_hash|null
      */
-    private static function from_record(\stdClass $record) : ?mumie_id_hash {
+    private static function from_record($record) : ?mumie_id_hash {
         if (!$record) {
             return null;
         }

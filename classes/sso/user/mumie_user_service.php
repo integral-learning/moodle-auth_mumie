@@ -82,7 +82,7 @@ class mumie_user_service {
      * @param \stdClass $mumietask
      * @return bool
      */
-    private static function use_id_masking(\stdClass $mumietask) : bool {
+    private static function use_id_masking($mumietask) : bool {
         return isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1;
     }
 
