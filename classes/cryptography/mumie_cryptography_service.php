@@ -100,7 +100,7 @@ class mumie_cryptography_service {
 
         openssl_pkey_export($res, $privatekey);
         $pubkey = openssl_pkey_get_details($res);
-        $pubkey = $pubkey["key"];
+        $pubkey = $pubkey["key_value"];
 
         self::upsert_key_pair($privatekey, $pubkey);
     }
