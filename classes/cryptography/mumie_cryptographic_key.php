@@ -66,7 +66,7 @@ class mumie_cryptographic_key {
      */
     public function create() {
         global $DB;
-        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key" => $this->key]);
+        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "`key`" => $this->key]);
     }
 
     /**
