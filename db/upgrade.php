@@ -93,9 +93,10 @@ function xmldb_auth_mumie_upgrade($oldversion) {
 
     if ($oldversion < 2023110800) {
         $table = new xmldb_table('auth_mumie_cryptographic_key');
-        $dbman->table_exists('auth_mumie_cryptographic_key');
-        $field = $table->getField('key');
-        $dbman->rename_field($table, $field, 'key_value');
+        $field = new xmldb_field('key');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->rename_field($table, $field, 'key_value');
+        }
         upgrade_plugin_savepoint(true, 2023110800, 'auth', 'mumie');
     }
 
