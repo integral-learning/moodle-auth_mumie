@@ -60,7 +60,7 @@ class mumie_cryptographic_key {
     }
 
     /**
-     * Insert a new key into the database
+     * Insert a new key_value into the database
      * @return void
      * @throws dml_exception
      */
@@ -138,7 +138,7 @@ class mumie_cryptographic_key {
     }
 
     /**
-     * Get the key
+     * Get the key_value
      * @return string
      */
     public function get_key() : string {
@@ -146,8 +146,8 @@ class mumie_cryptographic_key {
     }
 
     /**
-     * Set a new key
-     * @param string $key
+     * Set a new key_value
+     * @param string $key_value
      */
     public function set_key(string $key_value) : void {
         $this->key_value = $key_value;
