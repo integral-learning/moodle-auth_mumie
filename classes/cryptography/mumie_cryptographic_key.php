@@ -47,16 +47,16 @@ class mumie_cryptographic_key {
     /**
      * @var string
      */
-    private string $key;
+    private string $key_value;
 
     /**
      * Create a new instance
      * @param string $name
-     * @param string $key
+     * @param string $key_value
      */
-    public function __construct(string $name, string $key) {
+    public function __construct(string $name, string $key_value) {
         $this->name = $name;
-        $this->key = $key;
+        $this->key_value = $key_value;
     }
 
     /**
@@ -66,7 +66,7 @@ class mumie_cryptographic_key {
      */
     public function create() {
         global $DB;
-        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->key]);
+        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->key_value]);
     }
 
     /**
@@ -76,7 +76,7 @@ class mumie_cryptographic_key {
      */
     public function update() {
         global $DB;
-        $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->key, "id" => $this->id]);
+        $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->key_value, "id" => $this->id]);
     }
 
     /**
@@ -100,7 +100,7 @@ class mumie_cryptographic_key {
         if (!$record) {
             return null;
         }
-        $cryptokey = new mumie_cryptographic_key($record->name, $record->key);
+        $cryptokey = new mumie_cryptographic_key($record->name, $record->key_value);
         $cryptokey->set_id($record->id);
         return $cryptokey;
     }
@@ -142,14 +142,14 @@ class mumie_cryptographic_key {
      * @return string
      */
     public function get_key() : string {
-        return $this->key;
+        return $this->key_value;
     }
 
     /**
      * Set a new key
      * @param string $key
      */
-    public function set_key(string $key) : void {
-        $this->key = $key;
+    public function set_key(string $key_value) : void {
+        $this->key_value = $key_value;
     }
 }
