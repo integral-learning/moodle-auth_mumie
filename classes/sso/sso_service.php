@@ -91,7 +91,7 @@ class sso_service {
      * @return bool
      */
     private static function include_signed_deadline(string $problempath, int $deadline) : bool {
-        return str_starts_with($problempath, self::WORKSHEET_PREFIX)
+        return substr( $problempath, 0, 10 ) === self::WORKSHEET_PREFIX
             && $deadline > 0;
     }
 }
