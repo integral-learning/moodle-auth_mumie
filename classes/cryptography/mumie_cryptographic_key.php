@@ -66,7 +66,7 @@ class mumie_cryptographic_key {
      */
     public function create() {
         global $DB;
-        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->keyvalue]);
+        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "keyvalue" => $this->keyvalue]);
     }
 
     /**
@@ -76,7 +76,7 @@ class mumie_cryptographic_key {
      */
     public function update() {
         global $DB;
-        $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->keyvalue, "id" => $this->id]);
+        $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "keyvalue" => $this->keyvalue, "id" => $this->id]);
     }
 
     /**
@@ -141,7 +141,7 @@ class mumie_cryptographic_key {
      * Get the keyvalue
      * @return string
      */
-    public function get_key_value() : string {
+    public function get_keyvalue() : string {
         return $this->keyvalue;
     }
 
@@ -149,7 +149,7 @@ class mumie_cryptographic_key {
      * Set a new keyvalue
      * @param string $keyvalue
      */
-    public function set_key_value(string $keyvalue) : void {
+    public function set_keyvalue(string $keyvalue) : void {
         $this->keyvalue = $keyvalue;
     }
 }

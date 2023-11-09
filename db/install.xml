@@ -42,7 +42,7 @@
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="name" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="key_value" TYPE="text" LENGTH="160" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="keyvalue" TYPE="text" LENGTH="160" NOTNULL="true" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

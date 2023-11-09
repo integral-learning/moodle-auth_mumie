@@ -31,4 +31,4 @@ if (!$publickey) {
     http_response_code(404);
     return;
 }
-echo $publickey->get_key_value();
+echo $publickey->get_keyvalue();
