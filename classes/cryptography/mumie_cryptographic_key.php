@@ -47,26 +47,26 @@ class mumie_cryptographic_key {
     /**
      * @var string
      */
-    private string $key_value;
+    private string $keyvalue;
 
     /**
      * Create a new instance
      * @param string $name
-     * @param string $key_value
+     * @param string $keyvalue
      */
-    public function __construct(string $name, string $key_value) {
+    public function __construct(string $name, string $keyvalue) {
         $this->name = $name;
-        $this->key_value = $key_value;
+        $this->keyvalue = $keyvalue;
     }
 
     /**
-     * Insert a new key_value into the database
+     * Insert a new keyvalue into the database
      * @return void
      * @throws dml_exception
      */
     public function create() {
         global $DB;
-        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->key_value]);
+        $DB->insert_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->keyvalue]);
     }
 
     /**
@@ -76,7 +76,7 @@ class mumie_cryptographic_key {
      */
     public function update() {
         global $DB;
-        $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->key_value, "id" => $this->id]);
+        $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "key_value" => $this->keyvalue, "id" => $this->id]);
     }
 
     /**
@@ -100,7 +100,7 @@ class mumie_cryptographic_key {
         if (!$record) {
             return null;
         }
-        $cryptokey = new mumie_cryptographic_key($record->name, $record->key_value);
+        $cryptokey = new mumie_cryptographic_key($record->name, $record->keyvalue);
         $cryptokey->set_id($record->id);
         return $cryptokey;
     }
@@ -138,18 +138,18 @@ class mumie_cryptographic_key {
     }
 
     /**
-     * Get the key_value
+     * Get the keyvalue
      * @return string
      */
     public function get_key_value() : string {
-        return $this->key_value;
+        return $this->keyvalue;
     }
 
     /**
-     * Set a new key_value
-     * @param string $key_value
+     * Set a new keyvalue
+     * @param string $keyvalue
      */
-    public function set_key_value(string $key_value) : void {
-        $this->key_value = $key_value;
+    public function set_key_value(string $keyvalue) : void {
+        $this->keyvalue = $keyvalue;
     }
 }
