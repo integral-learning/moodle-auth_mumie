@@ -96,7 +96,7 @@ class mumie_user {
      * @return string
      */
     public function get_sync_id() : string {
-        return "gsso_" . $this->org . "_" . $this->mumieid;
+        return "GSSO_" . $this->org . "_" . $this->mumieid;
     }
 
     /**
