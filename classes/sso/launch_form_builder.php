@@ -88,7 +88,7 @@ class launch_form_builder {
      */
     private function get_deadline_signature_inputs(int $deadline) : string {
         $deadlineinmilliseconds = auth_mumie_get_deadline_in_ms($deadline);
-        $syncidlowercase = strtolower($this->user->get_sync_id());
+        $syncidlowercase = $this->user->get_sync_id();
         $signeddata = \mumie_cryptography_service::sign_data(
             $deadlineinmilliseconds,
             $syncidlowercase,
