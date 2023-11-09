@@ -1,6 +1,11 @@
 # MUMIE Single Sign On - Changelog
 
 All important changes to this plugin will be documented in this file
+
+## [v1.5.1] - 2023-11-09
+### Fixed
+- Support mysql and php:7.4
+
 ## [v1.5.0] - 2023-10-31
 ### Added
 - Added a new EP `[GET] /auth/mumie/publicKey.php` that returns the public cryptographic key used to sign data
