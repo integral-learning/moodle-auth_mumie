@@ -82,7 +82,7 @@ class mumie_cryptography_service {
      */
     public static function sign_data(string ...$data) : string {
         self::ensure_key_pair_exist();
-        openssl_sign(implode("",  $data), $signeddata, self::get_private_key()->get_key(), OPENSSL_ALGO_SHA512);
+        openssl_sign(implode("",  $data), $signeddata, self::get_private_key()->get_keyvalue(), OPENSSL_ALGO_SHA512);
         return base64_encode($signeddata);
     }
 
@@ -143,7 +143,7 @@ class mumie_cryptography_service {
     private static function upsert_key(string $name, string $key) : void {
         $cryptographickey = mumie_cryptographic_key::get_by_name($name);
         if (!is_null($cryptographickey)) {
-            $cryptographickey->set_key($key);
+            $cryptographickey->set_keyvalue($key);
             $cryptographickey->update();
         } else {
             $cryptographickey = new mumie_cryptographic_key($name, $key);
