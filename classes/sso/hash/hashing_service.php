@@ -51,6 +51,17 @@ class hashing_service {
     }
 
     /**
+     * Generate a hash of the userid without respecting the gradepool
+     * @param string    $user
+     * @return mumie_id_hash
+     */
+    public static function generate_hash_without_gradepool(string $user) : mumie_id_hash {
+        $mumieidhash = new mumie_id_hash($user, auth_mumie_get_hashed_id($user));
+        $mumieidhash->save();
+        return $mumieidhash;
+    }
+
+    /**
      * MUMIE user names consist out of the hashed user ID and a suffix depending on the MUMIE Task.
      *
      * This function returns the entire user name.

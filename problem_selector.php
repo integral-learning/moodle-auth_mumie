@@ -30,9 +30,9 @@ use auth_mumie\user\mumie_user_service;
 require_once("../../config.php");
 require_once($CFG->dirroot . '/auth/mumie/classes/sso/sso_service.php');
 
-function build(\stdClass $user, \stdClass $mumietask) : string {
+function build(\stdClass $user) : string {
     $problemselectorurl = get_config('auth_mumie', 'mumie_problem_selector_url');
-    $mumieuser = mumie_user_service::get_user($user->id, $mumietask);
+    $mumieuser = mumie_user_service::get_user($user->id);
     $ssotoken = token_service::generate_sso_token($mumieuser);
     $org = get_config("auth_mumie", "mumie_org");
 
@@ -57,10 +57,6 @@ function build(\stdClass $user, \stdClass $mumietask) : string {
 
 require_login();
 
-global $DB, $USER;
+global $USER;
 
-$id = optional_param('id', 0, PARAM_INT); // Course Module ID.
-
-$mumietask = $DB->get_record("mumie", array('id' => $id));
-
-echo build($USER, $mumietask);
+echo build($USER);

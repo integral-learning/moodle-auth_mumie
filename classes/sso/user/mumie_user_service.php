@@ -43,15 +43,24 @@ require_once($CFG->dirroot . '/auth/mumie/classes/sso/user/mumie_user.php');
  */
 class mumie_user_service {
     /**
-     * Get a mumie_user instance for a given moodle user and MUMIE Task
+     * Get a mumie_user instance for a given moodle user and optional MUMIE Task.
+     *
+     * If there is a MUMIE Task, the id is masked, depending on the MUMIE Task.
+     * Without the MUMIE Task, the id is always masked and the hash doesn't respect
+     * the gradepool.
+     *
      * @param string    $moodleid
-     * @param \stdClass $mumietask
+     * @param \stdClass|null $mumietask Optional. A MUMIE Task. Default null.
      * @return mumie_user
      */
-    public static function get_user(string $moodleid, \stdClass $mumietask) : mumie_user {
-        $mumieid = self::use_id_masking($mumietask)
-            ? hashing_service::generate_hash($moodleid, $mumietask)->get_hash()
-            : $moodleid;
+    public static function get_user(string $moodleid, \stdClass $mumietask = null) : mumie_user {
+        if ($mumietask === null) {
+            $mumieid = hashing_service::generate_hash_without_gradepool($moodleid)->get_hash();
+        } else if (self::use_id_masking($mumietask)) {
+            $mumieid = hashing_service::generate_hash($moodleid, $mumietask)->get_hash();
+        } else {
+            $mumieid = $moodleid;
+        }
         return new mumie_user($moodleid, $mumieid);
     }
 
