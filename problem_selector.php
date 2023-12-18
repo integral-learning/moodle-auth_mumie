@@ -30,11 +30,19 @@ use auth_mumie\user\mumie_user_service;
 require_once("../../config.php");
 require_once($CFG->dirroot . '/auth/mumie/classes/sso/sso_service.php');
 
-function build(\stdClass $user) : string {
+function selectionInput($selection) : string {
+    if ($selection === null) {
+        return '';
+    }
+    return "<input type='hidden' name='selection' id='selection' type ='text' value='{$selection}'/>";
+}
+
+function openProblemSelector(\stdClass $user, $serverUrl, $gradingType, $problemLang, $origin, $selection = null) : string {
     $problemselectorurl = get_config('auth_mumie', 'mumie_problem_selector_url');
     $mumieuser = mumie_user_service::get_user($user->id);
     $ssotoken = token_service::generate_sso_token($mumieuser);
     $org = get_config("auth_mumie", "mumie_org");
+    $selectionInput = selectionInput($selection);
 
     return"
             <form id='mumie_problem_selector_form' name='mumie_problem_selector_form' method='post' action='{$problemselectorurl}/api/sso/problem-selector'>
@@ -42,11 +50,11 @@ function build(\stdClass $user) : string {
                 <input type='hidden' name='token' id='token' type ='text' value='{$ssotoken->get_token()}'/>
                 <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
                 <input type='hidden' name='uiLang' id='uiLang' type ='text' value='{$user->lang}'/>
-                <input type='hidden' name='serverUrl' id='serverUrl' type ='text' value='https://lemon-dev.mumie.net/api'/>
-                <input type='hidden' name='gradingType' id='gradingType' type ='text' value='graded'/>
-                <input type='hidden' name='selection' id='selection' type ='text' value='worksheet_1921'/>
-                <input type='hidden' name='problemLang' id='problemLang' type ='text' value='de'/>
-                <input type='hidden' name='origin' id='origin' type ='text' value='http://moodledev.mumie.net:8050'/>
+                <input type='hidden' name='serverUrl' id='serverUrl' type ='text' value='{$serverUrl}'/>
+                <input type='hidden' name='gradingType' id='gradingType' type ='text' value='{$gradingType}'/>
+                <input type='hidden' name='problemLang' id='problemLang' type ='text' value='{$problemLang}'/>
+                <input type='hidden' name='origin' id='origin' type ='text' value='{$origin}'/>
+                {$selectionInput}
             </form>
             <script>
             document.forms['mumie_problem_selector_form'].submit();
@@ -58,4 +66,10 @@ require_login();
 
 global $USER;
 
-echo build($USER);
+$serverUrl = required_param('serverUrl', PARAM_URL);
+$gradingType = required_param('gradingType', PARAM_ALPHA);
+$problemLang = required_param('problemLang', PARAM_LANG);
+$origin = required_param('origin', PARAM_URL);
+$selection = optional_param('selection', null, PARAM_STRINGID);
+
+echo openProblemSelector($USER, $serverUrl, $gradingType, $problemLang, $origin, $selection);
