@@ -42,7 +42,6 @@ function build(\stdClass $user) : string {
                 <input type='hidden' name='token' id='token' type ='text' value='{$ssotoken->get_token()}'/>
                 <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
                 <input type='hidden' name='uiLang' id='uiLang' type ='text' value='{$user->lang}'/>
-                <input type='hidden' name='problemSelectorOrigin' id='problemSelectorOrigin' type ='text' value='https://lemon.mumie.net'/>
                 <input type='hidden' name='serverUrl' id='serverUrl' type ='text' value='https://lemon.mumie.net/api'/>
                 <input type='hidden' name='gradingType' id='gradingType' type ='text' value='graded'/>
                 <input type='hidden' name='selection' id='selection' type ='text' value='worksheet_1921'/>
