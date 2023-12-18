@@ -37,7 +37,7 @@ function build(\stdClass $user) : string {
     $org = get_config("auth_mumie", "mumie_org");
 
     return"
-            <form id='mumie_problem_selector_form' name='mumie_problem_selector_form' method='post' action='{$problemselectorurl}/sso/problem-selector'>
+            <form id='mumie_problem_selector_form' name='mumie_problem_selector_form' method='post' action='{$problemselectorurl}/api/sso/problem-selector'>
                 <input type='hidden' name='userId' id='userId' type ='text' value='{$ssotoken->get_user()}'/>
                 <input type='hidden' name='token' id='token' type ='text' value='{$ssotoken->get_token()}'/>
                 <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
