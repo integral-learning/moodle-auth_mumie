@@ -90,10 +90,10 @@ $server_url = required_param('server_url', PARAM_URL);
 $grading_type = required_param('grading_type', PARAM_ALPHA);
 $problem_lang = required_param('problem_lang', PARAM_LANG);
 $origin = required_param('origin', PARAM_URL);
-$course_id = required_param('course_id', PARAM_INT);
+$context_id = required_param('context_id', PARAM_INT);
 $selection = optional_param('selection', null, PARAM_STRINGID);
 
-$course_context = \context_course::instance($course_id);
-require_capability('auth/mumie:ssotoproblemselector', $course_context);
+$context = \context::instance_by_id($context_id);
+require_capability('auth/mumie:ssotoproblemselector', $context);
 
 echo open_problem_selector($USER, $server_url, $grading_type, $problem_lang, $origin, $selection);
