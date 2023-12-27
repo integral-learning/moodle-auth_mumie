@@ -30,13 +30,32 @@ use auth_mumie\user\mumie_user_service;
 require_once("../../config.php");
 require_once($CFG->dirroot . '/auth/mumie/classes/sso/sso_service.php');
 
-function selectionInput($selection) : string {
+/**
+ * Generates a hidden input field to send the selection when submitting the form
+ *
+ * @param string|null $selection The potential selection
+ *
+ * @return string The HTML representation of the hidden input field for the selection value
+ */
+function selectionInput(?string $selection) : string {
     if ($selection === null) {
         return '';
     }
     return "<input type='hidden' name='selection' id='selection' type ='text' value='{$selection}'/>";
 }
 
+/**
+ * Generates a form to open the problem selector and submit the form automatically
+ *
+ * @param \stdClass $user The user object
+ * @param string $serverUrl The server URL
+ * @param string $gradingType The grading type
+ * @param string $problemLang The problem language
+ * @param string $origin The origin of the request
+ * @param string|null $selection The potential selection
+ *
+ * @return string The HTML representation of the problem selector form
+ */
 function openProblemSelector(\stdClass $user, $serverUrl, $gradingType, $problemLang, $origin, $selection = null) : string {
     $problemselectorurl = get_config('auth_mumie', 'mumie_problem_selector_url');
     $mumieuser = mumie_user_service::get_user($user->id);
