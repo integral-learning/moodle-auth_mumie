@@ -59,7 +59,7 @@ function selection_input(?string $selection) : string {
  */
 function open_problem_selector(\stdClass $user, string $serverUrl, string $gradingType, string $problemLang, string $origin, string $selection = null) : string {
     $problemSelectorUrl = get_config('auth_mumie', 'mumie_problem_selector_url');
-    $mumieUser = mumie_user_service::get_user($user->id);
+    $mumieUser = mumie_user_service::get_problem_selector_user($user->id);
     $ssoToken = token_service::generate_sso_token($mumieUser);
     $org = get_config("auth_mumie", "mumie_org");
     $selectionInput = selection_input($selection);

@@ -51,12 +51,15 @@ class hashing_service {
     }
 
     /**
-     * Generate a hash of the userid without respecting the gradepool
-     * @param string    $user
-     * @return mumie_id_hash
+     * Generate a hash of the userid with a lecturer postfix.
+     *
+     * @param string $user The user id for which to generate the hash
+     * @return mumie_id_hash The generated mumie_id_hash
      */
-    public static function generate_hash_without_gradepool(string $user) : mumie_id_hash {
-        $mumieidhash = new mumie_id_hash($user, auth_mumie_get_hashed_id($user));
+    public static function generate_hash_with_lecturer_postfix(string $user) : mumie_id_hash {
+        $hash = auth_mumie_get_hashed_id($user);
+        $hash .= '@lecturer@';
+        $mumieidhash = new mumie_id_hash($user, $hash);
         $mumieidhash->save();
         return $mumieidhash;
     }
