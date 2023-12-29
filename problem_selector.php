@@ -48,16 +48,16 @@ function selection_input(?string $selection) : string {
  * Generates a form to open the problem selector and submit the form automatically
  *
  * @param \stdClass $user The user object
- * @param string $serverUrl The server URL
- * @param string $gradingType The grading type
- * @param string $problemLang The problem language
+ * @param string $serverurl The server URL
+ * @param string $gradingtype The grading type
+ * @param string $problemlang The problem language
  * @param string $origin The origin of the request
  * @param string|null $selection The potential selection
  *
  * @return string The HTML representation of the problem selector form
  * @throws \dml_exception
  */
-function open_problem_selector(\stdClass $user, string $serverUrl, string $gradingType, string $problemLang, string $origin, string $selection = null) : string {
+function open_problem_selector(\stdClass $user, string $serverurl, string $gradingtype, string $problemlang, string $origin, string $selection = null) : string {
     $problemSelectorUrl = get_config('auth_mumie', 'mumie_problem_selector_url');
     $mumieUser = mumie_user_service::get_problem_selector_user($user->id);
     $ssoToken = token_service::generate_sso_token($mumieUser);
@@ -70,9 +70,9 @@ function open_problem_selector(\stdClass $user, string $serverUrl, string $gradi
                 <input type='hidden' name='token' id='token' type ='text' value='{$ssoToken->get_token()}'/>
                 <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
                 <input type='hidden' name='uiLang' id='uiLang' type ='text' value='{$user->lang}'/>
-                <input type='hidden' name='serverUrl' id='serverUrl' type ='text' value='{$serverUrl}'/>
-                <input type='hidden' name='gradingType' id='gradingType' type ='text' value='{$gradingType}'/>
-                <input type='hidden' name='problemLang' id='problemLang' type ='text' value='{$problemLang}'/>
+                <input type='hidden' name='serverUrl' id='serverUrl' type ='text' value='{$serverurl}'/>
+                <input type='hidden' name='gradingType' id='gradingType' type ='text' value='{$gradingtype}'/>
+                <input type='hidden' name='problemLang' id='problemLang' type ='text' value='{$problemlang}'/>
                 <input type='hidden' name='origin' id='origin' type ='text' value='{$origin}'/>
                 {$selectionInput}
             </form>
@@ -86,14 +86,14 @@ require_login();
 
 global $USER;
 
-$serverUrl = required_param('server_url', PARAM_URL);
-$gradingType = required_param('grading_type', PARAM_ALPHA);
-$problemLang = required_param('problem_lang', PARAM_LANG);
+$serverurl = required_param('server_url', PARAM_URL);
+$gradingtype = required_param('grading_type', PARAM_ALPHA);
+$problemlang = required_param('problem_lang', PARAM_LANG);
 $origin = required_param('origin', PARAM_URL);
-$contextId = required_param('context_id', PARAM_INT);
+$contextid = required_param('context_id', PARAM_INT);
 $selection = optional_param('selection', null, PARAM_STRINGID);
 
-$context = \context::instance_by_id($contextId);
+$context = \context::instance_by_id($contextid);
 require_capability('auth/mumie:ssotoproblemselector', $context);
 
-echo open_problem_selector($USER, $serverUrl, $gradingType, $problemLang, $origin, $selection);
+echo open_problem_selector($USER, $serverurl, $gradingtype, $problemlang, $origin, $selection);
