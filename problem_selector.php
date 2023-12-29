@@ -86,11 +86,11 @@ require_login();
 
 global $USER;
 
-$serverurl = required_param('server_url', PARAM_URL);
-$gradingtype = required_param('grading_type', PARAM_ALPHA);
-$problemlang = required_param('problem_lang', PARAM_LANG);
+$serverurl = required_param('serverurl', PARAM_URL);
+$gradingtype = required_param('gradingtype', PARAM_ALPHA);
+$problemlang = required_param('problemlang', PARAM_LANG);
 $origin = required_param('origin', PARAM_URL);
-$contextid = required_param('context_id', PARAM_INT);
+$contextid = required_param('contextid', PARAM_INT);
 $selection = optional_param('selection', null, PARAM_STRINGID);
 
 $context = \context::instance_by_id($contextid);
