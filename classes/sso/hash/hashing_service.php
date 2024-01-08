@@ -51,7 +51,7 @@ class hashing_service {
     }
 
     /**
-     * Generate a hash of the userid with a lecturer postfix.
+     * Generate a hash of the user id with the lecturer postfix
      *
      * @param string $user The user id for which to generate the hash
      * @return mumie_id_hash The generated mumie_id_hash
