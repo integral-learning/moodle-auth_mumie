@@ -51,4 +51,11 @@ $capabilities = array(
             'manager' => CAP_ALLOW,
         ),
     ),
+    'auth/mumie:ssotoproblemselector' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW
+        )
+    )
 );

@@ -51,6 +51,20 @@ class hashing_service {
     }
 
     /**
+     * Generate a hash of the user id with the lecturer postfix
+     *
+     * @param string $user The user id for which to generate the hash
+     * @return mumie_id_hash The generated mumie_id_hash
+     */
+    public static function generate_hash_with_lecturer_postfix(string $user) : mumie_id_hash {
+        $hash = auth_mumie_get_hashed_id($user);
+        $hash .= '@lecturer@';
+        $mumieidhash = new mumie_id_hash($user, $hash);
+        $mumieidhash->save();
+        return $mumieidhash;
+    }
+
+    /**
      * MUMIE user names consist out of the hashed user ID and a suffix depending on the MUMIE Task.
      *
      * This function returns the entire user name.
