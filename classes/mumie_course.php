@@ -194,6 +194,7 @@ class mumie_course implements \JsonSerializable {
      * Necessary to encode this object as json.
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize() {
         $vars = get_object_vars($this);
 
