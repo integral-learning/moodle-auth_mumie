@@ -28,6 +28,8 @@ defined('MOODLE_INTERNAL') || die;
 global $CFG;
 require_once($CFG->dirroot . '/auth/mumie/classes/mumie_course.php');
 
+// phpcs:disable moodle.Commenting.InlineComment.DocBlock
+
 /**
  * This class represents a MUMIE Server in moodle
  *
