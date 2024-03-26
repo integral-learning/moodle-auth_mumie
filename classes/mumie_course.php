@@ -29,6 +29,8 @@ defined('MOODLE_INTERNAL') || die;
 require_once($CFG->dirroot . '/auth/mumie/classes/mumie_problem.php');
 require_once($CFG->dirroot . '/auth/mumie/classes/mumie_tag.php');
 
+// phpcs:disable moodle.Commenting.InlineComment.DocBlock
+
 /**
  * This class represents a MUMIE Course in moodle
  *
@@ -194,6 +196,7 @@ class mumie_course implements \JsonSerializable {
      * Necessary to encode this object as json.
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize() {
         $vars = get_object_vars($this);
 

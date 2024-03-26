@@ -28,6 +28,8 @@ namespace auth_mumie;
 defined('MOODLE_INTERNAL') || die;
 require_once($CFG->dirroot . '/auth/mumie/classes/mumie_problem.php');
 
+// phpcs:disable moodle.Commenting.InlineComment.DocBlock
+
 /**
  * mumie_tags are used to classify MUMIE Tasks
  *
@@ -62,6 +64,7 @@ class mumie_tag implements \JsonSerializable {
      * Necessary to encode this object as json.
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize() {
         $vars = get_object_vars($this);
 
