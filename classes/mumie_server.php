@@ -141,7 +141,7 @@ class mumie_server implements \JsonSerializable {
      */
     public static function get_all_servers() {
         global $DB;
-        return array_map('self::from_object', $DB->get_records(self::MUMIE_SERVER_TABLE_NAME));
+        return array_map(self::class . '::from_object', $DB->get_records(self::MUMIE_SERVER_TABLE_NAME));
     }
 
     /**
