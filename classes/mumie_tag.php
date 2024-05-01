@@ -58,6 +58,7 @@ class mumie_tag implements \JsonSerializable {
         $this->values = $values;
     }
 
+    // phpcs:ignore moodle.Commenting.InlineComment.DocBlock
     /**
      * Necessary to encode this object as json.
      * @return mixed

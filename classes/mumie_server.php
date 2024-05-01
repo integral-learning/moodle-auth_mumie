@@ -299,6 +299,7 @@ class mumie_server implements \JsonSerializable {
         $this->languages = array_values(array_unique($langs));
     }
 
+    // phpcs:ignore moodle.Commenting.InlineComment.DocBlock
     /**
      * Necessary to encode this object as json.
      * @return mixed
