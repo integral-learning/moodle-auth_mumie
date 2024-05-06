@@ -84,6 +84,7 @@ $string['mumie_url_prefix_help'] = 'Specify the MUMIE URL prefix  <br><br> e.g. 
 $string['mumie:addserver'] = 'Add a new MUMIE server to MOODLE';
 $string['mumie:deleteserver'] = 'Remove a MUMIE server from MOODLE';
 $string['mumie:viewavailablecourses'] = 'View all MUMIE servers, courses and tasks that are available on this MOODLE platform';
+$string['mumie:ssotoproblemselector'] = 'Open Problem selector with SSO';
 
 // Privacy.
 $string['privacy:metadata:auth_mumie_tokens:token'] = 'Token used to verify a user\'s Single Sign On attempt to MUMIE/Lemon servers.';

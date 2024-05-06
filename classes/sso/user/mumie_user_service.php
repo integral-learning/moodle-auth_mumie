@@ -56,6 +56,17 @@ class mumie_user_service {
     }
 
     /**
+     * Get the Problem selector user from a Moodle user id.
+     *
+     * @param string $moodleid The Moodle user id
+     * @return mumie_user The Problem selector user
+     */
+    public static function get_problem_selector_user(string $moodleid) : mumie_user {
+        $mumieid = hashing_service::generate_hash_with_lecturer_postfix($moodleid)->get_hash();
+        return new mumie_user($moodleid, $mumieid);
+    }
+
+    /**
      * Get mumie_user from a mumie user id.
      * @param string $mumieid
      * @return mumie_user

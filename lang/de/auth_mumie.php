@@ -84,6 +84,7 @@ $string['mumie_url_prefix_help'] = 'Bitte geben Sie die URL des MUMIE-Servers ei
 $string['mumie:addserver'] = 'MUMIE-Server zu MOODLE hinzufügen';
 $string['mumie:deleteserver'] = 'MUMIE-Server löschen';
 $string['mumie:viewavailablecourses'] = 'Alle MUMIE-Server, -Courses und -Tasks sehen, die auf diesem MOODLE verfügbar sind';
+$string['mumie:ssotoproblemselector'] = 'Problem selector mit SSO öffnen';
 
 // Privacy.
 $string['privacy:metadata:auth_mumie_tokens:token'] = 'Tokens zur Verifizierung von Single-Sign-On-Versuchen zu MUMIE/Lemon-Server.';
