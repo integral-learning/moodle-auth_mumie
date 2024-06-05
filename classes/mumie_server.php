@@ -303,7 +303,7 @@ class mumie_server implements \JsonSerializable {
      * Necessary to encode this object as json.
      * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $vars = get_object_vars($this);
 
         return $vars;
