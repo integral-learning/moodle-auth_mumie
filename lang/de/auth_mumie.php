@@ -40,6 +40,8 @@ $string['mumie_api_key_desc'] = 'Geben Sie den MUMIE API-Key zur Notensynchronis
 $string['mumie_org'] = 'MUMIE Org';
 $string['mumie_org_desc'] = 'Geben Sie Ihr Organisationskürzel für MUMIE an, z.B. "rwth"';
 
+$string['cachedef_mumieidhash'] = 'Cache für das mumie_id_hash für ein Hash';
+
 // Used in settings.php.
 $string['mumie_table_header_name'] = 'Servername';
 $string['mumie_table_header_url'] = 'URL-Prefix';

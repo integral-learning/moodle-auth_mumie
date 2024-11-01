@@ -40,6 +40,8 @@ $string['mumie_api_key_desc'] = 'Specify the MUMIE API key for grade synchroniza
 $string['mumie_org'] = 'MUMIE Org';
 $string['mumie_org_desc'] = 'Specify the MUMIE organization key, i.e "rwth" ';
 
+$string['cachedef_mumieidhash'] = 'Cache for the mumie_id_hash for a hash';
+
 // Used in settings.php.
 $string['mumie_table_header_name'] = 'Server name';
 $string['mumie_table_header_url'] = 'URL prefix';

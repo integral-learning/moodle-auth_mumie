@@ -124,8 +124,14 @@ class mumie_id_hash {
      */
     public static function find_by_hash(string $hash) : ?mumie_id_hash {
         global $DB;
-        $record = $DB->get_record(self::HASH_ID_TABLE, ["hash" => $hash]);
-        return self::from_record($record);
+        $cache = \cache::make('auth_mumie', 'mumieidhash');
+        $result = $cache->get($hash);
+        if ($result === false) {
+            $record = $DB->get_record(self::HASH_ID_TABLE, ["hash" => $hash]);
+            $result = self::from_record($record);
+            $cache->set($hash, $result);
+        }
+        return $result;
     }
 
     /**
