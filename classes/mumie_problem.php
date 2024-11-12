@@ -135,10 +135,12 @@ class mumie_problem implements \JsonSerializable {
         return $this;
     }
 
+    // phpcs:ignore moodle.Commenting.InlineComment.DocBlock
     /**
      * Necessary to encode this object as json.
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize() {
         $vars = get_object_vars($this);
         return $vars;
