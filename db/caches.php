@@ -15,18 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of auth_mumie
+ * This file contains the definitions of the caches used by the auth_mumie plugin
  *
  * @package auth_mumie
- * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
- * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+ * @copyright  2017-2024 integral-learning GmbH (https://www.integral-learning.de/)
+ * @author Yannic Lapawczyk (yannic.lapawczyk@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$plugin->version = 2024110500;
-$plugin->component = 'auth_mumie';
-$plugin->requires = 2022041900;
-$plugin->release = "v1.7.0";
-$plugin->maturity = MATURITY_STABLE;
+$definitions = [
+    'mumieidhash' => [
+        'mode' => cache_store::MODE_APPLICATION,
+    ],
+];

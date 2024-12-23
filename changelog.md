@@ -2,6 +2,10 @@
 
 All important changes to this plugin will be documented in this file
 
+## [v1.7.0] - 2024-11-05
+### Added
+- Caching for user resolution during grade synchronization
+
 ## [v1.6.0] - 2024-05-06
 ### Added
 - SSO when opening the Problem selector for the Problem Pool
