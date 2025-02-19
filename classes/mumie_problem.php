@@ -135,6 +135,7 @@ class mumie_problem implements \JsonSerializable {
         return $this;
     }
 
+    #[\ReturnTypeWillChange]
     /**
      * Necessary to encode this object as json.
      * @return mixed
