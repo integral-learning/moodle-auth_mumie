@@ -3,7 +3,7 @@
 All important changes to this plugin will be documented in this file
 
 ## [v1.7.1] - 2025-02-19
-## Changed
+### Changed
 - Plugin now requires Moodle 4.1 LTS
 - Support Moodle 4.5
 
