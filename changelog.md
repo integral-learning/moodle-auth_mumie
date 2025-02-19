@@ -2,6 +2,11 @@
 
 All important changes to this plugin will be documented in this file
 
+## [v1.7.1] - 2025-02-19
+## Changed
+- Plugin now requires Moodle 4.1 LTS
+- Support Moodle 4.5
+
 ## [v1.7.0] - 2024-11-05
 ### Added
 - Caching for user resolution during grade synchronization
