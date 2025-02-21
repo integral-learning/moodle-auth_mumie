@@ -190,6 +190,7 @@ class mumie_course implements \JsonSerializable {
         $this->tags = array_values($tags);
     }
 
+    #[\ReturnTypeWillChange]
     /**
      * Necessary to encode this object as json.
      * @return mixed

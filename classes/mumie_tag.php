@@ -58,6 +58,7 @@ class mumie_tag implements \JsonSerializable {
         $this->values = $values;
     }
 
+    #[\ReturnTypeWillChange]
     /**
      * Necessary to encode this object as json.
      * @return mixed
