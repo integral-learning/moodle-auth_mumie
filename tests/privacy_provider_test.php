@@ -19,6 +19,12 @@ namespace auth_mumie;
 use auth_mumie\privacy\provider;
 use core_privacy\local\request\writer;
 use core_privacy\local\request\approved_contextlist;
+use core_privacy\local\request\approved_userlist;
+use core_privacy\local\request\userlist;
+use core_user;
+use context_course;
+use context_user;
+use context_system;
 
 /**
  * PHPUnit tests for the privacy provider in auth_mumie.

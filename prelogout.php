@@ -28,16 +28,13 @@ $logouturls = required_param("logoutUrl", PARAM_RAW);
 $redirect = required_param("redirect", PARAM_URL);
 ?>
 
-<!-- We must not use the JS helper otherwise this gets executed too late. Tell behat to wait. -->
-
 <script>
-
 
     var logouturls = Object.values(
 
     <?php
     /**
-     * converts logouturls from php to js
+     * converts logout urls from php to js
      *
      * @package auth_mumie
      * @copyright  2017-2025 integral-learning GmbH (https://www.integral-learning.de/)
@@ -58,7 +55,7 @@ $redirect = required_param("redirect", PARAM_URL);
         window.location.href = `
         <?php
          /**
-          * converts logouturls from php to js
+          * go to $redirect
           *
           * @package auth_mumie
           * @copyright  2017-2025 integral-learning GmbH (https://www.integral-learning.de/)
