@@ -48,7 +48,7 @@ class mumie_user_service {
      * @param \stdClass $mumietask
      * @return mumie_user
      */
-    public static function get_user(string $moodleid, \stdClass $mumietask) : mumie_user {
+    public static function get_user(string $moodleid, \stdClass $mumietask): mumie_user {
         $mumieid = self::use_id_masking($mumietask)
             ? hashing_service::generate_hash($moodleid, $mumietask)->get_hash()
             : $moodleid;
@@ -61,7 +61,7 @@ class mumie_user_service {
      * @param string $moodleid The Moodle user id
      * @return mumie_user The Problem selector user
      */
-    public static function get_problem_selector_user(string $moodleid) : mumie_user {
+    public static function get_problem_selector_user(string $moodleid): mumie_user {
         $mumieid = hashing_service::generate_hash_with_lecturer_postfix($moodleid)->get_hash();
         return new mumie_user($moodleid, $mumieid);
     }
@@ -72,7 +72,7 @@ class mumie_user_service {
      * @return mumie_user
      * @throws \dml_exception
      */
-    public static function get_user_from_mumie_id(string $mumieid) : ?mumie_user {
+    public static function get_user_from_mumie_id(string $mumieid): ?mumie_user {
         if (self::is_mumie_id_masked($mumieid)) {
             $moodleid = mumie_id_hash::find_by_hash($mumieid)->get_user();
         } else {
@@ -93,7 +93,7 @@ class mumie_user_service {
      * @param \stdClass $mumietask
      * @return bool
      */
-    private static function use_id_masking($mumietask) : bool {
+    private static function use_id_masking($mumietask): bool {
         return isset($mumietask->use_hashed_id) && $mumietask->use_hashed_id == 1;
     }
 
@@ -102,7 +102,7 @@ class mumie_user_service {
      * @param string $mumieid
      * @return bool
      */
-    private static function is_mumie_id_masked(string $mumieid) : bool {
+    private static function is_mumie_id_masked(string $mumieid): bool {
         return strlen($mumieid) >= 128;
     }
 }

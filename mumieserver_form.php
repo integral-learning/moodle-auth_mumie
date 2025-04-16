@@ -69,7 +69,7 @@ class mumieserver_form extends moodleform {
      */
     public function validation($data, $files) {
         global $DB;
-        $errors = array();
+        $errors = [];
         $server = auth_mumie\mumie_server::from_object((object) $data);
         if (!$server->is_valid_mumie_server()) {
             $errors["url_prefix"] = get_string('mumie_form_server_not_existing', 'auth_mumie');

@@ -76,7 +76,7 @@ class launch_form_builder {
      * @param int $deadline
      * @return $this
      */
-    public function with_deadline(int $deadline) : launch_form_builder {
+    public function with_deadline(int $deadline): launch_form_builder {
         $this->deadlinefragment = $this->get_deadline_signature_inputs($deadline);
         return $this;
     }
@@ -86,7 +86,7 @@ class launch_form_builder {
      * @param int $deadline
      * @return string
      */
-    private function get_deadline_signature_inputs(int $deadline) : string {
+    private function get_deadline_signature_inputs(int $deadline): string {
         $deadlineinmilliseconds = auth_mumie_get_deadline_in_ms($deadline);
         $syncidlowercase = strtolower($this->user->get_sync_id());
         $signeddata = \mumie_cryptography_service::sign_data(
@@ -102,7 +102,7 @@ class launch_form_builder {
      * Get worksheet id from problem path
      * @return string
      */
-    private function get_worksheet_id() : string {
+    private function get_worksheet_id(): string {
         $problempath = auth_mumie_get_problem_path($this->mumietask);
         return str_replace(sso_service::WORKSHEET_PREFIX, "", $problempath);
     }
@@ -112,7 +112,7 @@ class launch_form_builder {
      * @return string
      * @throws \dml_exception
      */
-    public function build() : string {
+    public function build(): string {
         $loginurl = auth_mumie_get_login_url($this->mumietask);
         $org = get_config("auth_mumie", "mumie_org");
         $problemurl = auth_mumie_get_problem_url($this->mumietask);

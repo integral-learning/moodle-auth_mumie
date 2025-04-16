@@ -77,9 +77,9 @@ class mumie_user {
      * @return bool
      * @throws \dml_exception
      */
-    public function load() : bool {
+    public function load(): bool {
         global $DB;
-        $user = $DB->get_record('user', array('id' => $this->moodleid));
+        $user = $DB->get_record('user', ['id' => $this->moodleid]);
         if (!$user) {
             return false;
         }
@@ -95,7 +95,7 @@ class mumie_user {
      * The sync id is the full username on a MUMIE / Lemon server
      * @return string
      */
-    public function get_sync_id() : string {
+    public function get_sync_id(): string {
         return "GSSO_" . $this->org . "_" . $this->mumieid;
     }
 
@@ -103,7 +103,7 @@ class mumie_user {
      * Set moodle id
      * @return int
      */
-    public function get_moodle_id() : int {
+    public function get_moodle_id(): int {
         return $this->moodleid;
     }
 
@@ -111,7 +111,7 @@ class mumie_user {
      * Get moodle id
      * @param int $moodleid
      */
-    public function set_moodle_id(int $moodleid) : void {
+    public function set_moodle_id(int $moodleid): void {
         $this->moodleid = $moodleid;
     }
 
@@ -119,7 +119,7 @@ class mumie_user {
      * Get mumie id
      * @return string
      */
-    public function get_mumie_id() : string {
+    public function get_mumie_id(): string {
         return $this->mumieid;
     }
 
@@ -127,7 +127,7 @@ class mumie_user {
      * Set mumie id
      * @param string $mumieid
      */
-    public function set_mumie_id(string $mumieid) : void {
+    public function set_mumie_id(string $mumieid): void {
         $this->mumieid = $mumieid;
     }
 
@@ -135,7 +135,7 @@ class mumie_user {
      * Get first name
      * @return string
      */
-    public function get_firstname() : string {
+    public function get_firstname(): string {
         return $this->firstname;
     }
 
@@ -143,7 +143,7 @@ class mumie_user {
      * get lastname
      * @return string
      */
-    public function get_lastname() : string {
+    public function get_lastname(): string {
         return $this->lastname;
     }
 
@@ -151,7 +151,7 @@ class mumie_user {
      * Get email
      * @return string
      */
-    public function get_email() : string {
+    public function get_email(): string {
         return $this->email;
     }
 }

@@ -37,7 +37,7 @@ require_once($CFG->dirroot . '/auth/mumie/classes/sso/sso_service.php');
  *
  * @return string The HTML representation of the hidden input field for the selection value
  */
-function selection_input(?string $selection) : string {
+function selection_input(?string $selection): string {
     if ($selection === null) {
         return '';
     }
@@ -58,28 +58,29 @@ function selection_input(?string $selection) : string {
  * @throws \dml_exception
  */
 function open_problem_selector(\stdClass $user, string $serverurl, string $gradingtype, string $problemlang,
-                               string $origin, string $selection = null) : string {
+                               string $origin, ?string $selection): string {
     $problemselectorurl = get_config('auth_mumie', 'mumie_problem_selector_url');
     $mumieuser = mumie_user_service::get_problem_selector_user($user->id);
     $ssotoken = token_service::generate_sso_token($mumieuser);
     $org = get_config("auth_mumie", "mumie_org");
     $selectioninput = selection_input($selection);
 
-    return"
-            <form id='mumie_problem_selector_form' name='mumie_problem_selector_form' method='post' action='{$problemselectorurl}/api/sso/problem-selector'>
-                <input type='hidden' name='userId' id='userId' type ='text' value='{$ssotoken->get_user()}'/>
-                <input type='hidden' name='token' id='token' type ='text' value='{$ssotoken->get_token()}'/>
-                <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
-                <input type='hidden' name='uiLang' id='uiLang' type ='text' value='{$user->lang}'/>
-                <input type='hidden' name='serverUrl' id='serverUrl' type ='text' value='{$serverurl}'/>
-                <input type='hidden' name='gradingType' id='gradingType' type ='text' value='{$gradingtype}'/>
-                <input type='hidden' name='problemLang' id='problemLang' type ='text' value='{$problemlang}'/>
-                <input type='hidden' name='origin' id='origin' type ='text' value='{$origin}'/>
-                {$selectioninput}
-            </form>
-            <script>
-            document.forms['mumie_problem_selector_form'].submit();
-            </script>
+    return "
+    <form id='mumie_problem_selector_form' name='mumie_problem_selector_form'
+    method='post' action='{$problemselectorurl}/api/sso/problem-selector'>
+    <input type='hidden' name='userId' id='userId' type ='text' value='{$ssotoken->get_user()}'/>
+    <input type='hidden' name='token' id='token' type ='text' value='{$ssotoken->get_token()}'/>
+    <input type='hidden' name='org' id='org' type ='text' value='{$org}'/>
+    <input type='hidden' name='uiLang' id='uiLang' type ='text' value='{$user->lang}'/>
+    <input type='hidden' name='serverUrl' id='serverUrl' type ='text' value='{$serverurl}'/>
+    <input type='hidden' name='gradingType' id='gradingType' type ='text' value='{$gradingtype}'/>
+    <input type='hidden' name='problemLang' id='problemLang' type ='text' value='{$problemlang}'/>
+    <input type='hidden' name='origin' id='origin' type ='text' value='{$origin}'/>
+    {$selectioninput}
+    </form>
+    <script>
+    document.forms['mumie_problem_selector_form'].submit();
+    </script>
         ";
 }
 

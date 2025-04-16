@@ -52,12 +52,12 @@ class mumie_problem implements \JsonSerializable {
      * All languages this task is available in
      * @var string[]
      */
-    private $languages = array();
+    private $languages = [];
     /**
      * All content tags set for this problem
      * @var mumie_tag[]
      */
-    private $tags = array();
+    private $tags = [];
 
     /**
      * Get headlines for all available languages

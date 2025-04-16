@@ -77,7 +77,7 @@ class mumie_server implements \JsonSerializable {
      * All languages that are available on the server
      * @var string[]
      */
-    private $languages = array();
+    private $languages = [];
 
     /**
      * Create an instance of mumie_server from a database record
@@ -120,7 +120,7 @@ class mumie_server implements \JsonSerializable {
      */
     public function delete() {
         global $DB;
-        $DB->delete_records(self::MUMIE_SERVER_TABLE_NAME, array("id" => $this->id));
+        $DB->delete_records(self::MUMIE_SERVER_TABLE_NAME, ["id" => $this->id]);
     }
 
     /**
@@ -149,7 +149,7 @@ class mumie_server implements \JsonSerializable {
      * @return mumie_server[]
      */
     public static function get_all_servers_with_structure() {
-        $servers = array();
+        $servers = [];
         foreach (self::get_all_servers() as $server) {
             $server->load_structure();
             array_push($servers, $server);

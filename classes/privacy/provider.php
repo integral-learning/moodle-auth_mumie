@@ -49,7 +49,7 @@ class provider implements
      * @param   collection $collection The initialized item collection to add items to.
      * @return  collection     A listing of user data stored through this system.
      */
-    public static function get_metadata(collection $collection) : collection {
+    public static function get_metadata(collection $collection): collection {
         $collection->add_database_table(
             'auth_mumie_sso_tokens',
             [
@@ -74,7 +74,7 @@ class provider implements
             [
                 'firstname' => 'privacy:metadata:auth_mumie_servers:firstname',
                 'lastname' => 'privacy:metadata:auth_mumie_servers:lastname',
-                'email' => 'privacy:metadata:auth_mumie_servers:email'
+                'email' => 'privacy:metadata:auth_mumie_servers:email',
             ],
             'privacy:metadata:auth_mumie_servers:tableexplanation'
         );
@@ -87,16 +87,16 @@ class provider implements
      * @param   int $userid The user to search.
      * @return  contextlist   $contextlist  The contextlist containing the list of contexts used in this plugin.
      */
-    public static function get_contexts_for_userid(int $userid) : contextlist {
+    public static function get_contexts_for_userid(int $userid): contextlist {
         global $DB;
         $contextlist = new contextlist();
         $contextlist->set_component('auth_mumie');
 
-        $hashes = $DB->get_records('auth_mumie_id_hashes', array('the_user' => $userid));
-        $courseids = array();
+        $hashes = $DB->get_records('auth_mumie_id_hashes', ['the_user' => $userid]);
+        $courseids = [];
 
         foreach ($hashes as $hash) {
-            $matches = array();
+            $matches = [];
             \preg_match('@gradepool([0-9]*)@', $hash->hash, $matches);
             if (count($matches) > 0 && !in_array($matches[1], $courseids)) {
                 array_push($courseids, $matches[1]);
@@ -145,7 +145,7 @@ class provider implements
             FROM {auth_mumie_id_hashes}
             WHERE hash LIKE :gradepool
         ";
-        $userlist->add_from_sql('userid', $sql, array('gradepool' => "%@gradepool{$courseid}@"));
+        $userlist->add_from_sql('userid', $sql, ['gradepool' => "%@gradepool{$courseid}@"]);
     }
 
     /**
@@ -160,7 +160,8 @@ class provider implements
             if ($context->contextlevel != CONTEXT_COURSE && $context->contextlevel != CONTEXT_USER) {
                 continue;
             }
-            $records = $DB->get_records('auth_mumie_id_hashes', array('the_user' => $contextlist->get_user()->id));
+            $records = $DB->get_records('auth_mumie_id_hashes', ['the_user' =>
+            $contextlist->get_user()->id]);
             $hashes = array_map(
                 function($record) {
                     return $record->hash;
@@ -196,7 +197,7 @@ class provider implements
         writer::with_context($context)->export_data(
             [
                 get_string('pluginname', 'auth_mumie'),
-                get_string('mumie_course_account', 'auth_mumie')
+                get_string('mumie_course_account', 'auth_mumie'),
             ],
             (object) $data
         );
@@ -220,7 +221,7 @@ class provider implements
         writer::with_context($context)->export_data(
             [
                 get_string('pluginname', 'auth_mumie'),
-                get_string('mumie_sso_tokens', 'auth_mumie')
+                get_string('mumie_sso_tokens', 'auth_mumie'),
             ],
             (object) $tokens
         );
@@ -257,10 +258,10 @@ class provider implements
         } else if ($context->contextlevel == CONTEXT_COURSE) {
             $courseid = $context->__get("instanceid");
             $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE hash LIKE :gradepool";
-            $records = $DB->get_records_sql($sql, array('gradepool' => "%@gradepool{$courseid}@"));
+            $records = $DB->get_records_sql($sql, ['gradepool' => "%@gradepool{$courseid}@"]);
             foreach ($records as $record) {
-                $DB->delete_records('auth_mumie_id_hashes', array('id' => $record->id));
-                $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
+                $DB->delete_records('auth_mumie_id_hashes', ['id' => $record->id]);
+                $DB->delete_records('auth_mumie_sso_tokens', ['the_user' => $record->hash]);
             }
         }
     }
@@ -297,8 +298,8 @@ class provider implements
         $records = $DB->get_records_sql($sql, $inparams);
         foreach ($records as $record) {
             if (strpos($record->hash, "@gradepool{$courseid}@") !== false ) {
-                $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $record->the_user, 'hash' => $record->hash));
-                $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
+                $DB->delete_records('auth_mumie_id_hashes', ['the_user' => $record->the_user, 'hash' => $record->hash]);
+                $DB->delete_records('auth_mumie_sso_tokens', ['the_user' => $record->hash]);
             }
         }
     }
@@ -319,8 +320,8 @@ class provider implements
         $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
         $records = $DB->get_records_sql($sql, $inparams);
         foreach ($records as $record) {
-            $DB->delete_records('auth_mumie_id_hashes', array('the_user' => $record->the_user));
-            $DB->delete_records('auth_mumie_sso_tokens', array('the_user' => $record->hash));
+            $DB->delete_records('auth_mumie_id_hashes', ['the_user' => $record->the_user]);
+            $DB->delete_records('auth_mumie_sso_tokens', ['the_user' => $record->hash]);
         }
     }
 }

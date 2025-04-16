@@ -65,7 +65,7 @@ class mumie_id_hash {
      * Create a database entry, if none exists.
      * @return void
      */
-    public function save() : void {
+    public function save(): void {
         if (!self::find($this->user, $this->hash)) {
             $this->create();
         }
@@ -76,7 +76,7 @@ class mumie_id_hash {
      * @return void
      * @throws \dml_exception
      */
-    public function create() : void {
+    public function create(): void {
         global $DB;
         $DB->insert_record(self::HASH_ID_TABLE, ["the_user" => $this->user, "hash" => $this->hash]);
     }
@@ -86,7 +86,7 @@ class mumie_id_hash {
      * @return void
      * @throws \dml_exception
      */
-    public function update() : void {
+    public function update(): void {
         global $DB;
         $DB->update_record(self::HASH_ID_TABLE, ["id" => $this->id, "the_user" => $this->user, "hash" => $this->hash]);
     }
@@ -97,7 +97,7 @@ class mumie_id_hash {
      * @return mumie_id_hash|null
      * @throws \dml_exception
      */
-    public static function find_by_user(string $user) : ?mumie_id_hash {
+    public static function find_by_user(string $user): ?mumie_id_hash {
         global $DB;
         $record = $DB->get_record(self::HASH_ID_TABLE, ["the_user" => $user]);
         return self::from_record($record);
@@ -110,7 +110,7 @@ class mumie_id_hash {
      * @return mumie_id_hash|null
      * @throws \dml_exception
      */
-    private static function find(int $user, string $hash) : ?mumie_id_hash {
+    private static function find(int $user, string $hash): ?mumie_id_hash {
         global $DB;
         $record = $DB->get_record(self::HASH_ID_TABLE, ["the_user" => $user, "hash" => $hash]);
         return self::from_record($record);
@@ -122,7 +122,7 @@ class mumie_id_hash {
      * @return mumie_id_hash|null
      * @throws \dml_exception
      */
-    public static function find_by_hash(string $hash) : ?mumie_id_hash {
+    public static function find_by_hash(string $hash): ?mumie_id_hash {
         global $DB;
         $cache = \cache::make('auth_mumie', 'mumieidhash');
         $result = $cache->get($hash);
@@ -139,7 +139,7 @@ class mumie_id_hash {
      * @param  \stdClass $record
      * @return mumie_id_hash|null
      */
-    private static function from_record($record) : ?mumie_id_hash {
+    private static function from_record($record): ?mumie_id_hash {
         if (!$record) {
             return null;
         }
@@ -152,7 +152,7 @@ class mumie_id_hash {
      * Get the id.
      * @return int
      */
-    public function get_id() : int {
+    public function get_id(): int {
         return $this->id;
     }
 
@@ -160,7 +160,7 @@ class mumie_id_hash {
      * Set the id
      * @param int $id
      */
-    public function set_id(int $id) : void {
+    public function set_id(int $id): void {
         $this->id = $id;
     }
 
@@ -168,7 +168,7 @@ class mumie_id_hash {
      * Get the moodle user id
      * @return int
      */
-    public function get_user() : int {
+    public function get_user(): int {
         return $this->user;
     }
 
@@ -176,7 +176,7 @@ class mumie_id_hash {
      * Set the moodle user id
      * @param int $user
      */
-    public function set_user(int $user) : void {
+    public function set_user(int $user): void {
         $this->user = $user;
     }
 
@@ -184,7 +184,7 @@ class mumie_id_hash {
      * Get the hash
      * @return string
      */
-    public function get_hash() : string {
+    public function get_hash(): string {
         return $this->hash;
     }
 
@@ -192,7 +192,7 @@ class mumie_id_hash {
      * Set the hash
      * @param string $hash
      */
-    public function set_hash(string $hash) : void {
+    public function set_hash(string $hash): void {
         $this->hash = $hash;
     }
 }

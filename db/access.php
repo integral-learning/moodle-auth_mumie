@@ -24,38 +24,38 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = array(
+$capabilities = [
 
-    'auth/mumie:addserver' => array(
+    'auth/mumie:addserver' => [
         'riskbitmask' => RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW,
-        ),
-    ),
-    'auth/mumie:deleteserver' => array(
+        ],
+    ],
+    'auth/mumie:deleteserver' => [
         'riskbitmask' => RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
+        'archetypes' => [
             'manager' => CAP_ALLOW,
-        ),
-    ),
-    'auth/mumie:viewavailablecourses' => array(
+        ],
+    ],
+    'auth/mumie:viewavailablecourses' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW,
-        ),
-    ),
-    'auth/mumie:ssotoproblemselector' => array(
+        ],
+    ],
+    'auth/mumie:ssotoproblemselector' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
-            'editingteacher' => CAP_ALLOW
-        )
-    )
-);
+        'archetypes' => [
+            'editingteacher' => CAP_ALLOW,
+        ],
+    ],
+];
