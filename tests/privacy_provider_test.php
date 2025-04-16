@@ -91,8 +91,6 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
     public function test_get_users_in_context(): void {
         $this->resetAfterTest(true);
 
-        global $DB;
-
         $course1 = $this->getDataGenerator()->create_course();
         $course2 = $this->getDataGenerator()->create_course();
         $course3 = $this->getDataGenerator()->create_course();
