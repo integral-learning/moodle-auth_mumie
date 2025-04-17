@@ -62,10 +62,12 @@ class mumieserver_form extends moodleform {
     }
 
     /**
-     * Validate the form data
-     * @param array $data form data
-     * @return array associative array of errors
-     */
+    * If there are errors return array of errors ("fieldname"=>"error message"), otherwise true if ok.
+    * Server side rules do not work for uploaded files, implement serverside rules here if needed.
+    * @param array $data — form data
+    * @param array $files — array of uploaded files "element_name"=>tmp_file_path
+    * @return array — associative array of errors
+    */
     public function validation($data, $files) {
         $errors = [];
         $server = auth_mumie\mumie_server::from_object((object) $data);
