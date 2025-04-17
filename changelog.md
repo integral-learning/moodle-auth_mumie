@@ -2,6 +2,12 @@
 
 All important changes to this plugin will be documented in this file
 
+## [v1.7.2] - 2025-04-17
+### Changed
+- **Code style revised:** Refactored code to comply with moodle-plugin-ci ^4 formatting standards 
+  and updated for compatibility with PHP 8.2.
+- Support Moodle 5.0
+ 
 ## [v1.7.1] - 2025-02-19
 ### Changed
 - Plugin now requires Moodle 4.1 LTS
