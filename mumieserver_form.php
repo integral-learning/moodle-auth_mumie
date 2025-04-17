@@ -66,7 +66,7 @@ class mumieserver_form extends moodleform {
      * @param array $data form data
      * @return array associative array of errors
      */
-    public function validation($data) {
+    public function validation($data, $files) {
         $errors = [];
         $server = auth_mumie\mumie_server::from_object((object) $data);
 
