@@ -37,11 +37,11 @@ use context_system;
  */
 final class privacy_provider_test extends \core_privacy\tests\provider_testcase {
 
-        /**
-         * Test: get_contexts_for_userid returns no data for user without logins.
-         *
-         * @covers ::get_contexts_for_userid
-         */
+    /**
+     * Test: get_contexts_for_userid returns no data for user without logins.
+     *
+     * @covers ::get_contexts_for_userid
+     */
     public function test_get_contexts_for_userid_no_data(): void {
         global $USER;
         $this->resetAfterTest(true);
