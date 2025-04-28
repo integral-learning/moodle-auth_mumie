@@ -45,7 +45,7 @@ class token_service {
      * @return sso_token
      * @throws \dml_exception
      */
-    public static function generate_sso_token(mumie_user $user) : sso_token {
+    public static function generate_sso_token(mumie_user $user): sso_token {
         if ($token = sso_token::find_by_user($user->get_mumie_id())) {
             $token->set_token(self::generate_token());
             $token->set_timecreated(time());
@@ -79,7 +79,7 @@ class token_service {
      * @param sso_token $token
      * @return bool
      */
-    private static function has_token_timed_out(sso_token $token) : bool {
+    private static function has_token_timed_out(sso_token $token): bool {
         $current = time();
         return $current - $token->get_timecreated() > 60;
     }
@@ -88,7 +88,7 @@ class token_service {
      * Generate a new token value
      * @return string
      */
-    private static function generate_token() : string {
+    private static function generate_token(): string {
         return auth_mumie_get_token(20);
     }
 }

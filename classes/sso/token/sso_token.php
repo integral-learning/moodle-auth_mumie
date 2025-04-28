@@ -73,15 +73,15 @@ class sso_token {
      * @return void
      * @throws \dml_exception
      */
-    public function create() : void {
+    public function create(): void {
         global $DB;
         $DB->insert_record(
             self::SSO_TOKEN_TABLE,
-            array(
+            [
                 "the_user" => $this->user,
                 "token" => $this->token,
-                "timecreated" => $this->timecreated
-            ));
+                "timecreated" => $this->timecreated,
+            ]);
     }
 
     /**
@@ -89,16 +89,16 @@ class sso_token {
      * @return void
      * @throws \dml_exception
      */
-    public function update() : void {
+    public function update(): void {
         global $DB;
         $DB->update_record(
             self::SSO_TOKEN_TABLE,
-            array(
+            [
                 "the_user" => $this->user,
                 "token" => $this->token,
                 "timecreated" => $this->timecreated,
-                "id" => $this->id
-            ));
+                "id" => $this->id,
+            ]);
     }
 
     /**
@@ -107,7 +107,7 @@ class sso_token {
      * @return sso_token|null
      * @throws \dml_exception
      */
-    public static function find_by_user(string $user) : ?sso_token {
+    public static function find_by_user(string $user): ?sso_token {
         global $DB;
         $record = $DB->get_record(self::SSO_TOKEN_TABLE, ["the_user" => $user]);
         return self::from_record($record);
@@ -118,7 +118,7 @@ class sso_token {
      * @param \stdClass $record
      * @return sso_token|null
      */
-    private static function from_record($record) : ?sso_token {
+    private static function from_record($record): ?sso_token {
         if (!$record) {
             return null;
         }
@@ -131,7 +131,7 @@ class sso_token {
      * Get the id
      * @return int
      */
-    public function get_id() : int {
+    public function get_id(): int {
         return $this->id;
     }
 
@@ -139,7 +139,7 @@ class sso_token {
      * Set the id
      * @param int $id
      */
-    public function set_id(int $id) : void {
+    public function set_id(int $id): void {
         $this->id = $id;
     }
 
@@ -147,7 +147,7 @@ class sso_token {
      * Get the token
      * @return string
      */
-    public function get_token() : string {
+    public function get_token(): string {
         return $this->token;
     }
 
@@ -155,7 +155,7 @@ class sso_token {
      * Set the token
      * @param string $token
      */
-    public function set_token(string $token) : void {
+    public function set_token(string $token): void {
         $this->token = $token;
     }
 
@@ -163,7 +163,7 @@ class sso_token {
      * Get the user.
      * @return string
      */
-    public function get_user() : string {
+    public function get_user(): string {
         return $this->user;
     }
 
@@ -171,7 +171,7 @@ class sso_token {
      * Set the user
      * @param string $user
      */
-    public function set_user(string $user) : void {
+    public function set_user(string $user): void {
         $this->user = $user;
     }
 
@@ -179,7 +179,7 @@ class sso_token {
      * Get time created
      * @return int
      */
-    public function get_timecreated() : int {
+    public function get_timecreated(): int {
         return $this->timecreated;
     }
 
@@ -187,7 +187,7 @@ class sso_token {
      * Set time created
      * @param int $timecreated
      */
-    public function set_timecreated(int $timecreated) : void {
+    public function set_timecreated(int $timecreated): void {
         $this->timecreated = $timecreated;
     }
 }

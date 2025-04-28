@@ -76,7 +76,10 @@ class mumie_cryptographic_key {
      */
     public function update() {
         global $DB;
-        $DB->update_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $this->name, "keyvalue" => $this->keyvalue, "id" => $this->id]);
+        $DB->update_record(
+        self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE,
+        ["name" => $this->name, "keyvalue" => $this->keyvalue, "id" => $this->id]
+        );
     }
 
     /**
@@ -85,7 +88,7 @@ class mumie_cryptographic_key {
      * @return mumie_cryptographic_key|null
      * @throws dml_exception
      */
-    public static function get_by_name(string $name) : ?mumie_cryptographic_key {
+    public static function get_by_name(string $name): ?mumie_cryptographic_key {
         global $DB;
         $record = $DB->get_record(self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE, ["name" => $name]);
         return self::from_record($record);
@@ -96,7 +99,7 @@ class mumie_cryptographic_key {
      * @param mixed $record
      * @return mumie_cryptographic_key|null
      */
-    private static function from_record($record) : ?mumie_cryptographic_key {
+    private static function from_record($record): ?mumie_cryptographic_key {
         if (!$record) {
             return null;
         }
@@ -109,7 +112,7 @@ class mumie_cryptographic_key {
      * Get the id
      * @return string
      */
-    public function get_id() : string {
+    public function get_id(): string {
         return $this->id;
     }
 
@@ -117,7 +120,7 @@ class mumie_cryptographic_key {
      * Set a new id
      * @param string $id
      */
-    public function set_id(string $id) : void {
+    public function set_id(string $id): void {
         $this->id = $id;
     }
 
@@ -125,7 +128,7 @@ class mumie_cryptographic_key {
      * Get the name
      * @return string
      */
-    public function get_name() : string {
+    public function get_name(): string {
         return $this->name;
     }
 
@@ -133,7 +136,7 @@ class mumie_cryptographic_key {
      * Set a new name
      * @param string $name
      */
-    public function set_name(string $name) : void {
+    public function set_name(string $name): void {
         $this->name = $name;
     }
 
@@ -141,7 +144,7 @@ class mumie_cryptographic_key {
      * Get the keyvalue
      * @return string
      */
-    public function get_keyvalue() : string {
+    public function get_keyvalue(): string {
         return $this->keyvalue;
     }
 
@@ -149,7 +152,7 @@ class mumie_cryptographic_key {
      * Set a new keyvalue
      * @param string $keyvalue
      */
-    public function set_keyvalue(string $keyvalue) : void {
+    public function set_keyvalue(string $keyvalue): void {
         $this->keyvalue = $keyvalue;
     }
 }

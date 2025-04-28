@@ -33,8 +33,8 @@ $mumieservers = auth_mumie\mumie_server::get_all_servers();
 // Build html table containing all saved mumie servers.
 $table = new html_table();
 $table->attributes['class'] = 'generaltable auth_index mumie_server_list_container';
-$table->head = array(get_string("mumie_table_header_name", "auth_mumie"), get_string("mumie_table_header_url", "auth_mumie"),
-    get_string("mumie_edit_button", "auth_mumie"), get_string("mumie_delete_button", "auth_mumie"));
+$table->head = [get_string("mumie_table_header_name", "auth_mumie"), get_string("mumie_table_header_url", "auth_mumie"),
+    get_string("mumie_edit_button", "auth_mumie"), get_string("mumie_delete_button", "auth_mumie")];
 
 foreach ($mumieservers as $server) {
     $id = "<span class='mumie_list_entry_id' hidden>" . $server->get_id() . "</span>";
@@ -49,7 +49,7 @@ foreach ($mumieservers as $server) {
         . "'>"
         . '<span class="icon fa fa-trash fa-fw " aria-hidden="true"></span>'
         . "</a>";
-    $table->data[] = array($name, $url, $edit, $delete);
+    $table->data[] = [$name, $url, $edit, $delete];
 }
 
 $addbutton = "<button class='btn mumie_add_server_button btn-primary' id='mumie_add_server_button'>"
@@ -116,11 +116,11 @@ if ($ADMIN->fulltree) {
         get_string('mumie_task_admin_header_desc', 'auth_mumie')
     ));
 
-    $gradepooloptions = array(
+    $gradepooloptions = [
         -1 => get_string('admin_gradepool_free_choice_option', 'auth_mumie'),
         1 => get_string('admin_gradepool_private_option', 'auth_mumie'),
-        0 => get_string('admin_gradepool_shared_option', 'auth_mumie')
-    );
+        0 => get_string('admin_gradepool_shared_option', 'auth_mumie'),
+    ];
 
     $settings->add(
         new admin_setting_configselect(
@@ -157,5 +157,5 @@ if ($ADMIN->fulltree) {
     ));
 
     $context = context_system::instance();
-    $PAGE->requires->js_call_amd('auth_mumie/settings', 'init', array(json_encode($context->id)));
+    $PAGE->requires->js_call_amd('auth_mumie/settings', 'init', [json_encode($context->id)]);
 }

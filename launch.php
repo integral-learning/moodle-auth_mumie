@@ -32,6 +32,6 @@ require_login();
 global $DB, $USER;
 $id = optional_param('id', 0, PARAM_INT); // Course Module ID.
 
-$mumietask = $DB->get_record("mumie", array('id' => $id));
+$mumietask = $DB->get_record("mumie", ['id' => $id]);
 
 sso_service::sso($USER->id, $mumietask);

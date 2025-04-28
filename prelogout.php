@@ -18,7 +18,7 @@
  * Execute a script that sends logout requests to all MUMIE servers
  *
  * @package auth_mumie
- * @copyright  2017-2020 integral-learning GmbH (https://www.integral-learning.de/)
+ * @copyright  2017-2025 integral-learning GmbH (https://www.integral-learning.de/)
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,7 +29,21 @@ $redirect = required_param("redirect", PARAM_URL);
 ?>
 
 <script>
-    var logouturls = Object.values(<?php echo $logouturls ?>);
+
+    var logouturls = Object.values(
+
+    <?php
+    /**
+     * converts logout urls from php to js
+     *
+     * @package auth_mumie
+     * @copyright  2017-2025 integral-learning GmbH (https://www.integral-learning.de/)
+     * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+     * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+     */
+        echo $logouturls
+    ?>
+    );
     var promises = [];
 
     logouturls.forEach(function(url) {
@@ -38,7 +52,18 @@ $redirect = required_param("redirect", PARAM_URL);
 
     Promise.all(promises)
     .then(function (values) {
-        window.location.href = "<?php echo $redirect ?>";
+        window.location.href = `
+        <?php
+         /**
+          * go to $redirect
+          *
+          * @package auth_mumie
+          * @copyright  2017-2025 integral-learning GmbH (https://www.integral-learning.de/)
+          * @author Tobias Goltz (tobias.goltz@integral-learning.de)
+          * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+          */
+            echo $redirect
+        ?>`;
     });
 
     function logoutFromServer(url) {
@@ -60,5 +85,4 @@ $redirect = required_param("redirect", PARAM_URL);
     }
 
 </script>
-
 

@@ -44,10 +44,10 @@ class auth_mumie_external extends external_api {
      */
     public static function submit_mumieserver_form_parameters() {
         return new external_function_parameters(
-            array(
+            [
                 'contextid' => new external_value(PARAM_INT, 'The context id for action'),
                 'jsonformdata' => new external_value(PARAM_RAW, 'The data from the mumie server form, encoded as a json array'),
-            )
+            ]
         );
     }
 
@@ -79,7 +79,7 @@ class auth_mumie_external extends external_api {
 
         $serialiseddata = json_decode($params['jsonformdata']);
 
-        $data = array();
+        $data = [];
         parse_str($serialiseddata, $data);
 
         $editoroptions = [
@@ -101,7 +101,7 @@ class auth_mumie_external extends external_api {
         );
 
         // The last param is the ajax submitted data.
-        $mform = new mumieserver_form(null, array('editoroptions' => $editoroptions), 'post', '', null, true, $data);
+        $mform = new mumieserver_form(null, ['editoroptions' => $editoroptions], 'post', '', null, true, $data);
 
         $validateddata = $mform->get_data();
         if ($validateddata) {
@@ -129,9 +129,9 @@ class auth_mumie_external extends external_api {
      */
     public static function get_server_structure_parameters() {
         return new external_function_parameters(
-            array(
+            [
                 "contextid" => new external_value(PARAM_INT, 'The context id for the requesting course'),
-            )
+            ]
         );
     }
 

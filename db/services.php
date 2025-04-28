@@ -25,22 +25,22 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$functions = array(
-    'auth_mumie_submit_mumieserver_form' => array(
+$functions = [
+    'auth_mumie_submit_mumieserver_form' => [
         'classname' => 'auth_mumie_external',
         'methodname' => 'submit_mumieserver_form',
         'classpath' => 'auth/mumie/externallib.php',
         'description' => 'Creates a Mumie server from submitted form data',
         'ajax' => true,
         'type' => 'write',
-    ),
+    ],
 
-    'auth_mumie_get_server_structure' => array(
+    'auth_mumie_get_server_structure' => [
         'classname' => 'auth_mumie_external',
         'methodname' => 'get_server_structure',
         'classpath' => 'auth/mumie/externallib.php',
         'description' => 'get all Mumie severs, courses and tasks that are available for this institution',
         'ajax' => true,
         'type' => 'read',
-    ),
-);
+    ],
+];

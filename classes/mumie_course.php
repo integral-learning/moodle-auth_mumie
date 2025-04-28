@@ -62,12 +62,12 @@ class mumie_course implements \JsonSerializable {
      * All languages that are available in this course
      * @var string[]
      */
-    private $languages = array();
+    private $languages = [];
     /**
      * All tags set for tasks in this course
      * @var mumie_tag[]
      */
-    private $tags = array();
+    private $tags = [];
 
     /**
      * Get the value of coursefile
@@ -177,11 +177,11 @@ class mumie_course implements \JsonSerializable {
      * Collect and set all tags that are used in this course
      */
     public function collect_tags() {
-        $tags = array();
+        $tags = [];
         foreach ($this->tasks as $task) {
             foreach ($task->get_tags() as $tag) {
                 if (!isset($tags[$tag->get_name()])) {
-                    $tags[$tag->get_name()] = array();
+                    $tags[$tag->get_name()] = [];
                 }
                 $tags[$tag->get_name()] = $tag->merge($tags[$tag->get_name()]);
             }

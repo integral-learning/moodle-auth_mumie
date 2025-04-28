@@ -28,7 +28,7 @@ env:
 before_install:
   - phpenv config-rm xdebug.ini
   - cd ../..
-  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
+  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^4
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:
@@ -36,7 +36,6 @@ install:
 
 script:
   - moodle-plugin-ci phplint
-  - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
   - moodle-plugin-ci codechecker
   - moodle-plugin-ci validate

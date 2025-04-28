@@ -60,16 +60,16 @@ class auth_plugin_mumie extends auth_plugin_base {
         global $CFG;
         $tokentable = "auth_mumie_sso_tokens";
 
-        if ($DB->get_record($tokentable, array('the_user' => $USER->id))
-            || $DB->get_record($tokentable, array('the_user' => auth_mumie_get_hashed_id($USER->id)))) {
+        if ($DB->get_record($tokentable, ['the_user' => $USER->id])
+            || $DB->get_record($tokentable, ['the_user' => auth_mumie_get_hashed_id($USER->id)])) {
             $redirecturl = "{$CFG->wwwroot}/auth/mumie/prelogout.php?sesskey={$USER->sesskey}&logoutUrl="
             . json_encode(auth_mumie\mumie_server::get_all_logout_urls())
             . "&redirect=" . urlencode("{$CFG->wwwroot}/login/logout.php?sesskey={$USER->sesskey}");
-            $DB->delete_records($tokentable, array('the_user' => $USER->id));
+            $DB->delete_records($tokentable, ['the_user' => $USER->id]);
             $DB->delete_records_select(
                 $tokentable,
                 ' the_user LIKE :the_user',
-                array('the_user' => auth_mumie_get_hashed_id($USER->id) . '%')
+                ['the_user' => auth_mumie_get_hashed_id($USER->id) . '%']
             );
             redirect($redirecturl);
         }

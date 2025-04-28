@@ -62,50 +62,44 @@ class mumieserver_form extends moodleform {
     }
 
     /**
-     * Validate the form data
-     * @param array $data form data
-     * @param array $files files uploaded
-     * @return array associative array of errors
+     * If there are errors return array of errors ("fieldname"=>"error message"), otherwise true if ok.
+     * Server side rules do not work for uploaded files, implement serverside rules here if needed.
+     *
+     * @param array $data — form data
+     * @param array $files — array of uploaded files "element_name"=>tmp_file_path
+     * @return array — associative array of errors
      */
     public function validation($data, $files) {
-        global $DB;
-        $errors = array();
+        $errors = [];
         $server = auth_mumie\mumie_server::from_object((object) $data);
+
+        // Check if server is valid.
         if (!$server->is_valid_mumie_server()) {
-            $errors["url_prefix"] = get_string('mumie_form_server_not_existing', 'auth_mumie');
+            $errors['url_prefix'] = get_string('mumie_form_server_not_existing', 'auth_mumie');
         }
 
-        // Array containing all servers with the given url_prefix.
         $serverbyprefix = auth_mumie\mumie_server::get_by_urlprefix($data["url_prefix"]);
         $serverbyname = auth_mumie\mumie_server::get_by_name($data["name"]);
+        $id = $data['id'] ?? 0;
 
-        if (strlen($data["name"]) == 0) {
-            $errors["name"] = get_string('mumie_form_required', 'auth_mumie');
+        // Name required.
+        if (empty($data['name'])) {
+            $errors['name'] = get_string('mumie_form_required', 'auth_mumie');
         }
 
-        if ($serverbyname->get_id() != null && !$data["id"] > 0) {
-            $errors["name"] = get_string('mumie_form_already_existing_name', "auth_mumie");
-        }
-        if ($serverbyname->get_id() != null && $data["id"] > 0 && $serverbyname->get_id() != $data["id"]) {
-            $errors["name"] = get_string('mumie_form_already_existing_name', "auth_mumie");
+        // Name must be unique.
+        if ($serverbyname->get_id() !== null && $serverbyname->get_id() != $id) {
+            $errors['name'] = get_string('mumie_form_already_existing_name', 'auth_mumie');
         }
 
-        if (strlen($data["url_prefix"]) == 0) {
-            $errors["url_prefix"] = get_string('mumie_form_required', 'auth_mumie');
+        // URL prefix required.
+        if (empty($data['url_prefix'])) {
+            $errors['url_prefix'] = get_string('mumie_form_required', 'auth_mumie');
         }
 
-        /* url_prefix is a unique attribute. If a new server is added (id = default value),
-        there mustn't be a server with this property in the database
-         */
-        if ($serverbyprefix->get_id() != null && !$data["id"] > 0) {
-            $errors["url_prefix"] = get_string('mumie_form_already_existing_config', "auth_mumie");
-        }
-
-        /* url_prefix is a unique attribute. If an existing server is edited (id>0), make sure,
-        that there is no other server(a server with a different id) with the same property in the database
-         */
-        if ($serverbyprefix->get_id() != null && $data["id"] > 0 && $serverbyprefix->get_id() != $data["id"]) {
-            $errors["url_prefix"] = get_string('mumie_form_already_existing_config', "auth_mumie");
+        // URL prefix must be unique.
+        if ($serverbyprefix->get_id() !== null && $serverbyprefix->get_id() != $id) {
+            $errors['url_prefix'] = get_string('mumie_form_already_existing_config', 'auth_mumie');
         }
 
         return $errors;

@@ -58,7 +58,7 @@ class sso_service {
      * @return void
      * @throws \dml_exception
      */
-    public static function sso(string $moodleid, \stdClass $mumietask) : void {
+    public static function sso(string $moodleid, \stdClass $mumietask): void {
         $mumieuser = mumie_user_service::get_user($moodleid, $mumietask);
         $ssotoken = token_service::generate_sso_token($mumieuser);
         $deadline = mumie_get_effective_duedate($moodleid, $mumietask);
@@ -74,7 +74,7 @@ class sso_service {
      * @return string
      * @throws \dml_exception
      */
-    private static function get_launch_form(sso_token $token, \stdClass $mumietask, int $deadline, mumie_user $user) : string {
+    private static function get_launch_form(sso_token $token, \stdClass $mumietask, int $deadline, mumie_user $user): string {
         $launchformbuilder = new launch_form_builder($token, $mumietask, $user);
 
         $problempath = auth_mumie_get_problem_path($mumietask);
@@ -90,7 +90,7 @@ class sso_service {
      * @param int    $deadline
      * @return bool
      */
-    private static function include_signed_deadline(string $problempath, int $deadline) : bool {
+    private static function include_signed_deadline(string $problempath, int $deadline): bool {
         return substr( $problempath, 0, 10 ) === self::WORKSHEET_PREFIX
             && $deadline > 0;
     }
