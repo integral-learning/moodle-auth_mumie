@@ -47,7 +47,7 @@ function xmldb_auth_mumie_upgrade($oldversion) {
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, true);
         $table->add_field('the_user', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL);
         $table->add_field('hash', XMLDB_TYPE_CHAR, '128', null, XMLDB_NOTNULL);
-        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
@@ -83,7 +83,7 @@ function xmldb_auth_mumie_upgrade($oldversion) {
         $table->add_field('name', XMLDB_TYPE_CHAR, '10', null, XMLDB_NOTNULL, null, null);
         $table->add_field('key', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
 
-        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);

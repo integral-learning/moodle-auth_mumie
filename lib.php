@@ -130,7 +130,7 @@ function auth_mumie_output_fragment_new_mumieserver_form($args) {
         null
     );
 
-    $mform = new mumieserver_form(null, array('editoroptions' => $editoroptions), 'post', '', null, true, $formdata);
+    $mform = new mumieserver_form(null, ['editoroptions' => $editoroptions], 'post', '', null, true, $formdata);
 
     $mform->set_data($mumieserver);
 

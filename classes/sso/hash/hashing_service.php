@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This class is a service providing functionalities regarding hashing/masking of moodle ids. Hashes are used as user id on MUMIE servers.
+ * This class is a service providing functionalities regarding hashing/masking of moodle ids.
+ * Hashes are used as user id on MUMIE servers.
  *
  * @package auth_mumie
  * @copyright  2017-2023 integral-learning GmbH (https://www.integral-learning.de/)
@@ -30,7 +31,8 @@ require_once($CFG->dirroot . '/auth/mumie/classes/sso/hash/mumie_id_hash.php');
 require_once($CFG->dirroot . '/auth/mumie/lib.php');
 
 /**
- * This class is a service providing functionalities regarding hashing/masking of moodle ids. Hashes are used as user id on MUMIE servers.
+ * This class is a service providing functionalities regarding hashing/masking of moodle ids.
+ * Hashes are used as user id on MUMIE servers.
  *
  * @package auth_mumie
  * @copyright  2017-2023 integral-learning GmbH (https://www.integral-learning.de/)
@@ -44,7 +46,7 @@ class hashing_service {
      * @param \stdClass $mumietask
      * @return mumie_id_hash
      */
-    public static function generate_hash(string $user, \stdClass $mumietask) : mumie_id_hash {
+    public static function generate_hash(string $user, \stdClass $mumietask): mumie_id_hash {
         $mumieidhash = new mumie_id_hash($user, self::get_hash_with_suffix($user, $mumietask));
         $mumieidhash->save();
         return $mumieidhash;
@@ -56,7 +58,7 @@ class hashing_service {
      * @param string $user The user id for which to generate the hash
      * @return mumie_id_hash The generated mumie_id_hash
      */
-    public static function generate_hash_with_lecturer_postfix(string $user) : mumie_id_hash {
+    public static function generate_hash_with_lecturer_postfix(string $user): mumie_id_hash {
         $hash = auth_mumie_get_hashed_id($user);
         $hash .= '@lecturer@';
         $mumieidhash = new mumie_id_hash($user, $hash);
@@ -72,7 +74,7 @@ class hashing_service {
      * @param \stdClass $mumietask
      * @return string
      */
-    private static function get_hash_with_suffix(string $user, \stdClass $mumietask) : string {
+    private static function get_hash_with_suffix(string $user, \stdClass $mumietask): string {
         $hash = auth_mumie_get_hashed_id($user);
         if ($mumietask->privategradepool) {
             $hash .= '@gradepool' . $mumietask->course . '@';
