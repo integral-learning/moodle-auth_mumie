@@ -53,12 +53,20 @@ function selection_input(?string $selection): string {
  * @param string $problemlang The problem language
  * @param string $origin The origin of the request
  * @param string|null $selection The potential selection
+ * @param bool $multiselect Whether to open the selector in multi-select mode
  *
  * @return string The HTML representation of the problem selector form
  * @throws \dml_exception
  */
-function open_problem_selector(\stdClass $user, string $serverurl, string $gradingtype, string $problemlang,
-                               string $origin, ?string $selection, bool $multiselect = false): string {
+function open_problem_selector(
+    \stdClass $user,
+    string $serverurl,
+    string $gradingtype,
+    string $problemlang,
+    string $origin,
+    ?string $selection,
+    bool $multiselect = false
+): string {
     $problemselectorurl = get_config('auth_mumie', 'mumie_problem_selector_url');
     $mumieuser = mumie_user_service::get_problem_selector_user($user->id);
     $ssotoken = token_service::generate_sso_token($mumieuser);

@@ -37,7 +37,6 @@ require_once($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class auth_mumie_external extends external_api {
-
     /**
      * Describes the parameters for submit_mumieserver_form webservice.
      * @return external_function_parameters
