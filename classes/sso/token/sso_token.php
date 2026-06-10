@@ -99,7 +99,8 @@ class sso_token {
                 "token" => $this->token,
                 "timecreated" => $this->timecreated,
                 "id" => $this->id,
-            ]);
+            ]
+        );
     }
 
     /**

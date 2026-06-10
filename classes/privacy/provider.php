@@ -212,7 +212,7 @@ class provider implements
     private static function export_sso_tokens(array $hashes, \context $context) {
         global $DB;
 
-        list($insql, $inparams) = $DB->get_in_or_equal($hashes);
+        [$insql, $inparams] = $DB->get_in_or_equal($hashes);
 
         $sql = "SELECT * FROM {auth_mumie_sso_tokens}
                 WHERE the_user $insql";
@@ -289,7 +289,7 @@ class provider implements
     private static function delete_in_course_context(\context $context, array $userids) {
         global $DB;
         $courseid = $context->__get("instanceid");
-        list($insql, $inparams) = $DB->get_in_or_equal($userids);
+        [$insql, $inparams] = $DB->get_in_or_equal($userids);
         $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
         $records = $DB->get_records_sql($sql, $inparams);
         foreach ($records as $record) {
@@ -312,7 +312,7 @@ class provider implements
         if (!is_a($context, \context_user::class)) {
             return;
         }
-        list($insql, $inparams) = $DB->get_in_or_equal($userids);
+        [$insql, $inparams] = $DB->get_in_or_equal($userids);
         $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
         $records = $DB->get_records_sql($sql, $inparams);
         foreach ($records as $record) {
