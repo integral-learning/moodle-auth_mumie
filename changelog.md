@@ -2,6 +2,11 @@
 
 All important changes to this plugin will be documented in this file
 
+## TODO
+### Changed
+- Plugin now requires Moodle 4.3
+- Support Moodle 5.2
+
 ## [v1.8.0] - 2025-05-15
 ### Changed
 - **Code style revised:** Refactored code to comply with moodle-plugin-ci ^4 formatting standards 
