@@ -81,7 +81,8 @@ class sso_token {
                 "the_user" => $this->user,
                 "token" => $this->token,
                 "timecreated" => $this->timecreated,
-            ]);
+            ]
+        );
     }
 
     /**
@@ -98,7 +99,8 @@ class sso_token {
                 "token" => $this->token,
                 "timecreated" => $this->timecreated,
                 "id" => $this->id,
-            ]);
+            ]
+        );
     }
 
     /**

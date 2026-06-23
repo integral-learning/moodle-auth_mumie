@@ -36,7 +36,6 @@ use context_system;
  * @coversDefaultClass \auth_mumie\privacy\provider
  */
 final class privacy_provider_test extends \core_privacy\tests\provider_testcase {
-
     /**
      * Test: get_contexts_for_userid returns no data for user without logins.
      *
@@ -134,18 +133,18 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $user1 = $this->getDataGenerator()->create_user();
 
         $approvedcontextlist1 = new \core_privacy\tests\request\approved_contextlist(
-        \core_user::get_user($user1->id),
-        'core_course',
-        []
+            \core_user::get_user($user1->id),
+            'core_course',
+            []
         );
         provider::export_user_data($approvedcontextlist1);
         $writer = writer::with_context(\context_system::instance());
         $this->assertFalse($writer->has_any_data_in_any_context());
 
         $approvedcontextlist2 = new \core_privacy\tests\request\approved_contextlist(
-        \core_user::get_user($user1->id),
-        'core_user',
-        []
+            \core_user::get_user($user1->id),
+            'core_user',
+            []
         );
         provider::export_user_data($approvedcontextlist2);
         $writer = writer::with_context(\context_system::instance());
@@ -173,12 +172,12 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $this->create_login($user2, $course1);
 
         $contextlist = new approved_contextlist(
-        $user1,
-        'core_course',
-        [
+            $user1,
+            'core_course',
+            [
             \context_course::instance($course1->id)->id,
             \context_course::instance($course2->id)->id,
-        ]
+            ]
         );
         provider::delete_data_for_user($contextlist);
 
@@ -190,15 +189,14 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $this->create_login($user3);
 
         $contextlist = new approved_contextlist(
-        $user3,
-        'core_user',
-        [context_user::instance($user3->id)->id]
+            $user3,
+            'core_user',
+            [context_user::instance($user3->id)->id]
         );
         provider::delete_data_for_user($contextlist);
 
         $this->assertEquals([$user2->id], $DB->get_fieldset_select('auth_mumie_id_hashes', 'the_user', ''));
         $this->assertCount(1, $DB->get_records('auth_mumie_sso_tokens', []));
-
     }
 
     /**
@@ -224,9 +222,9 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $coursectx1 = context_course::instance($course1->id);
 
         $approveduserlist1 = new \core_privacy\local\request\approved_userlist(
-        $coursectx1,
-        'core_course',
-        [$user1->id, $user2->id]
+            $coursectx1,
+            'core_course',
+            [$user1->id, $user2->id]
         );
 
         provider::delete_data_for_users($approveduserlist1);
@@ -240,9 +238,9 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
 
         $userctx1 = context_user::instance($user1->id);
         $approveduserlist2 = new \core_privacy\local\request\approved_userlist(
-        $userctx1,
-        'core_user',
-        [$user1->id, $user2->id]
+            $userctx1,
+            'core_user',
+            [$user1->id, $user2->id]
         );
 
         provider::delete_data_for_users($approveduserlist2);
@@ -313,5 +311,4 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
 
         $DB->insert_record('auth_mumie_sso_tokens', (array) $ssotoken);
     }
-
 }

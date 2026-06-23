@@ -39,10 +39,7 @@ use core_privacy\local\request\writer;
  * @author Tobias Goltz (tobias.goltz@integral-learning.de)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements
-    \core_privacy\local\metadata\provider,
-    \core_privacy\local\request\plugin\provider,
-    \core_privacy\local\request\core_userlist_provider {
+class provider implements \core_privacy\local\metadata\provider, \core_privacy\local\request\core_userlist_provider, \core_privacy\local\request\plugin\provider {
     /**
      * Returns meta data about this system.
      *
@@ -104,7 +101,7 @@ class provider implements
         }
 
         if (count($courseids) > 0) {
-            list($insql, $inparams) = $DB->get_in_or_equal($courseids);
+            [$insql, $inparams] = $DB->get_in_or_equal($courseids);
 
             $sql = "SELECT c.id
                     FROM {context} c
@@ -163,19 +160,18 @@ class provider implements
             $records = $DB->get_records('auth_mumie_id_hashes', ['the_user' =>
             $contextlist->get_user()->id]);
             $hashes = array_map(
-                function($record) {
+                function ($record) {
                     return $record->hash;
                 },
                 $records
             );
-            if ($context->contextlevel == CONTEXT_COURSE ) {
+            if ($context->contextlevel == CONTEXT_COURSE) {
                 self::export_id_hashes($hashes, $context);
             }
 
             if ($context->contextlevel == CONTEXT_USER) {
                 self::export_sso_tokens($hashes, $context);
             }
-
         }
     }
 
@@ -213,7 +209,7 @@ class provider implements
     private static function export_sso_tokens(array $hashes, \context $context) {
         global $DB;
 
-        list($insql, $inparams) = $DB->get_in_or_equal($hashes);
+        [$insql, $inparams] = $DB->get_in_or_equal($hashes);
 
         $sql = "SELECT * FROM {auth_mumie_sso_tokens}
                 WHERE the_user $insql";
@@ -290,11 +286,11 @@ class provider implements
     private static function delete_in_course_context(\context $context, array $userids) {
         global $DB;
         $courseid = $context->__get("instanceid");
-        list($insql, $inparams) = $DB->get_in_or_equal($userids);
+        [$insql, $inparams] = $DB->get_in_or_equal($userids);
         $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
         $records = $DB->get_records_sql($sql, $inparams);
         foreach ($records as $record) {
-            if (strpos($record->hash, "@gradepool{$courseid}@") !== false ) {
+            if (strpos($record->hash, "@gradepool{$courseid}@") !== false) {
                 $DB->delete_records('auth_mumie_id_hashes', ['the_user' => $record->the_user, 'hash' => $record->hash]);
                 $DB->delete_records('auth_mumie_sso_tokens', ['the_user' => $record->hash]);
             }
@@ -313,7 +309,7 @@ class provider implements
         if (!is_a($context, \context_user::class)) {
             return;
         }
-        list($insql, $inparams) = $DB->get_in_or_equal($userids);
+        [$insql, $inparams] = $DB->get_in_or_equal($userids);
         $sql = "SELECT * FROM {auth_mumie_id_hashes} WHERE the_user $insql";
         $records = $DB->get_records_sql($sql, $inparams);
         foreach ($records as $record) {

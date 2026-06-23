@@ -57,8 +57,14 @@ function selection_input(?string $selection): string {
  * @return string The HTML representation of the problem selector form
  * @throws \dml_exception
  */
-function open_problem_selector(\stdClass $user, string $serverurl, string $gradingtype, string $problemlang,
-                               string $origin, ?string $selection): string {
+function open_problem_selector(
+    \stdClass $user,
+    string $serverurl,
+    string $gradingtype,
+    string $problemlang,
+    string $origin,
+    ?string $selection
+): string {
     $problemselectorurl = get_config('auth_mumie', 'mumie_problem_selector_url');
     $mumieuser = mumie_user_service::get_problem_selector_user($user->id);
     $ssotoken = token_service::generate_sso_token($mumieuser);
