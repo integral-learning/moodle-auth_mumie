@@ -53,17 +53,26 @@ function selection_input(?string $selection): string {
  * @param string $problemlang The problem language
  * @param string $origin The origin of the request
  * @param string|null $selection The potential selection
+ * @param bool $multiselect Whether to open the selector in multi-select mode
  *
  * @return string The HTML representation of the problem selector form
  * @throws \dml_exception
  */
-function open_problem_selector(\stdClass $user, string $serverurl, string $gradingtype, string $problemlang,
-                               string $origin, ?string $selection): string {
+function open_problem_selector(
+    \stdClass $user,
+    string $serverurl,
+    string $gradingtype,
+    string $problemlang,
+    string $origin,
+    ?string $selection,
+    bool $multiselect = false
+): string {
     $problemselectorurl = get_config('auth_mumie', 'mumie_problem_selector_url');
     $mumieuser = mumie_user_service::get_problem_selector_user($user->id);
     $ssotoken = token_service::generate_sso_token($mumieuser);
     $org = get_config("auth_mumie", "mumie_org");
     $selectioninput = selection_input($selection);
+    $multiselectinput = $multiselect ? "<input type='hidden' name='multiSelect' value='true'/>" : '';
 
     return "
     <form id='mumie_problem_selector_form' name='mumie_problem_selector_form'
@@ -77,6 +86,7 @@ function open_problem_selector(\stdClass $user, string $serverurl, string $gradi
     <input type='hidden' name='problemLang' id='problemLang' type ='text' value='{$problemlang}'/>
     <input type='hidden' name='origin' id='origin' type ='text' value='{$origin}'/>
     {$selectioninput}
+    {$multiselectinput}
     </form>
     <script>
     document.forms['mumie_problem_selector_form'].submit();
@@ -94,8 +104,9 @@ $problemlang = required_param('problemlang', PARAM_LANG);
 $origin = required_param('origin', PARAM_URL);
 $contextid = required_param('contextid', PARAM_INT);
 $selection = optional_param('selection', null, PARAM_STRINGID);
+$multiselect = optional_param('multiselect', false, PARAM_BOOL);
 
 $context = \context::instance_by_id($contextid);
 require_capability('auth/mumie:ssotoproblemselector', $context);
 
-echo open_problem_selector($USER, $serverurl, $gradingtype, $problemlang, $origin, $selection);
+echo open_problem_selector($USER, $serverurl, $gradingtype, $problemlang, $origin, $selection, $multiselect);
