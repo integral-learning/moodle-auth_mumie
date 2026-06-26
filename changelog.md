@@ -2,6 +2,10 @@
 
 All important changes to this plugin will be documented in this file
 
+## TODO
+### Added
+- SSO when opening the Multi Problem Selector
+
 ## [v1.8.0] - 2025-05-15
 ### Changed
 - **Code style revised:** Refactored code to comply with moodle-plugin-ci ^4 formatting standards 
