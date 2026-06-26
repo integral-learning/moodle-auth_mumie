@@ -4,7 +4,7 @@ All important changes to this plugin will be documented in this file
 
 ## TODO
 ### Added
-- SSO when opening the Multi Problem Selector
+- SSO when opening the Multi Problem Selector for the Problem Pool
 
 ## [v1.8.0] - 2025-05-15
 ### Changed
