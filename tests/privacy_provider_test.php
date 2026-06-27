@@ -175,8 +175,8 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
             $user1,
             'core_course',
             [
-            \context_course::instance($course1->id)->id,
-            \context_course::instance($course2->id)->id,
+                \context_course::instance($course1->id)->id,
+                \context_course::instance($course2->id)->id,
             ]
         );
         provider::delete_data_for_user($contextlist);
