@@ -1,4 +1,4 @@
-define(['jquery', 'core/templates', 'core/modal_factory', 'auth_mumie/mumie_server_config'],
+define(['jquery', 'core/templates', 'auth_mumie/mumie_server_config'],
     function($) {
         return {
             init: function(contextid) {
