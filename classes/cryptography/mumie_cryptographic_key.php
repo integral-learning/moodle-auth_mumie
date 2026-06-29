@@ -77,8 +77,8 @@ class mumie_cryptographic_key {
     public function update() {
         global $DB;
         $DB->update_record(
-        self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE,
-        ["name" => $this->name, "keyvalue" => $this->keyvalue, "id" => $this->id]
+            self::MUMIE_CRYPTOGRAPHIC_KEY_TABLE,
+            ["name" => $this->name, "keyvalue" => $this->keyvalue, "id" => $this->id]
         );
     }
 

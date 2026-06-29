@@ -37,7 +37,6 @@ require_once($CFG->dirroot . '/auth/mumie/classes/mumie_server.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mumieserver_form extends moodleform {
-
     /**
      * Define fields and default values for the mumie server form
      * @return void

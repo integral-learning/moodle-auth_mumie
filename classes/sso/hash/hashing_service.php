@@ -81,5 +81,4 @@ class hashing_service {
         }
         return $hash;
     }
-
 }

@@ -38,7 +38,6 @@ require_once($CFG->dirroot . '/auth/mumie/lib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class auth_plugin_mumie extends auth_plugin_base {
-
     /**
      * The name of the component. Used by the configuration.
      */
@@ -60,8 +59,10 @@ class auth_plugin_mumie extends auth_plugin_base {
         global $CFG;
         $tokentable = "auth_mumie_sso_tokens";
 
-        if ($DB->get_record($tokentable, ['the_user' => $USER->id])
-            || $DB->get_record($tokentable, ['the_user' => auth_mumie_get_hashed_id($USER->id)])) {
+        if (
+            $DB->get_record($tokentable, ['the_user' => $USER->id])
+            || $DB->get_record($tokentable, ['the_user' => auth_mumie_get_hashed_id($USER->id)])
+        ) {
             $redirecturl = "{$CFG->wwwroot}/auth/mumie/prelogout.php?sesskey={$USER->sesskey}&logoutUrl="
             . json_encode(auth_mumie\mumie_server::get_all_logout_urls())
             . "&redirect=" . urlencode("{$CFG->wwwroot}/login/logout.php?sesskey={$USER->sesskey}");

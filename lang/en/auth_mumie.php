@@ -92,4 +92,3 @@ $string['privacy:metadata:auth_mumie_tokens:hash'] = 'The hashed moodle user ID 
 $string['privacy:metadata:auth_mumie_tokens:tableexplanation'] = 'Details of SSO tokens used to log into MUMIE/Lemon servers';
 $string['privacy:metadata:auth_mumie_tokens:timecreated'] = 'The timestamp of the user\'s last Single Sign On attempt';
 $string['privacy:metadata:auth_mumie_tokens:token'] = 'Token used to verify a user\'s Single Sign On attempt to MUMIE/Lemon servers.';
-
