@@ -7,7 +7,7 @@ All important changes to this plugin will be documented in this file
 - SSO when opening the Multi Problem Selector for the Problem Pool
 
 ### Changed
-- Plugin now requires Moodle 4.3
+- Plugin now requires Moodle 4.3 or higher
 - Support Moodle 5.2
 
 ## [v1.8.0] - 2025-05-15
