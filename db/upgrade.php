@@ -23,8 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * xmldb_auth_mumie_upgrade is the function that upgrades
  * the auth_mumie database when is needed

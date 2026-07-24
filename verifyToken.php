@@ -26,7 +26,7 @@
 use auth_mumie\user\mumie_user_service;
 use auth_mumie\token\token_service;
 
-require_once("../../config.php");
+require_once("../../config.php"); // phpcs:ignore moodle.Files.RequireLogin.Missing
 require_once($CFG->dirroot . "/auth/mumie/classes/sso/user/mumie_user_service.php");
 require_once($CFG->dirroot . "/auth/mumie/classes/sso/token/token_service.php");
 
