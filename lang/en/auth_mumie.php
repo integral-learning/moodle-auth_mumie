@@ -79,8 +79,8 @@ $string['pluginname'] = 'MUMIE Single Sign On';
 
 $string['privacy:metadata:auth_mumie_hashes:tableexplanation'] = 'Details of hash lookup table for moodle user IDs';
 $string['privacy:metadata:auth_mumie_hashes:userid'] = 'Moodle user ID';
-$string['privacy:metadata:auth_mumie_servers:userid'] = 'A pseudonymous identifier for the user';
 $string['privacy:metadata:auth_mumie_servers:tableexplanation'] = 'Details of the pseudonymous identifier shared with MUMIE/Lemon servers for single sign-on. No personal data (name, e-mail) is shared.';
+$string['privacy:metadata:auth_mumie_servers:userid'] = 'A pseudonymous identifier for the user';
 $string['privacy:metadata:auth_mumie_tokens:hash'] = 'The hashed moodle user ID used to identify the user on MUMIE/Lemon servers.';
 $string['privacy:metadata:auth_mumie_tokens:tableexplanation'] = 'Details of SSO tokens used to log into MUMIE/Lemon servers';
 $string['privacy:metadata:auth_mumie_tokens:timecreated'] = 'The timestamp of the user\'s last Single Sign On attempt';

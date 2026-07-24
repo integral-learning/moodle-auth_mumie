@@ -115,5 +115,4 @@ class mumie_user {
     public function set_mumie_id(string $mumieid): void {
         $this->mumieid = $mumieid;
     }
-
 }
