@@ -101,5 +101,12 @@ function xmldb_auth_mumie_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023110800, 'auth', 'mumie');
     }
 
+    if ($oldversion < 2026072100) {
+        unset_config('userdata_firstname', 'auth_mumie');
+        unset_config('userdata_lastname', 'auth_mumie');
+        unset_config('userdata_mail', 'auth_mumie');
+        upgrade_plugin_savepoint(true, 2026072100, 'auth', 'mumie');
+    }
+
     return true;
 }

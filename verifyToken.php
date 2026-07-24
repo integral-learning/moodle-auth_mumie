@@ -39,15 +39,6 @@ $user = mumie_user_service::get_user_from_mumie_id($mumieid);
 $response = new \stdClass();
 if ($user != null && token_service::is_token_valid($user, $token)) {
     $response->status = "valid";
-    if (get_config('auth_mumie', 'userdata_firstname')) {
-        $response->firstname = $user->get_firstname();
-    }
-    if (get_config('auth_mumie', 'userdata_lastname')) {
-        $response->lastname = $user->get_lastname();
-    }
-    if (get_config('auth_mumie', 'userdata_mail')) {
-        $response->email = $user->get_email();
-    }
 } else {
     $response->status = "invalid";
 }
