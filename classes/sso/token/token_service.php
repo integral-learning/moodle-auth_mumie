@@ -89,6 +89,6 @@ class token_service {
      * @return string
      */
     private static function generate_token(): string {
-        return auth_mumie_get_token(20);
+        return auth_mumie_get_token(30);
     }
 }
