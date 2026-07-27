@@ -2,6 +2,10 @@
 
 All important changes to this plugin will be documented in this file
 
+## TODO
+### Changed
+- Increased the SSO token length from 20 to 30 characters, matching the other LMS plugin implementations
+
 ## [1.9.0] - 2026-06-29
 ### Added
 - SSO when opening the Multi Problem Selector for the Problem Pool
