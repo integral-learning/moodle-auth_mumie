@@ -72,9 +72,7 @@ class provider implements
         $collection->add_external_location_link(
             'MUMIE/Lemon',
             [
-                'firstname' => 'privacy:metadata:auth_mumie_servers:firstname',
-                'lastname' => 'privacy:metadata:auth_mumie_servers:lastname',
-                'email' => 'privacy:metadata:auth_mumie_servers:email',
+                'userid' => 'privacy:metadata:auth_mumie_servers:userid',
             ],
             'privacy:metadata:auth_mumie_servers:tableexplanation'
         );
