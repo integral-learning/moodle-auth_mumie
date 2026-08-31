@@ -2,7 +2,7 @@
 
 All important changes to this plugin will be documented in this file
 
-## TODO
+## [1.10.0] - 2026-08-31
 ### Changed
 - Increased the SSO token length from 20 to 30 characters, matching the other LMS plugin implementations
 
