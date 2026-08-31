@@ -26,7 +26,7 @@
 use auth_mumie\user\mumie_user_service;
 use auth_mumie\token\token_service;
 
-require_once("../../config.php");
+require_once("../../config.php"); // phpcs:ignore moodle.Files.RequireLogin.Missing
 require_once($CFG->dirroot . "/auth/mumie/classes/sso/user/mumie_user_service.php");
 require_once($CFG->dirroot . "/auth/mumie/classes/sso/token/token_service.php");
 
@@ -39,15 +39,6 @@ $user = mumie_user_service::get_user_from_mumie_id($mumieid);
 $response = new \stdClass();
 if ($user != null && token_service::is_token_valid($user, $token)) {
     $response->status = "valid";
-    if (get_config('auth_mumie', 'userdata_firstname')) {
-        $response->firstname = $user->get_firstname();
-    }
-    if (get_config('auth_mumie', 'userdata_lastname')) {
-        $response->lastname = $user->get_lastname();
-    }
-    if (get_config('auth_mumie', 'userdata_mail')) {
-        $response->email = $user->get_email();
-    }
 } else {
     $response->status = "invalid";
 }

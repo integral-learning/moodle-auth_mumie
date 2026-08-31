@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once("../../config.php");
+require_once("../../config.php"); // phpcs:ignore moodle.Files.RequireLogin.Missing
 require_once($CFG->dirroot . '/auth/mumie/classes/cryptography/mumie_cryptography_service.php');
 
 $publickey = mumie_cryptography_service::get_public_key();

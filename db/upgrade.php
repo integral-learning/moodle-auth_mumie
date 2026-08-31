@@ -23,8 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * xmldb_auth_mumie_upgrade is the function that upgrades
  * the auth_mumie database when is needed
@@ -99,6 +97,13 @@ function xmldb_auth_mumie_upgrade($oldversion) {
             $dbman->rename_field($table, $field, 'keyvalue');
         }
         upgrade_plugin_savepoint(true, 2023110800, 'auth', 'mumie');
+    }
+
+    if ($oldversion < 2026072100) {
+        unset_config('userdata_firstname', 'auth_mumie');
+        unset_config('userdata_lastname', 'auth_mumie');
+        unset_config('userdata_mail', 'auth_mumie');
+        upgrade_plugin_savepoint(true, 2026072100, 'auth', 'mumie');
     }
 
     return true;

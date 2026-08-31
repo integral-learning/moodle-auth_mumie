@@ -2,6 +2,13 @@
 
 All important changes to this plugin will be documented in this file
 
+## [1.10.0] - 2026-08-31
+### Changed
+- Increased the SSO token length from 20 to 30 characters, matching the other LMS plugin implementations
+
+### Removed
+- Removed the admin option to share a user's first name, last name or e-mail address with MUMIE servers. No personal user data is sent for SSO anymore, only a pseudonymous user id.
+
 ## [1.9.0] - 2026-06-29
 ### Added
 - SSO when opening the Multi Problem Selector for the Problem Pool

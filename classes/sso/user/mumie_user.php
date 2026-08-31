@@ -45,18 +45,6 @@ class mumie_user {
     /**
      * @var string
      */
-    private string $firstname;
-    /**
-     * @var string
-     */
-    private string $lastname;
-    /**
-     * @var string
-     */
-    private string $email;
-    /**
-     * @var string
-     */
     private string $org;
 
     /**
@@ -83,9 +71,6 @@ class mumie_user {
         if (!$user) {
             return false;
         }
-        $this->firstname = $user->firstname;
-        $this->lastname = $user->lastname;
-        $this->email = $user->email;
         return true;
     }
 
@@ -129,29 +114,5 @@ class mumie_user {
      */
     public function set_mumie_id(string $mumieid): void {
         $this->mumieid = $mumieid;
-    }
-
-    /**
-     * Get first name
-     * @return string
-     */
-    public function get_firstname(): string {
-        return $this->firstname;
-    }
-
-    /**
-     * get lastname
-     * @return string
-     */
-    public function get_lastname(): string {
-        return $this->lastname;
-    }
-
-    /**
-     * Get email
-     * @return string
-     */
-    public function get_email(): string {
-        return $this->email;
     }
 }
