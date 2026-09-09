@@ -209,11 +209,11 @@ class mumie_server implements \JsonSerializable {
     public function get_logout_url() {
         // TEMPORARY EXPERIMENT (bugfix/logout-doesnt-work): mmsrv_ombplus registers its SSO logout
         // route under "public/ombplus/..." instead of the common "public/xapi/..." used everywhere
-        // else. Hardcoded here to test the path theory against omb+, hm4mint and test/ombplus.
+        // else. Hardcoded here to test the path theory against omb+ and test/ombplus.
+        // hm4mint.nrw runs mmsrv_rwth, which has no such override - stays on "xapi".
         // Not a real fix - do not ship this as-is.
         $ombplusflavoredhosts = [
             'www.ombplus.de',
-            'hm4mint.nrw',
             'test.mumie.net',
         ];
         $namespace = 'xapi';
