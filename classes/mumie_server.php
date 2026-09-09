@@ -258,7 +258,10 @@ class mumie_server implements \JsonSerializable {
      * @return bool
      */
     public function is_valid_mumie_server() {
-        return isset($this->get_courses_and_tasks()->courses);
+        // TODO: error message conflates "server unreachable" with "server reachable but has
+        // zero courses" (both fall through to the same mumie_form_server_not_existing string).
+        // Worth splitting into two distinct messages at some point.
+        return $this->get_courses_and_tasks()->courses != null;
     }
 
     /**
