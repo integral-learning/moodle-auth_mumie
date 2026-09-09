@@ -242,7 +242,7 @@ class mumie_server implements \JsonSerializable {
      * @return bool
      */
     public function is_valid_mumie_server() {
-        return $this->get_courses_and_tasks()->courses != null;
+        return isset($this->get_courses_and_tasks()->courses);
     }
 
     /**
